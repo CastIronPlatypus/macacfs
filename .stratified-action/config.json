@@ -1,0 +1,11 @@
+{
+  "embeddings": {
+    "api_key": "NbWaXC7AaD!KqAMV7tn-HQQ_LA7ocF6ht6zYBsx4@6GuTQ!dLw8vbtYt",
+    "api_key_env": "OPENAI_API_KEY",
+    "base_url": "http://100.90.198.19:11234/v1",
+    "max_input_tokens": 2048,
+    "model": "mlx-community/embeddinggemma-300m-8bit",
+    "safe_batch": 8,
+    "zdr": false
+  }
+}

@@ -1,0 +1,52 @@
+# macacfs tool catalog — the single source of truth for install/update.
+# Columns (tab-separated): abbr  repo  cli  method  ref  args
+#
+# method values:
+#   brew         -> brew install/upgrade <ref>            (ref = tap/formula)
+#   installer-sh -> curl the repo's own installer | bash  (ref = path in repo, args = flags)
+#   cargo-git    -> cargo install --git <ref> --force     (ref = repo git URL, args = extra flags e.g. --bin X)
+#   go           -> go install <ref>                       (ref = module path incl @latest)
+#
+# repo is under https://github.com/Dicklesworthstone/<repo>. Installer URLs use raw main.
+# Brew-preferred where dicklesworthstone/tap publishes a formula (15 tools).
+#
+# abbr	repo	cli	method	ref	args
+NTM	ntm	ntm	brew	dicklesworthstone/tap/ntm	-
+MAIL	mcp_agent_mail_rust	am	brew	dicklesworthstone/tap/mcp-agent-mail	-
+UBS	ultimate_bug_scanner	ubs	brew	dicklesworthstone/tap/ubs	-
+BV	beads_viewer	bv	brew	dicklesworthstone/tap/bv	-
+CASS	coding_agent_session_search	cass	brew	dicklesworthstone/tap/cass	-
+CM	cass_memory_system	cm	brew	dicklesworthstone/tap/cm	-
+SLB	slb	slb	brew	dicklesworthstone/tap/slb	-
+DCG	destructive_command_guard	dcg	brew	dicklesworthstone/tap/dcg	-
+BR	beads_rust	br	brew	dicklesworthstone/tap/br	-
+CAAM	coding_agent_account_manager	caam	brew	dicklesworthstone/tap/caam	-
+RU	repo_updater	ru	brew	dicklesworthstone/tap/ru	-
+RCH	remote_compilation_helper	rch	brew	dicklesworthstone/tap/rch	-
+XF	xf	xf	brew	dicklesworthstone/tap/xf	-
+TRU	toon_rust	toon	brew	dicklesworthstone/tap/tru	-
+EE	eidetic_engine_cli	ee	brew	dicklesworthstone/tap/ee	-
+MS	meta_skill	ms	cargo-git	https://github.com/Dicklesworthstone/meta_skill	-
+RP	rust_proxy	rust_proxy	cargo-git	https://github.com/Dicklesworthstone/rust_proxy	-
+CAUT	coding_agent_usage_tracker	caut	cargo-git	https://github.com/Dicklesworthstone/coding_agent_usage_tracker	-
+JFP	jeffreysprompts.com	jfp	cargo-git	https://github.com/Dicklesworthstone/jeffreysprompts.com	--bin jfp
+WA	frankenterm	wa	installer-sh	install.sh	-
+BRENNER	brenner_bot	brenner	installer-sh	install.sh	-
+SRPS	system_resource_protection_script	sysmoni	installer-sh	install.sh	--install --yes
+APR	automated_plan_reviser_pro	apr	installer-sh	install.sh	-
+PT	process_triage	pt	installer-sh	install.sh	-
+GIIL	giil	giil	installer-sh	install.sh	-
+CSCTF	chat_shared_conversation_to_file	csctf	installer-sh	install.sh	-
+RANO	rano	rano	installer-sh	install.sh	-
+MDWB	markdown_web_browser	mdwb	installer-sh	install.sh	-
+S2P	source_to_prompt_tui	s2p	installer-sh	install.sh	-
+AADC	aadc	aadc	installer-sh	install.sh	-
+FSFS	frankensearch	fsfs	installer-sh	install.sh	-
+SBH	storage_ballast_helper	sbh	installer-sh	install.sh	-
+CASR	cross_agent_session_resumer	casr	installer-sh	install.sh	-
+DSR	doodlestein_self_releaser	dsr	installer-sh	install.sh	-
+ASB	agent_settings_backup_script	asb	installer-sh	install.sh	-
+PCR	post_compact_reminder	claude-post-compact-reminder	installer-sh	install-post-compact-reminder.sh	-
+FMD	franken_markdown	fmd	installer-sh	install.sh	-
+PI	pi_agent_rust	pi	installer-sh	install.sh	-
+PFR	power_failure_resumer	pfr	installer-sh	install.sh	-

@@ -1,0 +1,92 @@
+{
+  "r-cli-update": {
+    "accept": "'macacfs update' updates all; 'macacfs update br ntm' updates just those; both re-run the tool's install/update method to latest.",
+    "created": 1789593647,
+    "kind": "functional",
+    "text": "macacfs CLI updates tools individually or all together, manually."
+  },
+  "r-dry-run": {
+    "accept": "'macacfs install --dry-run' changes nothing on disk/PATH and runs no network installs; output lists intended actions.",
+    "created": 1789593647,
+    "kind": "functional",
+    "text": "A dry-run mode that performs NO real installs \u2014 only prints what it would do."
+  },
+  "r-fail-loud": {
+    "accept": "Forcing one tool to fail yields a \u274c line in the summary and a non-zero exit code; failure is not swallowed.",
+    "created": 1789593648,
+    "kind": "invariant",
+    "text": "Fail loud: no silent fallbacks; per-tool failures surfaced with error output in a summary and non-zero exit if any tool failed."
+  },
+  "r-github-repo": {
+    "accept": "gh repo view shows a public repo under the user's account; README states the scope plainly.",
+    "created": 1789593648,
+    "kind": "functional",
+    "text": "Published as a PUBLIC GitHub repo via gh CLI, with a simple README framing it as a mini-ACFS-for-Mac doing only its few things."
+  },
+  "r-install-all": {
+    "accept": "After 'macacfs install', each tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version.",
+    "created": 1789593646,
+    "kind": "functional",
+    "text": "Install all 39 Dicklesworthstone ACFS-suite tools/CLIs on macOS (the full list incl. JFP's CLI)."
+  },
+  "r-macos-only": {
+    "accept": "Refuses to run on non-darwin with a clear message; no apt/systemctl/useradd calls anywhere.",
+    "created": 1789593646,
+    "kind": "constraint",
+    "text": "Runs on macOS only (darwin); does not attempt Ubuntu/systemd/root-VPS machinery."
+  },
+  "r-method-dispatch": {
+    "accept": "Manifest row per tool names its method; installing a sample of each method type succeeds on the Mac.",
+    "created": 1789593646,
+    "kind": "functional",
+    "text": "Per-tool install/update dispatch across ~5 methods: own install.sh (curl|bash), Homebrew tap, cargo install --git, go install/Makefile, npm/bash."
+  },
+  "r-no-servers": {
+    "accept": "No launchctl-load of tool services, no 'am serve', no daemon starts; code shows only build/install/update actions for tools.",
+    "created": 1789593646,
+    "kind": "constraint",
+    "text": "Never start/run any servers or long-running services (e.g. mcp_agent_mail). Install and update binaries only."
+  },
+  "r-prefer-brew": {
+    "accept": "MS and SRPS rows use the brew method; install/update go through brew for them.",
+    "created": 1789593646,
+    "kind": "constraint",
+    "text": "Prefer Homebrew where a tool publishes a tap/formula (e.g. MS, SRPS)."
+  },
+  "r-prereq-autoinstall": {
+    "accept": "On a Mac missing e.g. go, running macacfs installs go before the tools that need it; gate reports what it installed.",
+    "created": 1789593646,
+    "kind": "functional",
+    "text": "Prerequisite gate checks for required toolchains (git, curl, Homebrew, rust/cargo, go, uv, node/bun) and INSTALLS any that are missing, not just reports them."
+  },
+  "r-retry-escalation": {
+    "accept": "Simulated failure states drive the schedule: fail->nightly; 3 fails->2pm daily; success->back to weekly.",
+    "created": 1789593647,
+    "kind": "functional",
+    "text": "If a scheduled run fails, retry the next night nightly until success; after 3 consecutive nightly failures switch to daily 2pm attempts until success, then return to weekly."
+  },
+  "r-run-tracking": {
+    "accept": "A state file records last-run timestamp and success/failure; readable after each run.",
+    "created": 1789593647,
+    "kind": "functional",
+    "text": "The scheduled updater records when it last ran and whether that run succeeded or failed."
+  },
+  "r-scope-min": {
+    "accept": "Feature set maps only to those items; none of the ACFS VPS machinery is present.",
+    "created": 1789593648,
+    "kind": "constraint",
+    "text": "Minimal scope: install tools, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+  },
+  "r-self-update": {
+    "accept": "'macacfs self-update' (or --self-update) fetches the repo and replaces the installed macacfs with the latest; version reflects the update.",
+    "created": 1789593648,
+    "kind": "functional",
+    "text": "macacfs can update ITSELF via a bootstrap self-update flag (same pattern ACFS uses): re-download the repo and reinstall the macacfs tool from it."
+  },
+  "r-weekly-plist": {
+    "accept": "macacfs installs a ~/Library/LaunchAgents plist; launchctl lists it; normal cadence is weekly.",
+    "created": 1789593647,
+    "kind": "functional",
+    "text": "Installs a launchd LaunchAgent plist that runs the update weekly."
+  }
+}

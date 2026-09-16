@@ -1,0 +1,12 @@
+{
+  "agents": {
+    "jeff-96078-1789593573": {
+      "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-96078-1789593573.fifo",
+      "inbox": [],
+      "registered_at": 1789593708
+    }
+  },
+  "leases": [],
+  "read_deps": {},
+  "reservations": {}
+}

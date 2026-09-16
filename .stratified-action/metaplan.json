@@ -1,0 +1,42 @@
+{
+  "phase": 5,
+  "schema": {
+    "strata": [
+      {
+        "descent_question": "what does the observer see \u2014 CLI commands, bootstrap one-liner, and scheduled behavior?",
+        "kind": "fixed",
+        "name": "surface"
+      },
+      {
+        "descent_question": "how is each surface command realized as a coordinated capability on macOS?",
+        "kind": "project",
+        "name": "capabilities"
+      },
+      {
+        "descent_question": "what reusable mechanism, in bash on macOS within scope, underpins these capabilities?",
+        "kind": "project",
+        "name": "subsystems"
+      },
+      {
+        "kind": "fixed",
+        "name": "components"
+      },
+      {
+        "kind": "fixed",
+        "name": "file-boundaries"
+      },
+      {
+        "kind": "fixed",
+        "name": "logical-flow"
+      },
+      {
+        "kind": "fixed",
+        "name": "function-map"
+      },
+      {
+        "kind": "fixed",
+        "name": "implementation"
+      }
+    ]
+  }
+}

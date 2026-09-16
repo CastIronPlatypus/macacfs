@@ -1,0 +1,224 @@
+# Plan dev-log
+
+- [1789593582] **begin** — greenfield
+- [1789593646] **add-requirement** — r-install-all [functional] Install all 39 Dicklesworthstone ACFS-suite tools/CLIs on macOS (the full list incl. JFP's CLI).
+- [1789593646] **add-requirement** — r-macos-only [constraint] Runs on macOS only (darwin); does not attempt Ubuntu/systemd/root-VPS machinery.
+- [1789593646] **add-requirement** — r-method-dispatch [functional] Per-tool install/update dispatch across ~5 methods: own install.sh (curl|bash), Homebrew tap, cargo install --git, go install/Makefile, npm/bash.
+- [1789593646] **add-requirement** — r-prefer-brew [constraint] Prefer Homebrew where a tool publishes a tap/formula (e.g. MS, SRPS).
+- [1789593646] **add-requirement** — r-prereq-autoinstall [functional] Prerequisite gate checks for required toolchains (git, curl, Homebrew, rust/cargo, go, uv, node/bun) and INSTALLS any that are missing, not just reports them.
+- [1789593646] **add-requirement** — r-no-servers [constraint] Never start/run any servers or long-running services (e.g. mcp_agent_mail). Install and update binaries only.
+- [1789593647] **add-requirement** — r-cli-update [functional] macacfs CLI updates tools individually or all together, manually.
+- [1789593647] **add-requirement** — r-weekly-plist [functional] Installs a launchd LaunchAgent plist that runs the update weekly.
+- [1789593647] **add-requirement** — r-run-tracking [functional] The scheduled updater records when it last ran and whether that run succeeded or failed.
+- [1789593647] **add-requirement** — r-retry-escalation [functional] If a scheduled run fails, retry the next night nightly until success; after 3 consecutive nightly failures switch to daily 2pm attempts until success, then return to weekly.
+- [1789593647] **add-requirement** — r-dry-run [functional] A dry-run mode that performs NO real installs — only prints what it would do.
+- [1789593648] **add-requirement** — r-fail-loud [invariant] Fail loud: no silent fallbacks; per-tool failures surfaced with error output in a summary and non-zero exit if any tool failed.
+- [1789593648] **add-requirement** — r-self-update [functional] macacfs can update ITSELF via a bootstrap self-update flag (same pattern ACFS uses): re-download the repo and reinstall the macacfs tool from it.
+- [1789593648] **add-requirement** — r-github-repo [functional] Published as a PUBLIC GitHub repo via gh CLI, with a simple README framing it as a mini-ACFS-for-Mac doing only its few things.
+- [1789593648] **add-requirement** — r-scope-min [constraint] Minimal scope: install tools, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).
+- [1789593654] **metaplan** — phase -> organize
+- [1789593661] **metaplan** — phase -> anticipate
+- [1789593708] **add-node** — heterogeneous-install-methods
+- [1789593708] **add-node** — darwin-truth-per-tool
+- [1789593708] **add-node** — toolchain-prereqs-and-order
+- [1789593708] **add-node** — update-equals-reinstall-idempotency
+- [1789593708] **add-node** — never-start-services
+- [1789593709] **add-node** — stateful-schedule-escalation
+- [1789593709] **add-node** — fail-loud-aggregation
+- [1789593709] **add-node** — dry-run-without-sideeffects
+- [1789593709] **add-node** — self-update-bootstrap
+- [1789593709] **add-node** — scope-containment
+- [1789593714] **metaplan** — phase -> bridge
+- [1789593721] **metaplan** — phase -> emit
+- [1789593734] **set-schema** — strata: ['surface', 'capabilities', 'subsystems', 'components', 'file-boundaries', 'logical-flow', 'function-map', 'implementation']
+- [1789593793] **add-node** — macacfs-command-surface
+- [1789593802] **add-edge** — macacfs-command-surface -serves-> scope-containment
+- [1789593836] **add-node** — install-experience
+- [1789593836] **add-obligation** — install-experience <- r-prefer-brew
+- [1789593836] **add-obligation** — install-experience <- r-prereq-autoinstall
+- [1789593836] **add-obligation** — install-experience <- r-no-servers
+- [1789593836] **add-obligation** — install-experience <- r-macos-only
+- [1789593836] **add-node** — scheduled-update-behavior
+- [1789593837] **add-obligation** — scheduled-update-behavior <- r-retry-escalation
+- [1789593837] **add-obligation** — scheduled-update-behavior <- r-run-tracking
+- [1789593837] **add-node** — run-report-surface
+- [1789593837] **add-obligation** — run-report-surface <- r-dry-run
+- [1789593837] **add-node** — bootstrap-and-self-update
+- [1789593837] **add-obligation** — bootstrap-and-self-update <- r-github-repo
+- [1789593850] **add-edge** — install-experience -serves-> heterogeneous-install-methods
+- [1789593850] **add-edge** — install-experience -serves-> darwin-truth-per-tool
+- [1789593850] **add-edge** — install-experience -serves-> toolchain-prereqs-and-order
+- [1789593850] **add-edge** — install-experience -serves-> never-start-services
+- [1789593851] **add-edge** — scheduled-update-behavior -serves-> stateful-schedule-escalation
+- [1789593851] **add-edge** — run-report-surface -serves-> fail-loud-aggregation
+- [1789593851] **add-edge** — run-report-surface -serves-> dry-run-without-sideeffects
+- [1789593851] **add-edge** — bootstrap-and-self-update -serves-> self-update-bootstrap
+- [1789593851] **add-edge** — macacfs-command-surface -serves-> update-equals-reinstall-idempotency
+- [1789593893] **add-node** — tool-catalog
+- [1789593893] **add-node** — method-dispatch
+- [1789593894] **add-node** — prereq-autoinstaller
+- [1789593894] **add-node** — isolated-runner-reporter
+- [1789593894] **add-node** — launchd-scheduler-state
+- [1789593894] **add-node** — self-update-capability
+- [1789593894] **add-node** — cli-arg-dispatch
+- [1789593894] **add-edge** — tool-catalog -serves-> install-experience
+- [1789593895] **add-edge** — method-dispatch -serves-> install-experience
+- [1789593895] **add-edge** — method-dispatch -serves-> macacfs-command-surface
+- [1789593895] **add-edge** — prereq-autoinstaller -serves-> install-experience
+- [1789593895] **add-edge** — isolated-runner-reporter -serves-> run-report-surface
+- [1789593895] **add-edge** — launchd-scheduler-state -serves-> scheduled-update-behavior
+- [1789593895] **add-edge** — self-update-capability -serves-> bootstrap-and-self-update
+- [1789593895] **add-edge** — cli-arg-dispatch -serves-> macacfs-command-surface
+- [1789593934] **add-node** — manifest-store
+- [1789593935] **add-node** — install-method-functions
+- [1789593935] **add-node** — homebrew-and-toolchains
+- [1789593935] **add-node** — result-capture-and-summary
+- [1789593935] **add-node** — schedule-state-and-plist
+- [1789593935] **add-node** — repo-fetch-replace
+- [1789593935] **add-node** — argv-and-usage
+- [1789593936] **add-edge** — manifest-store -serves-> tool-catalog
+- [1789593936] **add-edge** — install-method-functions -serves-> method-dispatch
+- [1789593936] **add-edge** — homebrew-and-toolchains -serves-> prereq-autoinstaller
+- [1789593936] **add-edge** — homebrew-and-toolchains -serves-> method-dispatch
+- [1789593936] **add-edge** — result-capture-and-summary -serves-> isolated-runner-reporter
+- [1789593936] **add-edge** — schedule-state-and-plist -serves-> launchd-scheduler-state
+- [1789593937] **add-edge** — repo-fetch-replace -serves-> self-update-capability
+- [1789593937] **add-edge** — argv-and-usage -serves-> cli-arg-dispatch
+- [1789594032] **add-node** — catalog-loader-code
+- [1789594032] **add-node** — method-fns-code
+- [1789594032] **add-node** — toolchain-helpers-code
+- [1789594032] **add-node** — reporter-code
+- [1789594032] **add-node** — scheduler-code
+- [1789594032] **add-node** — selfupdate-code
+- [1789594033] **add-node** — argv-code
+- [1789594033] **add-edge** — catalog-loader-code -serves-> manifest-store
+- [1789594033] **add-edge** — method-fns-code -serves-> install-method-functions
+- [1789594033] **add-edge** — toolchain-helpers-code -serves-> homebrew-and-toolchains
+- [1789594033] **add-edge** — reporter-code -serves-> result-capture-and-summary
+- [1789594033] **add-edge** — scheduler-code -serves-> schedule-state-and-plist
+- [1789594033] **add-edge** — selfupdate-code -serves-> repo-fetch-replace
+- [1789594034] **add-edge** — argv-code -serves-> argv-and-usage
+- [1789594075] **add-node** — fb-bin-macacfs
+- [1789594075] **add-obligation** — fb-bin-macacfs <- r-cli-update
+- [1789594075] **add-obligation** — fb-bin-macacfs <- r-macos-only
+- [1789594075] **add-node** — fb-lib-catalog
+- [1789594075] **add-node** — fb-manifest-tsv
+- [1789594075] **add-obligation** — fb-manifest-tsv <- r-install-all
+- [1789594076] **add-obligation** — fb-manifest-tsv <- r-prefer-brew
+- [1789594076] **add-node** — fb-lib-methods
+- [1789594076] **add-obligation** — fb-lib-methods <- r-no-servers
+- [1789594076] **add-obligation** — fb-lib-methods <- r-dry-run
+- [1789594076] **add-node** — fb-lib-prereq
+- [1789594076] **add-node** — fb-lib-report
+- [1789594077] **add-obligation** — fb-lib-report <- r-dry-run
+- [1789594077] **add-node** — fb-lib-schedule
+- [1789594077] **add-obligation** — fb-lib-schedule <- r-retry-escalation
+- [1789594077] **add-obligation** — fb-lib-schedule <- r-weekly-plist
+- [1789594077] **add-node** — fb-plist-template
+- [1789594077] **add-node** — fb-lib-selfupdate
+- [1789594077] **add-node** — fb-install-sh
+- [1789594078] **add-obligation** — fb-install-sh <- r-github-repo
+- [1789594078] **add-obligation** — fb-install-sh <- r-macos-only
+- [1789594078] **add-node** — fb-readme
+- [1789594078] **add-edge** — fb-bin-macacfs -serves-> argv-code
+- [1789594078] **add-edge** — fb-lib-catalog -serves-> catalog-loader-code
+- [1789594078] **add-edge** — fb-manifest-tsv -serves-> catalog-loader-code
+- [1789594079] **add-edge** — fb-lib-methods -serves-> method-fns-code
+- [1789594079] **add-edge** — fb-lib-prereq -serves-> toolchain-helpers-code
+- [1789594079] **add-edge** — fb-lib-report -serves-> reporter-code
+- [1789594079] **add-edge** — fb-lib-schedule -serves-> scheduler-code
+- [1789594079] **add-edge** — fb-plist-template -serves-> scheduler-code
+- [1789594079] **add-edge** — fb-lib-selfupdate -serves-> selfupdate-code
+- [1789594079] **add-edge** — fb-install-sh -serves-> selfupdate-code
+- [1789594080] **add-edge** — fb-readme -serves-> selfupdate-code
+- [1789594187] **add-edge** — scope-containment -accomplished-by-> macacfs-command-surface
+- [1789594243] **add-edge** — method-fns-code -accomplished-by-> fb-lib-methods
+- [1789594294] **add-edge** — update-equals-reinstall-idempotency -accomplished-by-> macacfs-command-surface
+- [1789594294] **add-edge** — heterogeneous-install-methods -accomplished-by-> install-experience
+- [1789594294] **add-edge** — darwin-truth-per-tool -accomplished-by-> install-experience
+- [1789594294] **add-edge** — toolchain-prereqs-and-order -accomplished-by-> install-experience
+- [1789594294] **add-edge** — never-start-services -accomplished-by-> install-experience
+- [1789594294] **add-edge** — stateful-schedule-escalation -accomplished-by-> scheduled-update-behavior
+- [1789594295] **add-edge** — fail-loud-aggregation -accomplished-by-> run-report-surface
+- [1789594295] **add-edge** — dry-run-without-sideeffects -accomplished-by-> run-report-surface
+- [1789594295] **add-edge** — self-update-bootstrap -accomplished-by-> bootstrap-and-self-update
+- [1789594295] **add-edge** — macacfs-command-surface -accomplished-by-> cli-arg-dispatch
+- [1789594295] **add-edge** — macacfs-command-surface -accomplished-by-> method-dispatch
+- [1789594295] **add-edge** — install-experience -accomplished-by-> tool-catalog
+- [1789594295] **add-edge** — install-experience -accomplished-by-> method-dispatch
+- [1789594296] **add-edge** — install-experience -accomplished-by-> prereq-autoinstaller
+- [1789594296] **add-edge** — run-report-surface -accomplished-by-> isolated-runner-reporter
+- [1789594296] **add-edge** — scheduled-update-behavior -accomplished-by-> launchd-scheduler-state
+- [1789594296] **add-edge** — bootstrap-and-self-update -accomplished-by-> self-update-capability
+- [1789594296] **add-edge** — tool-catalog -accomplished-by-> manifest-store
+- [1789594296] **add-edge** — method-dispatch -accomplished-by-> install-method-functions
+- [1789594297] **add-edge** — method-dispatch -accomplished-by-> homebrew-and-toolchains
+- [1789594297] **add-edge** — prereq-autoinstaller -accomplished-by-> homebrew-and-toolchains
+- [1789594297] **add-edge** — isolated-runner-reporter -accomplished-by-> result-capture-and-summary
+- [1789594297] **add-edge** — launchd-scheduler-state -accomplished-by-> schedule-state-and-plist
+- [1789594297] **add-edge** — self-update-capability -accomplished-by-> repo-fetch-replace
+- [1789594297] **add-edge** — cli-arg-dispatch -accomplished-by-> argv-and-usage
+- [1789594298] **add-edge** — manifest-store -accomplished-by-> catalog-loader-code
+- [1789594298] **add-edge** — install-method-functions -accomplished-by-> method-fns-code
+- [1789594298] **add-edge** — homebrew-and-toolchains -accomplished-by-> toolchain-helpers-code
+- [1789594298] **add-edge** — result-capture-and-summary -accomplished-by-> reporter-code
+- [1789594298] **add-edge** — schedule-state-and-plist -accomplished-by-> scheduler-code
+- [1789594298] **add-edge** — repo-fetch-replace -accomplished-by-> selfupdate-code
+- [1789594299] **add-edge** — argv-and-usage -accomplished-by-> argv-code
+- [1789594299] **add-edge** — catalog-loader-code -accomplished-by-> fb-lib-catalog
+- [1789594299] **add-edge** — catalog-loader-code -accomplished-by-> fb-manifest-tsv
+- [1789594299] **add-edge** — toolchain-helpers-code -accomplished-by-> fb-lib-prereq
+- [1789594299] **add-edge** — reporter-code -accomplished-by-> fb-lib-report
+- [1789594299] **add-edge** — scheduler-code -accomplished-by-> fb-lib-schedule
+- [1789594300] **add-edge** — scheduler-code -accomplished-by-> fb-plist-template
+- [1789594300] **add-edge** — selfupdate-code -accomplished-by-> fb-lib-selfupdate
+- [1789594300] **add-edge** — selfupdate-code -accomplished-by-> fb-install-sh
+- [1789594300] **add-edge** — selfupdate-code -accomplished-by-> fb-readme
+- [1789594300] **add-edge** — argv-code -accomplished-by-> fb-bin-macacfs
+- [1789594981] **add-impl** — fb-bin-macacfs -> bin/macacfs
+- [1789594981] **add-impl** — fb-lib-catalog -> lib/catalog.sh
+- [1789594981] **add-impl** — fb-manifest-tsv -> share/manifest.tsv
+- [1789594981] **add-impl** — fb-lib-methods -> lib/methods.sh
+- [1789594981] **add-impl** — fb-lib-prereq -> lib/prereq.sh
+- [1789594981] **add-impl** — fb-lib-report -> lib/report.sh
+- [1789594982] **add-impl** — fb-lib-schedule -> lib/schedule.sh
+- [1789594982] **add-impl** — fb-plist-template -> share/macacfs.plist.template
+- [1789594982] **add-impl** — fb-lib-selfupdate -> lib/selfupdate.sh
+- [1789594982] **add-impl** — fb-install-sh -> install.sh
+- [1789594982] **add-impl** — fb-readme -> README.md
+- [1789595040] **revise-prose** — install-method-functions
+- [1789595106] **revise-prose** — scope-containment
+- [1789595106] **revise-prose** — update-equals-reinstall-idempotency
+- [1789595106] **revise-prose** — heterogeneous-install-methods
+- [1789595107] **revise-prose** — darwin-truth-per-tool
+- [1789595107] **revise-prose** — toolchain-prereqs-and-order
+- [1789595107] **revise-prose** — never-start-services
+- [1789595107] **revise-prose** — stateful-schedule-escalation
+- [1789595107] **revise-prose** — fail-loud-aggregation
+- [1789595107] **revise-prose** — dry-run-without-sideeffects
+- [1789595108] **revise-prose** — self-update-bootstrap
+- [1789595165] **revise-prose** — macacfs-command-surface
+- [1789595167] **revise-prose** — tool-catalog
+- [1789595167] **revise-prose** — method-dispatch
+- [1789595167] **revise-prose** — prereq-autoinstaller
+- [1789595167] **revise-prose** — isolated-runner-reporter
+- [1789595168] **revise-prose** — launchd-scheduler-state
+- [1789595168] **revise-prose** — self-update-capability
+- [1789595168] **revise-prose** — cli-arg-dispatch
+- [1789595189] **revise-prose** — install-experience
+- [1789595189] **revise-prose** — run-report-surface
+- [1789595189] **revise-prose** — scheduled-update-behavior
+- [1789595189] **revise-prose** — bootstrap-and-self-update
+- [1789595229] **revise-prose** — manifest-store
+- [1789595229] **revise-prose** — homebrew-and-toolchains
+- [1789595229] **revise-prose** — result-capture-and-summary
+- [1789595229] **revise-prose** — schedule-state-and-plist
+- [1789595229] **revise-prose** — repo-fetch-replace
+- [1789595230] **revise-prose** — argv-and-usage
+- [1789595230] **revise-prose** — catalog-loader-code
+- [1789595230] **revise-prose** — method-fns-code
+- [1789595230] **revise-prose** — toolchain-helpers-code
+- [1789595230] **revise-prose** — reporter-code
+- [1789595230] **revise-prose** — scheduler-code
+- [1789595231] **revise-prose** — selfupdate-code
+- [1789595231] **revise-prose** — argv-code

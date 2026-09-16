@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+# macacfs — a mini "ACFS for Mac".
+# Installs the Dicklesworthstone ACFS-suite tools on macOS, keeps them updated
+# weekly via a LaunchAgent, and updates itself. Nothing more.
+# Realizes: argv-code / fb-bin-macacfs.
+
+set -uo pipefail
+
+# --- resolve install home (follow symlink so ~/.local/bin/macacfs works) ----
+_resolve_dir() {
+  local src="$1" dir
+  while [ -h "$src" ]; do
+    dir="$(cd -P "$(dirname "$src")" >/dev/null 2>&1 && pwd)"
+    src="$(readlink "$src")"
+    case "$src" in /*) : ;; *) src="$dir/$src" ;; esac
+  done
+  cd -P "$(dirname "$src")" >/dev/null 2>&1 && pwd
+}
+BIN_DIR="$(_resolve_dir "$0")"
+MACACFS_HOME="$(dirname "$BIN_DIR")"
+export MACACFS_HOME
+export MACACFS_MANIFEST="$MACACFS_HOME/share/manifest.tsv"
+MACACFS_VERSION="$(cat "$MACACFS_HOME/VERSION" 2>/dev/null || echo dev)"
+
+# --- macOS only (r-macos-only) ----------------------------------------------
+require_darwin() {
+  if [ "$(uname -s)" != "Darwin" ]; then
+    printf 'macacfs: this tool is macOS-only (detected %s).\n' "$(uname -s)" >&2
+    exit 1
+  fi
+}
+
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/catalog.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/report.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/prereq.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/methods.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/schedule.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/selfupdate.sh"
+
+usage() {
+  cat <<EOF
+macacfs $MACACFS_VERSION — mini ACFS for Mac
+
+Usage:
+  macacfs install [--dry-run] [TOOL...]   install all tools, or the named ones
+  macacfs update  [--dry-run] [TOOL...]   update all tools, or the named ones
+  macacfs self-update                     update macacfs itself from its repo
+  macacfs schedule [--install|--uninstall|--status]
+                                          manage the weekly auto-update LaunchAgent
+  macacfs list                            list the tool catalog
+  macacfs version                         print version
+  macacfs help                            this help
+
+TOOL is an abbreviation (e.g. BR) or a cli name (e.g. br). Case-insensitive.
+$(catalog_count) tools in the catalog.
+EOF
+}
+
+# run_tools <install|update> [selectors...]  — the shared engine.
+run_tools() {
+  local mode="$1"; shift
+  local abbrs methods="" a row
+  abbrs="$(catalog_select "$@")" || return 1   # fail loud on unknown selector
+  for a in $abbrs; do row="$(catalog_row "$a")"; methods="$methods $(row_method "$row")"; done
+  prereq_ensure $methods || return 1
+  printf '\n%sing %s tool(s)%s...\n' "$mode" "$(printf '%s\n' $abbrs | wc -l | tr -d ' ')" "$([ "${DRY_RUN:-0}" = 1 ] && echo ' [dry-run]')"
+  report_init
+  for a in $abbrs; do
+    row="$(catalog_row "$a")"
+    if [ "${DRY_RUN:-0}" = 1 ]; then
+      printf '  → %s (%s)\n' "$a" "$(row_method "$row")"
+      dispatch_row "$row"
+      report_add "$a" ok "(dry-run)"
+    else
+      run_isolated "$a" "$(row_method "$row")" dispatch_row "$row"
+    fi
+  done
+  report_render
+}
+
+# Split --dry-run out of the arg list; remaining args are selectors.
+parse_dry_run() {
+  DRY_RUN=0; SELECTORS=()
+  local a
+  for a in "$@"; do
+    case "$a" in
+      --dry-run) DRY_RUN=1 ;;
+      *) SELECTORS+=("$a") ;;
+    esac
+  done
+  export DRY_RUN
+}
+
+main() {
+  local cmd="${1:-help}"; shift || true
+  case "$cmd" in
+    install|update)
+      require_darwin
+      parse_dry_run "$@"
+      run_tools "$cmd" "${SELECTORS[@]}"
+      ;;
+    self-update|--self-update)
+      require_darwin
+      DRY_RUN=0; [ "${1:-}" = "--dry-run" ] && DRY_RUN=1; export DRY_RUN
+      selfupdate_run
+      ;;
+    schedule)
+      require_darwin
+      case "${1:---install}" in
+        --install)   schedule_install ;;
+        --uninstall) schedule_uninstall ;;
+        --status)    schedule_status ;;
+        *) printf 'macacfs: unknown schedule option %s\n' "$1" >&2; exit 2 ;;
+      esac
+      ;;
+    _tick)               # internal: fired by the LaunchAgent
+      require_darwin
+      schedule_tick
+      ;;
+    list)                catalog_rows | awk -F'\t' '{printf "  %-9s %-8s %-13s %s\n",$1,$3,$4,$2}' ;;
+    version|-v|--version) printf 'macacfs %s\n' "$MACACFS_VERSION" ;;
+    help|-h|--help)      usage ;;
+    *) printf 'macacfs: unknown command "%s"\n\n' "$cmd" >&2; usage; exit 2 ;;
+  esac
+}
+
+main "$@"
