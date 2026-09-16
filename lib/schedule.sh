@@ -111,7 +111,9 @@ schedule_uninstall() {
 schedule_status() {
   state_load
   printf 'LaunchAgent : %s\n' "$LABEL"
-  if launchctl list 2>/dev/null | grep -q "$LABEL"; then
+  # Capture-then-test avoids a pipefail+SIGPIPE false negative from `grep -q`.
+  local listed; listed="$(launchctl list 2>/dev/null | grep -F "$LABEL" || true)"
+  if [ -n "$listed" ]; then
     printf 'Loaded      : yes\n'
   else
     printf 'Loaded      : no\n'
