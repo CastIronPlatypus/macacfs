@@ -1,10 +1,315 @@
 {
+  "change": {
+    "comprehend": {
+      "anchors": [
+        "shell-setup-dispatch",
+        "shell-setup-experience"
+      ],
+      "attach_points": [
+        "fb-share-zshrc-mac",
+        "shell-setup-dispatch",
+        "shell-setup-experience"
+      ],
+      "candidates": [
+        "macacfs-command-surface",
+        "shell-setup-experience",
+        "fb-share-zshrc-mac"
+      ],
+      "desc": "Add ACFS's tmux configuration to the shell setup: ship share/tmux.conf and install it to ~/.tmux.conf (backing up any existing one), wired into the shell-assets store and a new shell_tmux function in lib/shell.sh, run during 'macacfs shell'.",
+      "done": true,
+      "impact": [
+        "catalog-loader-code",
+        "fb-lib-catalog",
+        "fb-lib-catalog-impl",
+        "fb-lib-methods",
+        "fb-lib-methods-impl",
+        "fb-lib-prereq",
+        "fb-lib-prereq-impl",
+        "fb-lib-report",
+        "fb-lib-report-impl",
+        "fb-lib-shell",
+        "fb-lib-shell-impl",
+        "fb-manifest-tsv",
+        "fb-manifest-tsv-impl",
+        "fb-share-atuin-guard",
+        "fb-share-atuin-guard-impl",
+        "fb-share-powerlevel-preset",
+        "fb-share-powerlevel-preset-impl",
+        "fb-share-shell-bundle",
+        "fb-share-shell-bundle-impl",
+        "fb-share-zshrc-mac",
+        "fb-share-zshrc-mac-impl",
+        "homebrew-and-toolchains",
+        "install-experience",
+        "install-method-functions",
+        "isolated-runner-reporter",
+        "manifest-store",
+        "method-dispatch",
+        "method-fns-code",
+        "never-start-services",
+        "prereq-autoinstaller",
+        "reporter-code",
+        "result-capture-and-summary",
+        "run-report-surface",
+        "shell-assets-code",
+        "shell-environment-catalog",
+        "shell-fns-code",
+        "shell-setup-dispatch",
+        "shell-setup-experience",
+        "shell-setup-functions",
+        "shell-spec-store",
+        "terminal-environment-parity",
+        "tool-catalog",
+        "toolchain-helpers-code"
+      ],
+      "round": 4,
+      "stage": "attach"
+    },
+    "current": null,
+    "cursor": 3,
+    "done": [
+      "s1",
+      "s2",
+      "s3"
+    ],
+    "graph_fp": {
+      "argv-and-usage": "1518141cf08aa1b167075ac502f4eedeab49f40a",
+      "argv-code": "1c2b129196bb80d4e435f37a5178fedb4327caa2",
+      "bootstrap-and-self-update": "0be74e4a3ada089060e1e326eacef9b04d7fa504",
+      "catalog-loader-code": "82edde40c06d0386e05aeca6e86978733a316567",
+      "cli-arg-dispatch": "c7867968023f19594155b73d431d84db6f9bd9d0",
+      "darwin-truth-per-tool": "19e870ec359c2cfa2e9a2563e753f2a304d1a22e",
+      "dry-run-without-sideeffects": "35fc61da3239dce05ae8cebdd825a8a2904d4fd2",
+      "fail-loud-aggregation": "35d543cdae10f496539797f86e322fb1f6f0cae1",
+      "fb-bin-macacfs": "a1068b653801d124ab39ddd1186cd1aede24d312",
+      "fb-bin-macacfs-impl": "c77ac67fd8ead76db99fc7ffe95ed7fbcd837bd8",
+      "fb-install-sh": "ad41bd60079f6500b6858f9c1f5c48dc5bdbe4bd",
+      "fb-install-sh-impl": "0b43f66e093106a2f8065297146f57975aa29586",
+      "fb-lib-catalog": "9734e2173e4bf22367179cee3487dbd1f3ea5a58",
+      "fb-lib-catalog-impl": "1e139867824e95cc63292d1a518755a1475ab3c8",
+      "fb-lib-methods": "067dc08256ecadd1c8d89a5efd9b36af1fee6075",
+      "fb-lib-methods-impl": "c7804c460bf08ec86dd832aa8b822c59a79905bb",
+      "fb-lib-prereq": "b704485baa67ddba5b012e1e5f5e441dce766ca9",
+      "fb-lib-prereq-impl": "fa823835dd2356f2602386a0d8ec31e9ae4c73ab",
+      "fb-lib-report": "9ea3a849a464c91546b9b3049581b21cfd3fca42",
+      "fb-lib-report-impl": "574a197a0054b8353084736234ac04d09ce43957",
+      "fb-lib-schedule": "7a6dd9fa92bce1b1f508963c2a023cee30414e5c",
+      "fb-lib-schedule-impl": "ff73437a2ace1cf1662b4f956f0203cf47d5be48",
+      "fb-lib-selfupdate": "1fb407ea3702d5c142738ac6c6073fd3f04d5950",
+      "fb-lib-selfupdate-impl": "2765c970bf61033d89c49e2aa01a657b933fa1c4",
+      "fb-lib-shell": "185098feeed7ea59b03bcaeb4c7231b8504fa64c",
+      "fb-lib-shell-impl": "f7403eb55af43e86ba2f3fd4ac46f8b3934d0d50",
+      "fb-manifest-tsv": "ff1299333884ffb884206b1719e12f813adaec85",
+      "fb-manifest-tsv-impl": "d62edfb54f3ff710d069cbc85b8b0dfeb9a306a6",
+      "fb-plist-template": "57c466244aa13eecb84880d85fc35061ed018942",
+      "fb-plist-template-impl": "4d2be08f425f128c16c041bdb72186222662552f",
+      "fb-readme": "61d53b6b77325b641456ee8f04c2b8ca022f3a61",
+      "fb-readme-impl": "2c3ef29f3d791d69d6e581941517e8bc9b95fb08",
+      "fb-share-atuin-guard": "aa96b101ff74ee9d2b798c37dfc6ec948eef7b6d",
+      "fb-share-atuin-guard-impl": "4e7a604f643ebed51d4cbacea35c165d43ff2655",
+      "fb-share-powerlevel-preset": "7da1a52fe17e79aab12f8a89a4378cebab0623ee",
+      "fb-share-powerlevel-preset-impl": "278c854b6f17c339eb28f3295b38d6eddb8d2a40",
+      "fb-share-shell-bundle": "d9dcec3a0ac35c1fa7859ed72fe8e00f308350fa",
+      "fb-share-shell-bundle-impl": "32f65d0bb97e16ca2e2fc3fcf994438b53bbd729",
+      "fb-share-zshrc-mac": "faa35b63f6f0963777303b2ab024c6269cf87168",
+      "fb-share-zshrc-mac-impl": "6ad3d2731f3e4be1bf95e0fc6ade690e914af738",
+      "heterogeneous-install-methods": "10579231a603707d0352e928f211746353c5c2a4",
+      "homebrew-and-toolchains": "c7736c63778262eaebe4ebb0b281ecf7b7c2781e",
+      "install-experience": "3ba46944460d00335639e9592c3bdab928941a97",
+      "install-method-functions": "513fb86c03e3c1015c6ff2170128e912b4ffaf25",
+      "isolated-runner-reporter": "14ea181bca9f22a982307abdad9033cb886a836a",
+      "launchd-scheduler-state": "7666a46b6d8d3ddd26d144248b9473058a161cf0",
+      "macacfs-command-surface": "e71effa3373e4e40af8d39128eeb38e94876be81",
+      "manifest-store": "558b8d2e5a86c19b5745ed44da34c7342278cb36",
+      "method-dispatch": "4f1cac97d0b71a0eac911ba5a8f74e940d0386c6",
+      "method-fns-code": "76b1c9a0535ea283aaf822e9fe0edd674fd42d15",
+      "never-start-services": "8e0c7918c85d3fda38b8a39975683e31a6e4c5b4",
+      "prereq-autoinstaller": "244491cdd0878f742ffefd500ade7765a430a15a",
+      "repo-fetch-replace": "e6c647450ed45ec7dd1f25657d29e262d8f6b119",
+      "reporter-code": "3a56f3873dbfd1b5f7bd1d3af72247dde1b4b6db",
+      "result-capture-and-summary": "99ca8ce56d3648a9665d0593f3f376ed90b9dea0",
+      "run-report-surface": "c509a31b5d8349f2e71cae4641f517d198c29596",
+      "schedule-state-and-plist": "49228e442bc302e79fbdc6dbeadc088be9c31035",
+      "scheduled-update-behavior": "a0052c4d96d61ce045f92527136a61be40c50d1a",
+      "scheduler-code": "a2b14ad428ac494ac4950d23c3da6714522a1eee",
+      "scope-containment": "8018309f6b66c6ea014e71087471e961219e5b0c",
+      "self-update-bootstrap": "ddf3f9675a2aacbc54a0f610c461dd6d99914e3f",
+      "self-update-capability": "1824ab364f93f3e253eaa5961c4a79c8f634f193",
+      "selfupdate-code": "8f4ad72069448cca2dd0ed3ffce8bf6b1bb42f27",
+      "shell-assets-code": "9e236fa3ebf1323e544c71a9ac7ac0ca4ef86106",
+      "shell-environment-catalog": "c745e6d2f5b348a1483cc7ecadd9c42e0967d99c",
+      "shell-fns-code": "0c3e63acf0fd50e5cb1654b898e0f1c49e8bbe2a",
+      "shell-setup-dispatch": "b16d57846a9efdddae15735d4551d40660315a10",
+      "shell-setup-experience": "0a9c403a1bc0989f7ac724f65cde33f8288cd911",
+      "shell-setup-functions": "3f4f2b21e002df36350f7e55877fb863e4f4f316",
+      "shell-spec-store": "70cd12bf44d46e6c89016e92715df46bde6d0103",
+      "stateful-schedule-escalation": "d212b1c5b86791cbbcc2beeab3a43a0320a9797a",
+      "terminal-environment-parity": "48484a25c52d6e78bbd6984413a159461353897d",
+      "tool-catalog": "d0ea9e595594833ec2a1504e02202e8eee82dbfd",
+      "toolchain-helpers-code": "9a4281759b254644c3c1967a615024b382f799e4",
+      "toolchain-prereqs-and-order": "08064f5f401706c9124f493b4e8b72da682f4d70",
+      "update-equals-reinstall-idempotency": "8db2aa0b59dd998479e5d3fd9464dcefd5a04f68"
+    },
+    "impact_set": [
+      "catalog-loader-code",
+      "fb-lib-catalog",
+      "fb-lib-catalog-impl",
+      "fb-lib-methods",
+      "fb-lib-methods-impl",
+      "fb-lib-prereq",
+      "fb-lib-prereq-impl",
+      "fb-lib-report",
+      "fb-lib-report-impl",
+      "fb-lib-shell",
+      "fb-lib-shell-impl",
+      "fb-manifest-tsv",
+      "fb-manifest-tsv-impl",
+      "fb-share-atuin-guard",
+      "fb-share-atuin-guard-impl",
+      "fb-share-powerlevel-preset",
+      "fb-share-powerlevel-preset-impl",
+      "fb-share-shell-bundle",
+      "fb-share-shell-bundle-impl",
+      "fb-share-zshrc-mac",
+      "fb-share-zshrc-mac-impl",
+      "homebrew-and-toolchains",
+      "install-experience",
+      "install-method-functions",
+      "isolated-runner-reporter",
+      "manifest-store",
+      "method-dispatch",
+      "method-fns-code",
+      "never-start-services",
+      "prereq-autoinstaller",
+      "reporter-code",
+      "result-capture-and-summary",
+      "run-report-surface",
+      "shell-assets-code",
+      "shell-environment-catalog",
+      "shell-fns-code",
+      "shell-setup-dispatch",
+      "shell-setup-experience",
+      "shell-setup-functions",
+      "shell-spec-store",
+      "terminal-environment-parity",
+      "tool-catalog",
+      "toolchain-helpers-code"
+    ],
+    "notes": {
+      "s1": "shell-assets-code (component) is accomplished-by the four asset file-boundaries (fb-share-shell-bundle/-zshrc-mac/-powerlevel-preset/-atuin-guard), each a bead with an impl bound to its share/ file; lib/shell.sh functions live under fb-lib-shell -> fb-lib-shell-impl (impl_path lib/shell.sh) and are orchestrated by shell_run. tmux.conf mirrors the zshrc asset (fb under shell-assets-code) and shell_tmux mirrors shell_zshrc (a function in fb-lib-shell-impl, added to shell_run's install list)."
+    },
+    "phase": 3,
+    "plan": {
+      "steps": [
+        {
+          "aim": "confirm how sibling assets (zshrc/p10k) attach under shell-assets-code and how shell_run/shell functions live in fb-lib-shell, so tmux.conf + shell_tmux mirror them",
+          "id": "s1",
+          "kind": "investigate",
+          "target": "shell-assets-code"
+        },
+        {
+          "aim": "add the tmux.conf file-boundary + impl, wire it under shell-assets-code, and broaden r-terminal-env to name the tmux config",
+          "expect": [
+            "fb-share-tmux-conf",
+            "fb-share-tmux-conf-impl"
+          ],
+          "id": "s2",
+          "kind": "develop"
+        },
+        {
+          "aim": "succeed the lib/shell.sh implementation to add shell_tmux (install ~/.tmux.conf with backup) and run it during shell setup",
+          "expect": [
+            "fb-lib-shell-impl@v2"
+          ],
+          "id": "s3",
+          "kind": "develop",
+          "target": "fb-lib-shell-impl"
+        }
+      ]
+    }
+  },
   "dirty": [],
   "grants": [],
-  "ledger": [],
-  "mode": "greenfield",
+  "ledger": [
+    {
+      "at": 1789602259,
+      "detail": {
+        "name": "fb-share-tmux-conf",
+        "uid": "n0077"
+      },
+      "id": "op1",
+      "op": "add-node",
+      "step": "s2"
+    },
+    {
+      "at": 1789602259,
+      "detail": {
+        "impl": "fb-share-tmux-conf-impl",
+        "node": "fb-share-tmux-conf",
+        "path": "share/tmux.conf"
+      },
+      "id": "op2",
+      "op": "add-impl",
+      "step": "s2"
+    },
+    {
+      "at": 1789602270,
+      "detail": {
+        "name": "shell-assets-code"
+      },
+      "id": "op3",
+      "op": "revise-prose",
+      "step": "s2"
+    },
+    {
+      "at": 1789602281,
+      "detail": {
+        "id": "r-terminal-env",
+        "now": {
+          "accept": "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.",
+          "created": 1789599516,
+          "kind": "functional",
+          "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."
+        },
+        "prev": {
+          "accept": "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.",
+          "created": 1789599516,
+          "kind": "functional",
+          "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."
+        }
+      },
+      "id": "op4",
+      "op": "edit-requirement",
+      "step": "s2"
+    },
+    {
+      "at": 1789602293,
+      "detail": {
+        "dependents": [
+          "fb-lib-shell"
+        ],
+        "name": "fb-lib-shell-impl",
+        "prev_status": "drafting",
+        "uid": "n0068",
+        "ver": 1
+      },
+      "id": "op5",
+      "op": "retire-succeed",
+      "step": "s3"
+    },
+    {
+      "at": 1789602293,
+      "detail": {
+        "name": "fb-lib-shell-impl"
+      },
+      "id": "op6",
+      "op": "revise-prose",
+      "step": "s3"
+    }
+  ],
+  "mode": "change",
   "processed": [
     "scope-containment"
   ],
-  "uid_seq": 58
+  "uid_seq": 78
 }

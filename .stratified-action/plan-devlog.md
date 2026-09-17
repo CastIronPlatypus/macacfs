@@ -222,3 +222,69 @@
 - [1789595230] **revise-prose** — scheduler-code
 - [1789595231] **revise-prose** — selfupdate-code
 - [1789595231] **revise-prose** — argv-code
+- [1789599244] **begin** — change
+- [1789599280] **comprehend** — modify=['install-experience', 'macacfs-command-surface', 'method-dispatch']; attach=['isolated-runner-reporter', 'macacfs-command-surface', 'method-dispatch', 'result-capture-and-summary']; impact=38 node(s)
+- [1789599288] **change** — comprehend -> plan
+- [1789599407] **set-changeplan** — 9 step(s)
+- [1789599412] **change** — plan -> walk
+- [1789599516] **add-requirement** — r-terminal-env [functional] Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle.
+- [1789599516] **add-node** — terminal-environment-parity
+- [1789599516] **add-node** — shell-setup-experience
+- [1789599556] **change-done** — s1 — Confirmed ladder: problem -> surface (install-experience) -> capability (tool-catalog/method-dispatch/prereq-autoinstaller) -> subsystem (manifest-store/install-method-functions/homebrew-and-toolchains) -> component -> file-boundary -> impl. Surface folds requirements as obligations; accomplished-by edges are realized as inline [[node|accomplished-by]] links in prose. The new shell ladder will mirror catalog(->store) and dispatch(->functions), reusing prereq-autoinstaller (Homebrew) and isolated-runner-reporter (per-item summary).
+- [1789599557] **change-done** — s2 — macacfs-command-surface enumerates the closed subcommand set and dispatches via cli-arg-dispatch; implemented in fb-bin-macacfs-impl (bin/macacfs). It carries r-scope-min whose exclusions are user-provisioning/OS-upgrade/service-orchestration/phase-runner (none of which shell setup adds). Registering 'macacfs shell' and folding brew-bundle refresh into 'update' requires succeeding this surface (->v2) and its impl (fb-bin-macacfs-impl->v2).
+- [1789599586] **add-edge** — shell-setup-experience -serves-> terminal-environment-parity
+- [1789599587] **add-edge** — prereq-autoinstaller -serves-> shell-setup-experience
+- [1789599587] **add-edge** — isolated-runner-reporter -serves-> shell-setup-experience
+- [1789599587] **change-done** — s3
+- [1789599605] **add-node** — shell-environment-catalog
+- [1789599605] **add-node** — shell-setup-dispatch
+- [1789599605] **change-done** — s4
+- [1789599656] **change-amend** — 4 frozen + 4 re-authored
+- [1789599667] **add-node** — shell-spec-store
+- [1789599668] **add-node** — shell-setup-functions
+- [1789599679] **add-node** — shell-fns-code
+- [1789599679] **add-node** — shell-assets-code
+- [1789599679] **change-done** — s6
+- [1789599716] **add-node** — fb-lib-shell
+- [1789599716] **add-impl** — fb-lib-shell -> lib/shell.sh
+- [1789599736] **add-node** — fb-share-shell-bundle
+- [1789599736] **add-impl** — fb-share-shell-bundle -> share/shell-bundle.tsv
+- [1789599736] **add-node** — fb-share-zshrc-mac
+- [1789599736] **add-impl** — fb-share-zshrc-mac -> share/zshrc.mac.zsh
+- [1789599737] **add-node** — fb-share-atuin-guard
+- [1789599737] **add-impl** — fb-share-atuin-guard -> share/atuin-guard.sh
+- [1789599828] **change-amend** — 5 frozen + 3 re-authored
+- [1789599829] **add-node** — fb-share-powerlevel-preset
+- [1789599829] **add-impl** — fb-share-powerlevel-preset -> share/p10k.zsh
+- [1789599882] **retire** — shell-assets-code@v1 -> v2; reason: Correct a stale inline link: prose referenced fb-share-p10k, which was renamed to fb-share-powerlevel-preset by the name gate.; perturbed: ['fb-share-shell-bundle', 'fb-share-zshrc-mac', 'fb-share-p10k', 'fb-share-atuin-guard']
+- [1789599907] **revise-prose** — shell-assets-code
+- [1789599919] **absorb** — fb-share-shell-bundle absorbed the parent revision (unchanged)
+- [1789599919] **absorb** — fb-share-zshrc-mac absorbed the parent revision (unchanged)
+- [1789599919] **absorb** — fb-share-atuin-guard absorbed the parent revision (unchanged)
+- [1789599920] **change-done** — s7
+- [1789599946] **retire** — macacfs-command-surface@v1 -> v2; reason: Add the 'macacfs shell' subcommand (terminal-environment setup) and fold Homebrew-bundle refresh into 'macacfs update'; the four scope exclusions remain intact.; perturbed: ['cli-arg-dispatch', 'method-dispatch']
+- [1789599958] **add-obligation** — macacfs-command-surface <- r-terminal-env
+- [1789599958] **revise-prose** — macacfs-command-surface
+- [1789599965] **absorb** — cli-arg-dispatch absorbed the parent revision (unchanged)
+- [1789599965] **absorb** — method-dispatch absorbed the parent revision (unchanged)
+- [1789599965] **change-done** — s8
+- [1789599984] **retire** — fb-bin-macacfs-impl@v1 -> v2; reason: Wire the new 'shell' subcommand into dispatch (sources lib/shell.sh) and make 'update' also brew-upgrade the shell bundle.; perturbed: []
+- [1789599984] **revise-prose** — fb-bin-macacfs-impl
+- [1789599990] **change-done** — s9
+- [1789599990] **change** — walk -> settle
+- [1789600014] **absorb** — fb-share-p10k absorbed the parent revision (unchanged)
+- [1789602197] **begin** — change
+- [1789602237] **comprehend** — modify=['shell-setup-dispatch', 'shell-setup-experience']; attach=['fb-share-zshrc-mac', 'shell-setup-dispatch', 'shell-setup-experience']; impact=43 node(s)
+- [1789602237] **change** — comprehend -> plan
+- [1789602246] **set-changeplan** — 3 step(s)
+- [1789602246] **change** — plan -> walk
+- [1789602259] **change-done** — s1 — shell-assets-code (component) is accomplished-by the four asset file-boundaries (fb-share-shell-bundle/-zshrc-mac/-powerlevel-preset/-atuin-guard), each a bead with an impl bound to its share/ file; lib/shell.sh functions live under fb-lib-shell -> fb-lib-shell-impl (impl_path lib/shell.sh) and are orchestrated by shell_run. tmux.conf mirrors the zshrc asset (fb under shell-assets-code) and shell_tmux mirrors shell_zshrc (a function in fb-lib-shell-impl, added to shell_run's install list).
+- [1789602259] **add-node** — fb-share-tmux-conf
+- [1789602259] **add-impl** — fb-share-tmux-conf -> share/tmux.conf
+- [1789602270] **revise-prose** — shell-assets-code
+- [1789602281] **edit-requirement** — r-terminal-env: {'accept': "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.", 'created': 1789599516, 'kind': 'functional', 'text': "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."} -> {'accept': "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.", 'created': 1789599516, 'kind': 'functional', 'text': "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."}
+- [1789602281] **change-done** — s2
+- [1789602293] **retire** — fb-lib-shell-impl@v1 -> v2; reason: Add shell_tmux (install ~/.tmux.conf from share/tmux.conf, backing up any existing one) and include it in shell_run's install steps.; perturbed: []
+- [1789602293] **revise-prose** — fb-lib-shell-impl
+- [1789602293] **change-done** — s3
+- [1789602301] **change** — walk -> settle

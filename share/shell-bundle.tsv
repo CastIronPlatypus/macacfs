@@ -1,0 +1,25 @@
+# share/shell-bundle.tsv — the modern-CLI terminal environment (Homebrew).
+# Realizes: fb-share-shell-bundle. Read by lib/shell.sh (shell_brew_bundle).
+#
+# Columns:  kind <TAB> name <TAB> provides
+#   kind     — always 'formula' here (the Nerd Font cask is installed by shell_font)
+#   name     — the Homebrew formula
+#   provides — the command it puts on PATH (for logging only)
+#
+# These mirror ACFS's cli.modern bundle, minus Linux-only bits (strace, dnsutils,
+# netcat-openbsd, docker.io) that macOS already provides or that were declined.
+formula	ripgrep	rg
+formula	fd	fd
+formula	bat	bat
+formula	eza	eza
+formula	lsd	lsd
+formula	dust	dust
+formula	btop	btop
+formula	neovim	nvim
+formula	tmux	tmux
+formula	fzf	fzf
+formula	direnv	direnv
+formula	jq	jq
+formula	gh	gh
+formula	git-lfs	git-lfs
+formula	rsync	rsync

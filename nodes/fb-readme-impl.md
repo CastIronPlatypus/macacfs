@@ -11,6 +11,7 @@
   "is_bead": true,
   "is_impl": true,
   "name": "fb-readme-impl",
+  "node_type": "impl",
   "obligations": [],
   "realized_at": "0.14.0",
   "realized_fp": "1789594970:4254",

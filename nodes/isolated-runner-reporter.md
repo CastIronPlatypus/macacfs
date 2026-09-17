@@ -11,6 +11,11 @@
       "dst": "result-capture-and-summary",
       "reason": "The runner/reporter is built from capture + summary.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "shell-setup-experience",
+      "reason": "Shell setup reuses the isolated runner + summary so each component (omz, p10k, font, brew bundle, atuin, zoxide, lazygit) reports success/failure independently.",
+      "type": "serves"
     }
   ],
   "is_bead": false,

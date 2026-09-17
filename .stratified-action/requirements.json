@@ -83,6 +83,12 @@
     "kind": "functional",
     "text": "macacfs can update ITSELF via a bootstrap self-update flag (same pattern ACFS uses): re-download the repo and reinstall the macacfs tool from it."
   },
+  "r-terminal-env": {
+    "accept": "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.",
+    "created": 1789599516,
+    "kind": "functional",
+    "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."
+  },
   "r-weekly-plist": {
     "accept": "macacfs installs a ~/Library/LaunchAgents plist; launchctl lists it; normal cadence is weekly.",
     "created": 1789593647,

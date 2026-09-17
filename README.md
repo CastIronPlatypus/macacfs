@@ -3,8 +3,9 @@
 A tiny macOS companion to [ACFS](https://github.com/Dicklesworthstone/agentic_coding_flywheel_setup). ACFS itself only supports Ubuntu/Arch and assumes a fresh VPS (apt, systemd, a provisioned `ubuntu` user). `macacfs` does **not** try to port all of that. It does three small things:
 
 1. **Installs the Dicklesworthstone ACFS-suite tools on your Mac.**
-2. **Installs a `launchd` agent that updates them weekly** (with failure-driven retries).
-3. **Updates the tools — and itself — from a simple `macacfs` CLI.**
+2. **Sets up the same terminal environment ACFS gives you** — Oh My Zsh, Powerlevel10k, zsh plugins, a Nerd Font, a modern-CLI bundle, atuin/zoxide/lazygit/ast-grep.
+3. **Installs a `launchd` agent that updates everything weekly** (with failure-driven retries).
+4. **Updates the tools — and itself — from a simple `macacfs` CLI.**
 
 That's the whole scope. No user provisioning, no OS upgrades, no service orchestration.
 
@@ -20,8 +21,11 @@ This clones macacfs to `~/.macacfs` and links `macacfs` into `~/.local/bin`. Mak
 
 ```bash
 macacfs install            # install all 39 tools (or: macacfs install BR NTM)
-macacfs update             # update all tools    (or: macacfs update BR NTM)
+macacfs shell              # set up the terminal environment (omz, p10k, CLI bundle, ...)
+macacfs update             # update all tools + refresh the shell bundle
+macacfs update BR NTM      # update just the named tools (no shell refresh)
 macacfs install --dry-run  # show what would happen, change nothing
+macacfs shell --dry-run    # same, for the terminal setup
 macacfs self-update        # update macacfs itself from its repo
 macacfs schedule           # install the weekly auto-update LaunchAgent
 macacfs schedule --status  # show cadence, last run, and failure count
@@ -30,6 +34,21 @@ macacfs list               # show the tool catalog
 ```
 
 Tools are named by abbreviation (`BR`) or cli (`br`), case-insensitive.
+
+## Terminal environment (`macacfs shell`)
+
+`macacfs shell` reproduces the terminal setup ACFS installs, adapted for macOS + Homebrew:
+
+- **Shell UX:** Oh My Zsh, **Powerlevel10k** (with a pre-baked `~/.p10k.zsh` so there's no wizard), and the `zsh-autosuggestions` / `zsh-syntax-highlighting` plugins.
+- **Managed zshrc:** a mac-adapted `~/.zshrc` (Homebrew shellenv, PATH, modern-CLI aliases, zoxide/atuin init). Your existing `~/.zshrc` is **backed up** to `~/.zshrc.bak.<timestamp>` first; the managed body lives in `~/.macacfs.zshrc`.
+- **tmux config:** ACFS's `~/.tmux.conf` (Ctrl-a prefix, mouse, 50k scrollback, vim-style panes/copy, base-index 1, top status bar, `detach-on-destroy off` + `monitor-activity on` for NTM/agent workflows, sources `~/.tmux.conf.local`). Any existing `~/.tmux.conf` is **backed up** first.
+- **Nerd Font:** `font-meslo-lg-nerd-font` so the p10k icons render.
+- **Modern-CLI bundle (`share/shell-bundle.tsv`):** ripgrep, fd, bat, eza, lsd, dust, btop, neovim, tmux, fzf, direnv, jq, gh, git-lfs, rsync.
+- **Standalone tools:** **atuin** (searchable shell history) behind an **agent-safe shim**, plus **zoxide**, **lazygit**, and **ast-grep**.
+
+**The atuin shim** is installed at `~/.local/bin/atuin` (ahead of Homebrew's atuin on `PATH`). It detects coding-agent sessions — via env markers (`CLAUDE_PROJECT_DIR`, `CODEX_THREAD_ID`, …) or the parent process name — and no-ops history recording and the atuin hook there, so agent-run commands never flood your history or trigger `EPIPE`. Interactive use passes straight through to the real atuin.
+
+Re-running `macacfs shell` is idempotent (it upgrades brew packages and fast-forwards the git-cloned pieces). A full `macacfs update` refreshes the Homebrew part of this bundle too, so the weekly LaunchAgent keeps your CLI tools current without ever rewriting your shell config.
 
 ## How it installs each tool
 
@@ -78,11 +97,17 @@ Run state (last run time, status, consecutive failures, current cadence) lives i
 bin/macacfs                 CLI entrypoint + dispatch
 lib/catalog.sh              manifest loader
 lib/methods.sh              per-method install/update functions
+lib/shell.sh               terminal-environment setup (omz/p10k/CLI bundle/atuin...)
 lib/prereq.sh               toolchain auto-installer
 lib/report.sh              isolated runner + ✅/❌ summary
 lib/schedule.sh            launchd state + cadence + plist writer
 lib/selfupdate.sh          self-update from the repo
 share/manifest.tsv         the 39-tool catalog (source of truth)
+share/shell-bundle.tsv     the modern-CLI Homebrew bundle
+share/zshrc.mac.zsh        the mac-adapted managed zshrc
+share/p10k.zsh             the Powerlevel10k preset
+share/tmux.conf            the tmux config (installed to ~/.tmux.conf)
+share/atuin-guard.sh       the atuin agent-safe shim
 share/macacfs.plist.template  LaunchAgent template
 install.sh                  one-liner bootstrap
 ```

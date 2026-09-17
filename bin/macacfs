@@ -39,6 +39,8 @@ require_darwin() {
 # shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/methods.sh"
 # shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/shell.sh"
+# shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/schedule.sh"
 # shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/selfupdate.sh"
@@ -50,6 +52,10 @@ macacfs $MACACFS_VERSION — mini ACFS for Mac
 Usage:
   macacfs install [--dry-run] [TOOL...]   install all tools, or the named ones
   macacfs update  [--dry-run] [TOOL...]   update all tools, or the named ones
+                                          (a full update also refreshes the shell bundle)
+  macacfs shell   [--dry-run]             set up the terminal environment
+                                          (omz, p10k, plugins, font, modern CLI,
+                                           atuin+shim, zoxide, lazygit, ast-grep)
   macacfs self-update                     update macacfs itself from its repo
   macacfs schedule [--install|--uninstall|--status]
                                           manage the weekly auto-update LaunchAgent
@@ -100,10 +106,27 @@ parse_dry_run() {
 main() {
   local cmd="${1:-help}"; shift || true
   case "$cmd" in
-    install|update)
+    install)
       require_darwin
       parse_dry_run "$@"
-      run_tools "$cmd" "${SELECTORS[@]}"
+      run_tools install "${SELECTORS[@]}"
+      ;;
+    update)
+      require_darwin
+      parse_dry_run "$@"
+      local rc=0
+      run_tools update "${SELECTORS[@]}" || rc=$?
+      # A full update (no specific tools named) also refreshes the terminal-env
+      # Homebrew bundle so the weekly LaunchAgent keeps the CLI tools current.
+      if [ "${#SELECTORS[@]}" -eq 0 ]; then
+        shell_run refresh || rc=$?
+      fi
+      exit "$rc"
+      ;;
+    shell)
+      require_darwin
+      parse_dry_run "$@"
+      shell_run install
       ;;
     self-update|--self-update)
       require_darwin

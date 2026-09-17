@@ -27,13 +27,15 @@
   "name": "macacfs-command-surface",
   "node_type": "surface",
   "obligations": [
-    "r-scope-min"
+    "r-scope-min",
+    "r-terminal-env"
   ],
   "status": "drafting",
   "stratum": "surface",
+  "succeeds": "macacfs-command-surface@v1",
   "uid": "n0011",
-  "version": 1
+  "version": 2
 }
 -->
 
-The only things an observer can invoke: 'macacfs install [TOOL...]', 'macacfs update [TOOL...]', 'macacfs self-update', 'macacfs schedule [--install|--uninstall|--status]', plus global flags --dry-run, --list, --version, --help. There is intentionally NO user-provisioning, OS-upgrade, service-start, or phase-runner command — the limited surface IS how scope containment ([[scope-containment]]) is enforced, and it carries the manual per-tool/all update contract ([[update-equals-reinstall-idempotency]]). Accomplished by [[cli-arg-dispatch|accomplished-by]] and [[method-dispatch|accomplished-by]].
+The only things an observer can invoke: 'macacfs install [TOOL...]', 'macacfs update [TOOL...]', 'macacfs shell' (set up the terminal environment: omz/p10k/plugins/font, the modern-CLI brew bundle, atuin(+shim)/zoxide/lazygit/ast-grep), 'macacfs self-update', 'macacfs schedule [--install|--uninstall|--status]', plus global flags --dry-run, --list, --version, --help. 'macacfs update' also brew-upgrades the shell bundle. There is intentionally NO user-provisioning, OS-upgrade, service-start, or phase-runner command — the limited surface IS how scope containment ([[scope-containment]]) is enforced, and it carries the manual per-tool/all update contract ([[update-equals-reinstall-idempotency]]). Accomplished by [[cli-arg-dispatch|accomplished-by]], [[method-dispatch|accomplished-by]], and [[shell-setup-dispatch|accomplished-by]].

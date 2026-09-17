@@ -11,6 +11,11 @@
       "dst": "homebrew-and-toolchains",
       "reason": "The prereq gate is implemented by the brew/toolchain helpers.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "shell-setup-experience",
+      "reason": "Shell setup reuses the prerequisite auto-installer to ensure Homebrew is present before the brew bundle and casks install.",
+      "type": "serves"
     }
   ],
   "is_bead": false,
