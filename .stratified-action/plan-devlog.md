@@ -677,3 +677,16 @@
 - [1792290118] **absorb** — fb-lib-methods absorbed the parent revision (unchanged)
 - [1792290119] **prove** — fb-version-file: cmd exit 0
 - [1792290120] **change** — settle -> idle (finalized)
+- [1792290241] **begin** — change
+- [1792290241] **comprehend** — modify=['fb-manifest-tsv-impl']; attach=[]; impact=11 node(s)
+- [1792290242] **change** — comprehend -> plan
+- [1792290242] **set-changeplan** — 2 step(s)
+- [1792290242] **change** — plan -> walk
+- [1792290242] **retire** — fb-manifest-tsv-impl@v4 -> v5; reason: frankenterm v0.15.1's installer exits 1 when ft is already installed (its EXIT trap ends on a failing test under set -e), so every re-run failed; the WA row passes --force, which reinstalls and exits 0.; perturbed: []
+- [1792290243] **revise-prose** — fb-manifest-tsv-impl
+- [1792290243] **change-done** — s1
+- [1792290244] **retire** — fb-version-file@v2 -> v3; reason: VERSION 0.3.4 -> 0.3.5 for the WA --force commit.; perturbed: []
+- [1792290244] **prove** — fb-version-file: cmd exit 0
+- [1792290244] **change-done** — s2
+- [1792290244] **change** — walk -> settle
+- [1792290254] **change** — settle -> idle (finalized)

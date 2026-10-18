@@ -8,55 +8,7 @@
     "jeff-sg-shebang-1792274040": {
       "ledger": [
         {
-          "at": 1792290094,
-          "detail": {
-            "dependents": [
-              "install-method-functions"
-            ],
-            "name": "method-fns-code",
-            "prev_status": "drafting",
-            "uid": "n0031",
-            "ver": 2
-          },
-          "id": "op1",
-          "op": "retire-succeed",
-          "step": "s1"
-        },
-        {
-          "at": 1792290094,
-          "detail": {
-            "dependents": [
-              "fb-lib-methods"
-            ],
-            "name": "fb-lib-methods-impl",
-            "prev_status": "drafting",
-            "uid": "n0051",
-            "ver": 2
-          },
-          "id": "op2",
-          "op": "retire-succeed",
-          "step": "s1"
-        },
-        {
-          "at": 1792290095,
-          "detail": {
-            "name": "method-fns-code"
-          },
-          "id": "op3",
-          "op": "revise-prose",
-          "step": "s1"
-        },
-        {
-          "at": 1792290096,
-          "detail": {
-            "name": "fb-lib-methods-impl"
-          },
-          "id": "op4",
-          "op": "revise-prose",
-          "step": "s1"
-        },
-        {
-          "at": 1792290107,
+          "at": 1792290242,
           "detail": {
             "dependents": [
               "fb-manifest-tsv"
@@ -64,47 +16,23 @@
             "name": "fb-manifest-tsv-impl",
             "prev_status": "drafting",
             "uid": "n0050",
-            "ver": 3
+            "ver": 4
           },
-          "id": "op5",
+          "id": "op1",
           "op": "retire-succeed",
-          "step": "s2"
+          "step": "s1"
         },
         {
-          "at": 1792290108,
+          "at": 1792290243,
           "detail": {
             "name": "fb-manifest-tsv-impl"
           },
-          "id": "op6",
+          "id": "op2",
           "op": "revise-prose",
-          "step": "s2"
+          "step": "s1"
         },
         {
-          "at": 1792290109,
-          "detail": {
-            "dependents": [
-              "fb-readme"
-            ],
-            "name": "fb-readme-impl",
-            "prev_status": "drafting",
-            "uid": "n0058",
-            "ver": 4
-          },
-          "id": "op7",
-          "op": "retire-succeed",
-          "step": "s3"
-        },
-        {
-          "at": 1792290110,
-          "detail": {
-            "name": "fb-readme-impl"
-          },
-          "id": "op8",
-          "op": "revise-prose",
-          "step": "s3"
-        },
-        {
-          "at": 1792290118,
+          "at": 1792290244,
           "detail": {
             "dependents": [
               "argv-code"
@@ -112,14 +40,14 @@
             "name": "fb-version-file",
             "prev_status": "drafting",
             "uid": "n0089",
-            "ver": 1
+            "ver": 2
           },
-          "id": "op9",
+          "id": "op3",
           "op": "retire-succeed",
-          "step": "s4"
+          "step": "s2"
         },
         {
-          "at": 1792290119,
+          "at": 1792290244,
           "detail": {
             "cmd": "grep -Eq '^[0-9]+\\.[0-9]+\\.[0-9]+$' VERSION",
             "exit": 0,
@@ -128,9 +56,9 @@
             "reason": null,
             "uid": "n0089"
           },
-          "id": "op10",
+          "id": "op4",
           "op": "prove",
-          "step": null
+          "step": "s2"
         }
       ],
       "mode": null,

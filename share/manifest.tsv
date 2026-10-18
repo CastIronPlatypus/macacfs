@@ -32,7 +32,7 @@ MS	meta_skill	ms	cargo-git	https://github.com/Dicklesworthstone/meta_skill	-
 RP	rust_proxy	rust_proxy	skip	Linux-only: transparent proxy built on iptables/ipset and Linux socket APIs (SO_MARK, renameat2); does not build on macOS	-
 CAUT	coding_agent_usage_tracker	caut	cargo-git	https://github.com/Dicklesworthstone/coding_agent_usage_tracker	-
 JFP	jeffreysprompts.com	jfp	cargo-git	https://github.com/Dicklesworthstone/jeffreysprompts.com	--bin jfp
-WA	frankenterm	ft	installer-sh	@latest-release/install.sh	-
+WA	frankenterm	ft	installer-sh	@latest-release/install.sh	--force
 BRENNER	brenner_bot	brenner	installer-sh	install.sh	--skip-ntm --skip-cass --skip-cm
 SRPS	system_resource_protection_script	sysmoni	skip	Linux-only: installs via apt-get, ananicy-cpp and sudo; cannot run on macOS	-
 APR	automated_plan_reviser_pro	apr	installer-sh	install.sh	-
