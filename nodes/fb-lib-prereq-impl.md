@@ -16,9 +16,10 @@
   "realized_fp": "1789594932:3794",
   "status": "drafting",
   "stratum": "implementation",
+  "succeeds": "fb-lib-prereq-impl@v1",
   "uid": "n0052",
-  "version": 1
+  "version": 2
 }
 -->
 
-Implementation of fb-lib-prereq: `lib/prereq.sh`
+Implementation of fb-lib-prereq: `lib/prereq.sh` — ensure_homebrew, ensure_git, ensure_rust, ensure_go/uv/node, ensure_minisign and ensure_flock (brew formulas), and prereq_ensure, which picks the set from the selected methods (installer-sh pulls rust, go, uv, node, minisign, flock), reports what it installed and warns loudly about anything it could not provide.

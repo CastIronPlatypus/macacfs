@@ -62,6 +62,8 @@ ensure_go()   { _ensure_brew_pkg go go; }
 ensure_uv()   { _ensure_brew_pkg uv uv; }
 ensure_node() { _ensure_brew_pkg node node; }
 ensure_git()  { _ensure_brew_pkg git git; }
+ensure_minisign() { _ensure_brew_pkg minisign minisign; }  # WA installer verifies releases with it
+ensure_flock()    { _ensure_brew_pkg flock flock; }        # PCR installer serializes with it
 
 # prereq_ensure <method1> <method2> ...
 # BEST-EFFORT: attempts to install the toolchains implied by the methods in play.
@@ -85,7 +87,9 @@ prereq_ensure() {
   [ "$need_go" = 1 ]   && { ensure_go   || PREREQ_WARN="$PREREQ_WARN go"; }
   case "$methods" in *" installer-sh "*)
     ensure_uv   || PREREQ_WARN="$PREREQ_WARN uv"
-    ensure_node || PREREQ_WARN="$PREREQ_WARN node" ;;
+    ensure_node || PREREQ_WARN="$PREREQ_WARN node"
+    ensure_minisign || PREREQ_WARN="$PREREQ_WARN minisign"
+    ensure_flock    || PREREQ_WARN="$PREREQ_WARN flock" ;;
   esac
 
   if [ -n "$PREREQ_INSTALLED" ]; then

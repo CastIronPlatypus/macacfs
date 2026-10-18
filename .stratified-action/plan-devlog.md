@@ -368,3 +368,28 @@
 - [1792285930] **absorb** — isolated-runner-reporter absorbed the parent revision (unchanged)
 - [1792285938] **absorb** — fb-lib-schedule-impl absorbed the parent revision (unchanged)
 - [1792285939] **absorb** — fb-plist-template-impl absorbed the parent revision (unchanged)
+- [1792286033] **begin** — update
+- [1792287005] **begin** — change
+- [1792287024] **comprehend** — modify=['fb-lib-prereq', 'req-runnable-signatures', 'toolchain-prereqs-and-order']; attach=[]; impact=36 node(s)
+- [1792287024] **change** — comprehend -> plan
+- [1792287036] **set-changeplan** — 3 step(s)
+- [1792287036] **change** — plan -> walk
+- [1792287055] **retire** — signature-verify-and-resign@v1 -> v2; reason: codesign -v defaults to strict layout validation, which rejected runnable brenner 0.4.1 and failed the tool; verification now uses --no-strict, the hash/seal check the kernel enforces at launch.; perturbed: ['signature-repair-code']
+- [1792287055] **retire** — fb-lib-codesign@v1 -> v2; reason: lib/codesign.sh verifies and re-verifies with codesign -v --no-strict.; perturbed: []
+- [1792287056] **revise-prose** — signature-verify-and-resign
+- [1792287056] **revise-prose** — fb-lib-codesign
+- [1792287056] **change-done** — s1
+- [1792287075] **retire** — toolchain-helpers-code@v1 -> v2; reason: The live run showed WA's installer needs minisign and PCR's needs flock, neither on stock macOS; the helpers now provide both for installer-sh tools.; perturbed: ['fb-lib-prereq']
+- [1792287076] **retire** — fb-lib-prereq@v1 -> v2; reason: lib/prereq.sh now also ensures minisign and flock when installer-sh tools are selected.; perturbed: ['fb-lib-prereq-impl']
+- [1792287076] **retire** — fb-lib-prereq-impl@v1 -> v2; reason: Adds ensure_minisign and ensure_flock (brew) to the installer-sh branch of prereq_ensure.; perturbed: []
+- [1792287077] **revise-prose** — toolchain-helpers-code
+- [1792287077] **revise-prose** — fb-lib-prereq
+- [1792287078] **revise-prose** — fb-lib-prereq-impl
+- [1792287078] **change-done** — s2
+- [1792287087] **retire** — fb-readme-impl@v2 -> v3; reason: README documents the non-strict signature check and the minisign/flock prerequisites.; perturbed: []
+- [1792287088] **revise-prose** — fb-readme-impl
+- [1792287088] **change-done** — s3
+- [1792287088] **change** — walk -> settle
+- [1792287088] **absorb** — signature-repair-code absorbed the parent revision (unchanged)
+- [1792287089] **absorb** — fb-lib-prereq absorbed the parent revision (unchanged)
+- [1792287089] **absorb** — fb-lib-prereq-impl absorbed the parent revision (unchanged)

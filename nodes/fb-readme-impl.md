@@ -16,10 +16,10 @@
   "realized_fp": "1789594970:4254",
   "status": "drafting",
   "stratum": "implementation",
-  "succeeds": "fb-readme-impl@v1",
+  "succeeds": "fb-readme-impl@v2",
   "uid": "n0058",
-  "version": 2
+  "version": 3
 }
 -->
 
-Implementation of fb-readme: `README.md` — mini-ACFS for Mac: scope, install/usage, terminal environment, per-method install table, code-signature repair, no side-installs (brenner skip flags), prerequisites, weekly updates and failure escalation (including the LaunchAgent's own PATH, the Homebrew-bash shebang and the detached reload), design notes, and layout (incl. lib/codesign.sh).
+Implementation of fb-readme: `README.md` — mini-ACFS for Mac: scope, install/usage, terminal environment, per-method install table, code-signature repair (non-strict codesign check, ad-hoc re-sign, reported per tool), no side-installs (brenner skip flags), prerequisites (toolchains plus minisign and flock), weekly updates and failure escalation (including the LaunchAgent's own PATH, the Homebrew-bash shebang and the detached reload), design notes, and layout (incl. lib/codesign.sh).

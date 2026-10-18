@@ -23,9 +23,10 @@
   "node_type": "impl",
   "status": "drafting",
   "stratum": "components",
+  "succeeds": "toolchain-helpers-code@v1",
   "uid": "n0032",
-  "version": 1
+  "version": 2
 }
 -->
 
-Code unit that ensures Homebrew then rust/go/uv/node, installing the missing. Realizes [[homebrew-and-toolchains|flow]]. Accomplished by [[fb-lib-prereq|accomplished-by]].
+Code unit that ensures Homebrew then rust/go/uv/node, plus the installer-level tools minisign (WA's installer verifies release signatures with it) and flock (PCR's installer serializes with it) when installer-sh tools are selected, installing whatever is missing via brew. Realizes [[homebrew-and-toolchains|flow]]. Accomplished by [[fb-lib-prereq|accomplished-by]].

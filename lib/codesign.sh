@@ -5,8 +5,10 @@
 # Some upstream release binaries (Bun `--compile` single-file executables, e.g.
 # cm, brenner, csctf, s2p, ntm) ship with an invalidated signature, and macOS
 # SIGKILLs them at launch (the shell just prints "killed"). After each tool
-# installs, every Mach-O it produced is checked with `codesign -v`; any that
-# fail are re-signed ad-hoc and re-verified. Every re-sign is reported in the
+# installs, every Mach-O it produced is checked with `codesign -v --no-strict`
+# (the hash/seal check the kernel enforces at launch; strict layout validation
+# rejects runnable Bun binaries such as brenner 0.4.1); any that fail are
+# re-signed ad-hoc and re-verified. Every re-sign is reported in the
 # summary (never silent); a binary that cannot be repaired fails the tool.
 
 SIG_MARKER=""
@@ -44,14 +46,14 @@ sig_repair_row() {
     seen="$seen$real"$'\n'
     [ -f "$real" ] || continue
     file -b "$real" | grep -q 'Mach-O' || continue
-    codesign -v "$real" >/dev/null 2>&1 && continue
+    codesign -v --no-strict "$real" >/dev/null 2>&1 && continue
     printf '    ! invalid code signature: %s — re-signing ad-hoc\n' "$real"
     mode=""
     if [ ! -w "$real" ]; then
       mode="$(stat -f '%Lp' "$real")"
       chmod u+w "$real" || { printf 'macacfs: cannot make %s writable to re-sign it\n' "$real" >&2; bad=1; continue; }
     fi
-    if codesign --force -s - "$real" && codesign -v "$real"; then
+    if codesign --force -s - "$real" && codesign -v --no-strict "$real"; then
       RUN_NOTE="${RUN_NOTE:+$RUN_NOTE; }re-signed $real"
     else
       printf 'macacfs: %s has an invalid code signature and re-signing failed\n' "$real" >&2

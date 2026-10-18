@@ -15,9 +15,10 @@
   "node_type": "impl",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-lib-codesign@v1",
   "uid": "n0084",
-  "version": 1
+  "version": 2
 }
 -->
 
-lib/codesign.sh — install_and_verify_row, sig_repair_row and the candidate collector; called by run_tools for every tool so no installed binary is left with an invalid signature. Serves [[signature-repair-code|serves|this file realizes the signature-repair code unit]]. Bead.
+lib/codesign.sh — install_and_verify_row, sig_repair_row and the candidate collector; called by run_tools for every tool so no installed binary is left with a signature the kernel would reject (checked with codesign -v --no-strict). Serves [[signature-repair-code|serves|this file realizes the signature-repair code unit]]. Bead.

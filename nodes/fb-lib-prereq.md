@@ -23,9 +23,10 @@
   "node_type": "impl",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-lib-prereq@v1",
   "uid": "n0041",
-  "version": 1
+  "version": 2
 }
 -->
 
-lib/prereq.sh — ensure/install Homebrew then rust/go/uv/node; report what was installed. Bead.
+lib/prereq.sh — ensure/install Homebrew then rust/go/uv/node, and minisign + flock for installer-sh tools; report what was installed. Bead.

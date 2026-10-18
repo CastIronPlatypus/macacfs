@@ -63,14 +63,14 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 
 **Install and update are the same operation** — every method installs the latest, so re-running upgrades in place.
 
-**Code-signature repair.** Several suite tools (cm, brenner, csctf, s2p, ntm) are Bun-compiled single-file binaries that upstream ships with an invalid code signature, and macOS kills them at launch (your shell just prints `killed`). After every tool installs, macacfs checks each Mach-O binary it produced with `codesign -v`, re-signs any invalid one ad-hoc (`codesign --force -s -`), and re-verifies it. Each re-signed path is listed on that tool's ✅ row in the summary; a binary that can't be repaired fails the tool.
+**Code-signature repair.** Several suite tools (cm, brenner, csctf, s2p, ntm) are Bun-compiled single-file binaries that upstream ships with an invalid code signature, and macOS kills them at launch (your shell just prints `killed`). After every tool installs, macacfs checks each Mach-O binary it produced with `codesign -v --no-strict` (the check macOS enforces at launch; strict layout validation also rejects some binaries that run fine), re-signs any invalid one ad-hoc (`codesign --force -s -`), and re-verifies it. Each re-signed path is listed on that tool's ✅ row in the summary; a binary that can't be repaired fails the tool.
 
 **No side-installs.** brenner's installer normally also drops pinned (older) copies of ntm, cass and cm into `~/.local/bin`, which then shadow the Homebrew versions on `PATH`. macacfs runs it with `--skip-ntm --skip-cass --skip-cm` so each of those comes only from its own row.
 
 ## Prerequisites
 
 `macacfs` installs missing toolchains for you (best-effort): Homebrew first, then
-Rust, Go, uv, and Node as needed. Anything it can't provide is warned about, and
+Rust, Go, uv, and Node as needed, plus `minisign` (WA's installer verifies releases with it) and `flock` (PCR's installer locks with it). Anything it can't provide is warned about, and
 any tool that truly needs a missing toolchain fails loudly rather than silently.
 
 > **First-time macOS note:** Homebrew and any compiled tool need the Xcode
