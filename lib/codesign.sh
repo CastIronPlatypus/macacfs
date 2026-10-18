@@ -70,7 +70,7 @@ install_and_verify_row() {
   local row="$1" rc
   SIG_MARKER="$(mktemp -t macacfs.sigmark.XXXXXX)"
   dispatch_row "$row"; rc=$?
-  if [ "$rc" -eq 0 ]; then
+  if [ "$rc" -eq 0 ] && [ "${RUN_STATUS:-}" != skip ]; then
     sig_repair_row "$row"; rc=$?
   fi
   rm -f "$SIG_MARKER"

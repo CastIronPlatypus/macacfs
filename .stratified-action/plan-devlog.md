@@ -599,3 +599,59 @@
 - [1792288571] **revise-prose** — update-equals-reinstall-idempotency
 - [1792288572] **update-reviewed** — update-equals-reinstall-idempotency: reviewed-at None -> v0.15.0
 - [1792288579] **update-certify** — certified up-to-spec at v0.15.0
+- [1792289382] **begin** — change
+- [1792289399] **comprehend** — modify=['fb-manifest-tsv', 'schedule-state-and-plist', 'tool-catalog']; attach=['install-method-functions', 'req-per-tool-method-dispatch', 'result-capture-and-summary']; impact=41 node(s)
+- [1792289399] **change** — comprehend -> plan
+- [1792289438] **set-changeplan** — 7 step(s)
+- [1792289438] **change** — plan -> walk
+- [1792289474] **edit-requirement** — req-per-tool-method-dispatch: {'text': "Per-tool install/update dispatch across 4 methods: brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest).", 'kind': 'functional', 'accept': 'Each manifest row names exactly one of brew, installer-sh, cargo-git, go; the dispatcher handles those four and fails loud on any other method; installing a sample of each method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.'} -> {'text': "Per-tool install/update dispatch across 4 install methods — brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest) — plus skip, a reasoned no-op for catalogued tools that cannot run on macOS, and optional per-tool pre-install hooks.", 'kind': 'functional', 'accept': 'Each manifest row names exactly one of brew, installer-sh, cargo-git, go, skip; the dispatcher handles those five and fails loud on any other method; skip rows show their reason as skipped in the summary; installing a sample of each install method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.'}
+- [1792289474] **retire** — method-fns-code@v1 -> v2; reason: dispatch_row gains the skip method (Linux-only rows) and per-tool pre-install hooks that can pass an environment and extra args to the installer.; perturbed: ['fb-lib-methods']
+- [1792289474] **retire** — fb-lib-methods-impl@v1 -> v2; reason: lib/methods.sh adds do_skip, pre_install_<ABBR> hook dispatch, HOOK_ENV applied to installer-sh via env, and HOOK_EXTRA_ARGS appended to its args.; perturbed: []
+- [1792289475] **revise-prose** — method-fns-code
+- [1792289475] **revise-prose** — fb-lib-methods-impl
+- [1792289476] **change-done** — s1
+- [1792289499] **change-amend** — 1 frozen + 6 re-authored
+- [1792289523] **retire** — fb-lib-report-impl@v2 -> v3; reason: run_isolated records the step's RUN_STATUS (skip from do_skip) and the renderer shows skipped rows with their reason, counted apart from ok and failed.; perturbed: []
+- [1792289523] **retire** — run-report-surface@v2 -> v3; reason: The summary now has a third status: skipped tools (Linux-only rows) appear with their reason and do not fail the run.; perturbed: ['isolated-runner-reporter']
+- [1792289523] **retire** — fb-lib-codesign@v2 -> v3; reason: install_and_verify_row no longer runs signature repair for rows the dispatcher marked skipped.; perturbed: []
+- [1792289524] **revise-prose** — fb-lib-report-impl
+- [1792289524] **revise-prose** — run-report-surface
+- [1792289525] **revise-prose** — fb-lib-codesign
+- [1792289525] **change-done** — s2
+- [1792289565] **add-node** — tool-install-hooks
+- [1792289565] **add-node** — fb-lib-hooks
+- [1792289565] **add-impl** — fb-lib-hooks -> lib/hooks.sh (in place)
+- [1792289566] **revise-prose** — install-method-functions
+- [1792289573] **revise-prose** — fb-lib-methods-impl
+- [1792289574] **change-done** — s3
+- [1792289594] **edit-requirement** — req-install-whole-suite: {'text': "Install all 39 Dicklesworthstone ACFS-suite tools/CLIs on macOS (the full list incl. JFP's CLI).", 'kind': 'functional', 'accept': "After 'macacfs install', each tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version."} -> {'text': "Install every one of the 39 catalogued Dicklesworthstone ACFS-suite tools/CLIs that can run on macOS (the full list incl. JFP's CLI); catalogued tools that are Linux-only (SRPS, RP) stay in the catalog as skip rows and are reported as skipped with the reason, never silently dropped.", 'kind': 'functional', 'accept': "After 'macacfs install', each non-skipped tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version, and the summary lists SRPS and RP as skipped with their Linux-only reasons."}
+- [1792289594] **retire** — fb-manifest-tsv-impl@v2 -> v3; reason: SRPS and RP are Linux-only (apt-get/sudo; iptables and Linux socket APIs) and become skip rows; WA's latest release is unsigned, so its installer runs with --no-verify (SHA-256 is still checked, and signature repair still runs after).; perturbed: []
+- [1792289613] **revise-prose** — fb-manifest-tsv-impl
+- [1792289614] **change-done** — s4
+- [1792289630] **retire** — fb-lib-schedule-impl@v2 -> v3; reason: A fixed PATH list left out nvm's node, so the scheduled run brew-installed a duplicate node; schedule_path now bakes in the PATH of the shell running macacfs schedule, failing loud if Homebrew's bin is not on it.; perturbed: []
+- [1792289631] **change-done** — s5
+- [1792289640] **revise-prose** — fb-lib-schedule-impl
+- [1792289652] **add-requirement** — req-version-bump-per-commit [constraint] The patch number in VERSION increments by one on every commit to macacfs (0.3.0, 0.3.1, 0.3.2, ...), so the installed version always identifies the commit it came from.
+- [1792289652] **add-node** — fb-version-file
+- [1792289652] **add-impl** — fb-version-file -> VERSION (in place)
+- [1792289653] **change-done** — s6
+- [1792289681] **retire** — fb-readme-impl@v3 -> v4; reason: README documents skip rows (SRPS, RP), WA --no-verify, the MDWB Chrome for Testing hook, the LaunchAgent PATH captured from the scheduling shell, and the per-commit version bump.; perturbed: []
+- [1792289689] **revise-prose** — fb-readme-impl
+- [1792289690] **change-done** — s7
+- [1792289690] **change** — walk -> settle
+- [1792289696] **absorb** — fb-lib-methods absorbed the parent revision (unchanged)
+- [1792289696] **absorb** — isolated-runner-reporter absorbed the parent revision (unchanged)
+- [1792289715] **retire** — fb-lib-methods@v1 -> v2; reason: lib/methods.sh now also has do_skip, the pre_install hook dispatch, and sources lib/hooks.sh.; perturbed: ['fb-lib-methods-impl']
+- [1792289716] **absorb** — fb-lib-methods-impl absorbed the parent revision (unchanged)
+- [1792289757] **revise-prose** — fb-lib-methods
+- [1792289788] **change-amend** — 7 frozen + 1 re-authored
+- [1792289795] **retire** — fb-bin-macacfs-impl@v5 -> v6; reason: Under --dry-run, run_tools now records the dispatcher's RUN_STATUS/RUN_NOTE, so skip rows read skipped with their reason instead of ok.; perturbed: []
+- [1792289802] **revise-prose** — fb-bin-macacfs-impl
+- [1792289826] **prove** — fb-lib-hooks: cmd exit 0
+- [1792289826] **prove** — fb-version-file: cmd exit 0
+- [1792289837] **prove** — fb-lib-codesign: cmd exit 0
+- [1792289883] **revise-prose** — fb-lib-methods-impl
+- [1792289884] **revise-prose** — fb-lib-hooks
+- [1792289884] **revise-prose** — fb-lib-codesign
+- [1792289885] **revise-prose** — method-fns-code
+- [1792289887] **change** — settle -> idle (finalized)

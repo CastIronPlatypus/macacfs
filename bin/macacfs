@@ -84,8 +84,9 @@ run_tools() {
     row="$(catalog_row "$a")"
     if [ "${DRY_RUN:-0}" = 1 ]; then
       printf '  → %s (%s)\n' "$a" "$(row_method "$row")"
+      RUN_STATUS=""; RUN_NOTE=""
       dispatch_row "$row"
-      report_add "$a" ok "(dry-run)"
+      report_add "$a" "${RUN_STATUS:-ok}" "${RUN_NOTE:-(dry-run)}"
     else
       run_isolated "$a" "$(row_method "$row")" install_and_verify_row "$row"
     fi

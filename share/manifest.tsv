@@ -6,6 +6,7 @@
 #   installer-sh -> curl the repo's own installer | bash  (ref = path in repo, args = flags)
 #   cargo-git    -> cargo install --git <ref> --force     (ref = repo git URL, args = extra flags e.g. --bin X)
 #   go           -> go install <ref>                       (ref = module path incl @latest)
+#   skip         -> nothing installed; reported as skipped (ref = the reason, e.g. Linux-only)
 #
 # repo is under https://github.com/Dicklesworthstone/<repo>. Installer URLs use raw main.
 # Brew-preferred where dicklesworthstone/tap publishes a formula (15 tools).
@@ -27,12 +28,12 @@ XF	xf	xf	brew	dicklesworthstone/tap/xf	-
 TRU	toon_rust	toon	brew	dicklesworthstone/tap/tru	-
 EE	eidetic_engine_cli	ee	brew	dicklesworthstone/tap/ee	-
 MS	meta_skill	ms	cargo-git	https://github.com/Dicklesworthstone/meta_skill	-
-RP	rust_proxy	rust_proxy	cargo-git	https://github.com/Dicklesworthstone/rust_proxy	-
+RP	rust_proxy	rust_proxy	skip	Linux-only: transparent proxy built on iptables/ipset and Linux socket APIs (SO_MARK, renameat2); does not build on macOS	-
 CAUT	coding_agent_usage_tracker	caut	cargo-git	https://github.com/Dicklesworthstone/coding_agent_usage_tracker	-
 JFP	jeffreysprompts.com	jfp	cargo-git	https://github.com/Dicklesworthstone/jeffreysprompts.com	--bin jfp
-WA	frankenterm	wa	installer-sh	install.sh	-
+WA	frankenterm	wa	installer-sh	install.sh	--no-verify
 BRENNER	brenner_bot	brenner	installer-sh	install.sh	--skip-ntm --skip-cass --skip-cm
-SRPS	system_resource_protection_script	sysmoni	installer-sh	install.sh	--install --yes
+SRPS	system_resource_protection_script	sysmoni	skip	Linux-only: installs via apt-get, ananicy-cpp and sudo; cannot run on macOS	-
 APR	automated_plan_reviser_pro	apr	installer-sh	install.sh	-
 PT	process_triage	pt	installer-sh	install.sh	-
 GIIL	giil	giil	installer-sh	install.sh	-

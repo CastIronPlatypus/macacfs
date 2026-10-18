@@ -40,10 +40,11 @@ do_installer_sh() { # repo ref args...
     printf '    [dry-run] curl -fsSL %s | bash%s\n' "$url" "${*:+ -s -- $*}"
     return 0
   fi
+  # HOOK_ENV (set by a pre-install hook) is applied to the installer only.
   if [ "$#" -gt 0 ]; then
-    curl -fsSL "$url" | bash -s -- "$@"
+    curl -fsSL "$url" | env ${HOOK_ENV[@]+"${HOOK_ENV[@]}"} bash -s -- "$@"
   else
-    curl -fsSL "$url" | bash
+    curl -fsSL "$url" | env ${HOOK_ENV[@]+"${HOOK_ENV[@]}"} bash
   fi
 }
 
@@ -61,15 +62,36 @@ do_go() { # ref
   _m_run go install "$ref"
 }
 
-# dispatch <row> — pick the method from the row and run it. Returns method rc.
+# skip: a catalogued tool that cannot run on macOS. ref = the reason. Nothing is
+# installed; the row is reported as skipped (with the reason), never as ok.
+do_skip() { # reason
+  printf '    skipped: %s\n' "$1"
+  RUN_STATUS=skip
+  RUN_NOTE="$1"
+}
+
+# dispatch <row> — run the tool's pre-install hook (lib/hooks.sh, if it defines
+# pre_install_<ABBR>), then pick the method from the row and run it. A hook may
+# set HOOK_ENV (VAR=value words for the installer's environment) and
+# HOOK_EXTRA_ARGS (extra installer args). Returns the hook's or method's rc.
 dispatch_row() {
-  local row="$1" method repo ref args
+  local row="$1" abbr method repo ref args
+  abbr="$(row_abbr "$row")"
   method="$(row_method "$row")"; repo="$(row_repo "$row")"
   ref="$(row_ref "$row")";       args="$(row_args "$row")"
+  HOOK_ENV=(); HOOK_EXTRA_ARGS=()
+  if [ "$method" != skip ] && declare -F "pre_install_$abbr" >/dev/null; then
+    if [ "${DRY_RUN:-0}" = 1 ]; then
+      printf '    [dry-run] pre_install_%s\n' "$abbr"
+    else
+      "pre_install_$abbr" "$row" || return $?
+    fi
+  fi
   case "$method" in
+    skip)         do_skip "$ref" ;;
     brew)         do_brew "$ref" ;;
     installer-sh) # shellcheck disable=SC2086
-                  do_installer_sh "$repo" "$ref" $args ;;
+                  do_installer_sh "$repo" "$ref" $args ${HOOK_EXTRA_ARGS[@]+"${HOOK_EXTRA_ARGS[@]}"} ;;
     cargo-git)    # shellcheck disable=SC2086
                   do_cargo_git "$ref" $args ;;
     go)           do_go "$ref" ;;
@@ -77,3 +99,7 @@ dispatch_row() {
                   return 2 ;;
   esac
 }
+
+# Per-tool pre-install hooks (pre_install_<ABBR>) called by dispatch_row.
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/hooks.sh"

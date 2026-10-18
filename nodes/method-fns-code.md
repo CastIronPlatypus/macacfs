@@ -32,9 +32,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "components",
+  "succeeds": "method-fns-code@v1",
   "uid": "n0031",
-  "version": 1
+  "version": 2
 }
 -->
 
-Code unit in lib/methods.sh holding the per-method functions do_brew, do_installer_sh, do_cargo_git and do_go (with the _m_run dry-run wrapper) and dispatch_row, which reads a row's method, repo, ref and args via the catalog accessors and calls the matching function, failing with rc 2 on an unknown method; each function installs the latest (idempotent) and is dry-run-aware. It [[install-method-functions|serves|These functions realize the install-method-functions subsystem.]] and is [[fb-lib-methods|accomplished-by|The per-method functions and dispatch_row live in the lib/methods.sh file.]]. Its row reads [[catalog-loader-code|calls|dispatch_row calls row_method, row_repo, row_ref, row_args and row_abbr from the catalog loader to unpack each manifest row.]].
+Code unit in lib/methods.sh holding the per-method functions do_brew, do_installer_sh, do_cargo_git, do_go and do_skip (with the _m_run dry-run wrapper) and dispatch_row, which reads a row's abbr, method, repo, ref and args via the catalog accessors, runs the tool's pre_install_<ABBR> hook when one is defined (not for skip rows; announced only under --dry-run), then calls the matching function, failing with rc 2 on an unknown method. do_skip installs nothing and marks the row skipped with its reason; every install function installs the latest (idempotent) and is dry-run-aware. It [[install-method-functions|serves|These functions realize the install-method-functions subsystem.]] and is [[fb-lib-methods|accomplished-by|The per-method functions and dispatch_row live in the lib/methods.sh file.]]. Its row reads [[catalog-loader-code|calls|dispatch_row calls row_method, row_repo, row_ref, row_args and row_abbr from the catalog loader to unpack each manifest row.]] and it [[tool-install-hooks|calls|dispatch_row invokes a tool's pre_install hook before running its install method.]]. The hook contract [[tool-install-hooks|couples-with|A hook communicates with the installer only through HOOK_ENV and HOOK_EXTRA_ARGS, which dispatch_row resets and do_installer_sh applies, so the hooks and the dispatcher share that contract.]].

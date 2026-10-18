@@ -94,11 +94,16 @@ schedule_write_plist() { # cadence
 
 # The PATH the LaunchAgent runs with. launchd's default is /usr/bin:/bin:/usr/sbin:/sbin,
 # where brew, cargo, go, uv and node are invisible (prereq would try to reinstall
-# them) — so bake in the same toolchain dirs an interactive shell has.
+# them) — so bake in the PATH of the shell running `macacfs schedule`, which
+# carries everything it sees (nvm's node included). A tick rewrites the plist
+# with its own PATH, which is that same baked value, so it stays stable.
 schedule_path() {
   local prefix
-  prefix="$(brew --prefix)" || { printf 'macacfs: brew not found; cannot build the LaunchAgent PATH\n' >&2; return 1; }
-  printf '%s' "$HOME/.local/bin:$prefix/bin:$prefix/sbin:$HOME/.cargo/bin:$HOME/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  prefix="$(brew --prefix 2>/dev/null)" || { printf 'macacfs: brew is not on PATH; run macacfs schedule from your normal shell\n' >&2; return 1; }
+  case ":$PATH:" in
+    *":$prefix/bin:"*) printf '%s' "$PATH" ;;
+    *) printf 'macacfs: %s/bin is not on PATH; run macacfs schedule from your normal shell\n' "$prefix" >&2; return 1 ;;
+  esac
 }
 
 schedule_reload() {

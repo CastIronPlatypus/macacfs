@@ -42,9 +42,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-lib-methods@v1",
   "uid": "n0040",
-  "version": 1
+  "version": 2
 }
 -->
 
-The lib/methods.sh file boundary: the four install methods do_brew, do_installer_sh, do_cargo_git and do_go (there is no npm or bare-bash method; those tools go through their own installer-sh) plus dispatch_row, which picks the method from a manifest row; every method installs the latest so re-running is updating, honors DRY_RUN, and never starts a service. It [[method-fns-code|serves|This file holds the per-method install functions code unit.]] and is [[fb-lib-methods-impl|accomplished-by|lib/methods.sh contains the do_brew, do_installer_sh, do_cargo_git and do_go functions and the dispatcher.]]. Its dispatcher [[fb-manifest-tsv|couples-with|The method column of share/manifest.tsv must spell one of the four method names dispatch_row's case statement recognizes, and the ref/args columns must be in the shape each method expects.]].
+The lib/methods.sh file boundary: the four install methods do_brew, do_installer_sh, do_cargo_git and do_go (there is no npm or bare-bash method; those tools go through their own installer-sh), do_skip for Linux-only rows, and dispatch_row, which runs a tool's pre_install hook from lib/hooks.sh when one exists and then picks the method from a manifest row; every install method installs the latest so re-running is updating, honors DRY_RUN, and never starts a service. It [[method-fns-code|serves|This file holds the per-method install functions code unit.]] and is [[fb-lib-methods-impl|accomplished-by|lib/methods.sh contains the do_brew, do_installer_sh, do_cargo_git, do_go and do_skip functions and the dispatcher.]]. Its dispatcher [[fb-manifest-tsv|couples-with|The method column of share/manifest.tsv must spell one of the five method names dispatch_row's case statement recognizes, and the ref/args columns must be in the shape each method expects.]].

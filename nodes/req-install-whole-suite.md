@@ -1,6 +1,6 @@
 <!--stratified-action
 {
-  "accept": "After 'macacfs install', each tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version.",
+  "accept": "After 'macacfs install', each non-skipped tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version, and the summary lists SRPS and RP as skipped with their Linux-only reasons.",
   "created": 1789593646,
   "disc_stamp": {
     "disc-inline-link-prose": "1.0.0",
@@ -23,4 +23,4 @@
 }
 -->
 
-Install all 39 Dicklesworthstone ACFS-suite tools/CLIs on macOS (the full list incl. JFP's CLI).
+Install every one of the 39 catalogued Dicklesworthstone ACFS-suite tools/CLIs that can run on macOS (the full list incl. JFP's CLI); catalogued tools that are Linux-only (SRPS, RP) stay in the catalog as skip rows and are reported as skipped with the reason, never silently dropped.

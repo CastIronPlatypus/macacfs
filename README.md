@@ -20,7 +20,7 @@ This clones macacfs to `~/.macacfs` and links `macacfs` into `~/.local/bin`. Mak
 ## Usage
 
 ```bash
-macacfs install            # install all 39 tools AND set up the terminal environment
+macacfs install            # install the catalog's tools AND set up the terminal environment
 macacfs install BR NTM     # install just the named tools (no shell setup)
 macacfs update             # update all tools + refresh the shell bundle
 macacfs update BR NTM      # update just the named tools (no shell refresh)
@@ -58,14 +58,21 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 | method | how | tools |
 |---|---|---|
 | `brew` | `brew install/upgrade dicklesworthstone/tap/<formula>` | BR, BV, CAAM, CASS, CM, DCG, EE, MAIL, NTM, RCH, RU, SLB, TRU, UBS, XF |
-| `installer-sh` | the tool's own `install.sh` (installs latest) | WA, BRENNER, SRPS, APR, PT, GIIL, CSCTF, RANO, MDWB, S2P, AADC, FSFS, SBH, CASR, DSR, ASB, PCR, FMD, PI, PFR |
-| `cargo-git` | `cargo install --git … --force` | MS, RP, CAUT, JFP |
+| `installer-sh` | the tool's own `install.sh` (installs latest) | WA, BRENNER, APR, PT, GIIL, CSCTF, RANO, MDWB, S2P, AADC, FSFS, SBH, CASR, DSR, ASB, PCR, FMD, PI, PFR |
+| `cargo-git` | `cargo install --git … --force` | MS, CAUT, JFP |
+| `skip` | nothing; shown as ⏭ skipped with the reason | SRPS, RP (Linux-only) |
 
 **Install and update are the same operation** — every method installs the latest, so re-running upgrades in place.
 
 **Code-signature repair.** Several suite tools (cm, brenner, csctf, s2p, ntm) are Bun-compiled single-file binaries that upstream ships with an invalid code signature, and macOS kills them at launch (your shell just prints `killed`). After every tool installs, macacfs checks each Mach-O binary it produced with `codesign -v --no-strict` (the check macOS enforces at launch; strict layout validation also rejects some binaries that run fine), re-signs any invalid one ad-hoc (`codesign --force -s -`), and re-verifies it. Each re-signed path is listed on that tool's ✅ row in the summary; a binary that can't be repaired fails the tool.
 
 **No side-installs.** brenner's installer normally also drops pinned (older) copies of ntm, cass and cm into `~/.local/bin`, which then shadow the Homebrew versions on `PATH`. macacfs runs it with `--skip-ntm --skip-cass --skip-cm` so each of those comes only from its own row.
+
+**Linux-only tools are skipped, visibly.** SRPS (apt-get, ananicy-cpp, sudo) and RP (iptables/ipset and Linux socket APIs) cannot run on macOS. They stay in the catalog as `skip` rows and show up in the summary as `⏭ skipped: <reason>`; a skip never fails the run.
+
+**WA** runs its installer with `--no-verify`: frankenterm's latest release isn't minisign-signed, so verification would refuse it. The SHA-256 check still applies, and the code-signature repair above still runs afterwards.
+
+**MDWB** gets a pre-install hook (`lib/hooks.sh`). Its installer only fetches Chrome for Testing on Linux x86_64, so on a Mac its self-test fails. macacfs always downloads the Chrome for Testing build MDWB tests (`CFT_VERSION` from your environment, else MDWB's `.env`, else the installer's pinned build) into `~/.cache/mdwb/cft/<build>/`, without checking what is already there, and hands the installer `CFT_VERSION` and `CFT_EXECUTABLE` for it. It also pins the install to `~/markdown_web_browser` (`--dir`), since the installer's default is a folder under whatever directory you run it from.
 
 ## Prerequisites
 
@@ -88,7 +95,11 @@ any tool that truly needs a missing toolchain fails loudly rather than silently.
 Run state (last run time, status, consecutive failures, current cadence) lives in
 `~/.local/state/macacfs/state.env`; logs are under `~/.local/state/macacfs/logs/`.
 
-launchd runs jobs with a bare `PATH` (`/usr/bin:/bin:/usr/sbin:/sbin`) and no shell, so `~/.zshrc` is never read. The plist therefore carries its own `PATH` (`~/.local/bin`, Homebrew, `~/.cargo/bin`, `~/go/bin`, system dirs), and `bin/macacfs` is pinned to Homebrew's bash (`#!/opt/homebrew/bin/bash`) rather than macOS's `/bin/bash` 3.2. Each run rewrites the plist for the next cadence and reloads it from a detached helper (with `AbandonProcessGroup`), because unloading the job from inside its own run would kill the run before it could reload.
+launchd runs jobs with a bare `PATH` (`/usr/bin:/bin:/usr/sbin:/sbin`) and no shell, so `~/.zshrc` is never read. The plist therefore carries its own `PATH`: the `PATH` of the shell you run `macacfs schedule` from (so nvm's node and everything else you see reach the scheduled run; it refuses if Homebrew isn't on it). Re-run `macacfs schedule` after changing your shell's PATH. `bin/macacfs` is also pinned to Homebrew's bash (`#!/opt/homebrew/bin/bash`) rather than macOS's `/bin/bash` 3.2. Each run rewrites the plist for the next cadence and reloads it from a detached helper (with `AbandonProcessGroup`), because unloading the job from inside its own run would kill the run before it could reload.
+
+## Versioning
+
+The patch number in `VERSION` goes up by one on every commit (0.3.0, 0.3.1, 0.3.2, …), so `macacfs version` always identifies the commit you installed.
 
 ## Design notes
 
@@ -101,7 +112,8 @@ launchd runs jobs with a bare `PATH` (`/usr/bin:/bin:/usr/sbin:/sbin`) and no sh
 ```
 bin/macacfs                 CLI entrypoint + dispatch
 lib/catalog.sh              manifest loader
-lib/methods.sh              per-method install/update functions
+lib/methods.sh              per-method install/update functions (+ skip)
+lib/hooks.sh                per-tool pre-install hooks (MDWB's Chrome for Testing)
 lib/codesign.sh             post-install code-signature check + ad-hoc re-sign
 lib/shell.sh               terminal-environment setup (omz/p10k/CLI bundle/atuin...)
 lib/prereq.sh               toolchain auto-installer

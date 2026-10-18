@@ -6,248 +6,450 @@
   ],
   "runs": {
     "jeff-sg-shebang-1792274040": {
-      "change": {
-        "comprehend": {
-          "anchors": [
-            "fb-lib-prereq",
-            "req-runnable-signatures",
-            "toolchain-prereqs-and-order"
-          ],
-          "attach_points": [],
-          "candidates": [
-            "fb-lib-prereq-impl",
-            "fb-lib-prereq",
-            "req-prerequisite-autoinstall"
-          ],
-          "desc": "signature check must match what macOS enforces at launch (non-strict codesign verify), and the prerequisite gate must provide minisign and flock that some tool installers need",
-          "done": true,
-          "impact": [
-            "argv-and-usage",
-            "argv-code",
-            "catalog-loader-code",
-            "cli-arg-dispatch",
-            "darwin-truth-per-tool",
-            "fb-lib-catalog",
-            "fb-lib-catalog-impl",
-            "fb-lib-codesign",
-            "fb-lib-methods",
-            "fb-lib-methods-impl",
-            "fb-lib-prereq",
-            "fb-lib-prereq-impl",
-            "fb-manifest-tsv",
-            "fb-manifest-tsv-impl",
-            "heterogeneous-install-methods",
-            "homebrew-and-toolchains",
-            "install-experience",
-            "install-method-functions",
-            "invalid-upstream-signatures",
-            "macacfs-command-surface",
-            "manifest-store",
-            "method-dispatch",
-            "method-fns-code",
-            "never-start-services",
-            "prereq-autoinstaller",
-            "req-runnable-signatures",
-            "scope-containment",
-            "shell-setup-experience",
-            "signature-repair",
-            "signature-repair-code",
-            "signature-verify-and-resign",
-            "terminal-environment-parity",
-            "tool-catalog",
-            "toolchain-helpers-code",
-            "toolchain-prereqs-and-order",
-            "update-equals-reinstall-idempotency"
-          ],
-          "round": 2,
-          "stage": "modify"
-        },
-        "current": null,
-        "cursor": 3,
-        "done": [
-          "s1",
-          "s2",
-          "s3"
-        ],
-        "graph_fp": {
-          "argv-and-usage": "520a6130ba38091c7d784e3487e9d6abcff45154",
-          "argv-code": "d5271fe6c7632a82790cd1549eae3329457c0db6",
-          "bootstrap-and-self-update": "fcfc42c3f62405f5b8c7b121cb53bea965145c00",
-          "catalog-loader-code": "f186c96d5e6024b15fbebd9f9d64106d5835fa02",
-          "cli-arg-dispatch": "07d6bbb37c99932b8298cf8cd5da8fb7415a1782",
-          "darwin-truth-per-tool": "40eae413940f1a57de913e368407091da02811d9",
-          "dry-run-without-sideeffects": "e1185842376cf1a43283aa1a2ed4dbf4780d1457",
-          "fail-loud-aggregation": "6fdfd27726f7e3136823690125e45f8444cd2f13",
-          "fb-bin-macacfs": "f5af4afa62577a35769f038860cb3179decb1fee",
-          "fb-bin-macacfs-impl": "fc5fe484c982962c6886998469ad395058c0c628",
-          "fb-install-sh": "a17a5ff707d437f1afd8ede00aace2d74ed59a15",
-          "fb-install-sh-impl": "643cc89bb8afa7aee92efa6aef9b5acfe5f88c6d",
-          "fb-lib-catalog": "1a125ff53a1dd2ec73c29f43f15845256b23f602",
-          "fb-lib-catalog-impl": "b52fe596b9bc9f41201c106b97cff1770946e332",
-          "fb-lib-codesign": "fdd6fbd0fb3437e133a4d1dfaf26f990d03cbb11",
-          "fb-lib-methods": "32714bda931c0fe91bc8e3f2fe35b0ae35799626",
-          "fb-lib-methods-impl": "0b62591b7feabd838fca75cb52dc2adb86db46e6",
-          "fb-lib-prereq": "a354bab61aeec8713f99347a1dde25793aba0ef3",
-          "fb-lib-prereq-impl": "8f456ce0eb499e591ded21265c40c2cb25a06c29",
-          "fb-lib-report": "973cf84dba4f4384802f0228facb0e99e619bfdf",
-          "fb-lib-report-impl": "c0216c8c701507baa553fa45fb15f029766ae9ec",
-          "fb-lib-schedule": "8113ef22917637e564dff285d974590f275e7866",
-          "fb-lib-schedule-impl": "d518995286abd4326e3b7ed42ba592026c9a8fa2",
-          "fb-lib-selfupdate": "0c351987afba816796c93e42658e9167bad056cb",
-          "fb-lib-selfupdate-impl": "fe8c4447b478647ac990fff5c3647e7a33f03d3a",
-          "fb-lib-shell": "34018d69b4835f7f2ae401ff0901a336190d45fb",
-          "fb-lib-shell-impl": "63dd755d8b7b197364e34958c603309430fc29f2",
-          "fb-manifest-tsv": "3a52c595a297723b63cb5baeb703e7bd9b563765",
-          "fb-manifest-tsv-impl": "a41f14117b1b930cf9cc91d00b206c60014bfac7",
-          "fb-plist-template": "b0d32f3a82ee57ba6f50a124f82ca29ccff03cbf",
-          "fb-plist-template-impl": "6aae2c8c5f0669148c8ee689225e3df330290459",
-          "fb-readme": "7c5c7f8f14c2f6fa6fc49d58669b75244f82563e",
-          "fb-readme-impl": "b4def6d1a15051f8a0d9048d5672815e2d20f1e1",
-          "fb-share-atuin-guard": "ee706b46b5677a9d13f6324419cbfef0c755d567",
-          "fb-share-atuin-guard-impl": "cb4f94974be8ed3d107281046b6759b20ec8800b",
-          "fb-share-powerlevel-preset": "9ae15df57cd7be927a6cf6097e648670537a72ed",
-          "fb-share-powerlevel-preset-impl": "3aeb1e61e663e23f2bf90f673dfd4f3b09241b75",
-          "fb-share-shell-bundle": "7937d887bbbfb4092fc7f23f7e06e4e12c7af856",
-          "fb-share-shell-bundle-impl": "b9c3165f5a6d46ecef62cc6d03c676cba094a7cb",
-          "fb-share-tmux-conf": "b18399a8f051be7f2a2cdc30de03e7457b3ced02",
-          "fb-share-tmux-conf-impl": "d18d66eabff4fcdd1110730ce46e1c3b659fce5e",
-          "fb-share-zshrc-mac": "1e38f726d4a050e99e40de681262ff44c00c198d",
-          "fb-share-zshrc-mac-impl": "d6aa66cb389887bc4a5f35520d096f266a671bf7",
-          "heterogeneous-install-methods": "8d2c6c53ca33d4c77c7d8e76a06c9d438b59529c",
-          "homebrew-and-toolchains": "ee1e8a1e5550333e78b9a5025ce5bfcca83fae62",
-          "install-experience": "27aaa314c8702aeff155abf2a87a84c9388a3e5f",
-          "install-method-functions": "a45ac9f842f5d2fd081779564885c97aab83b39b",
-          "invalid-upstream-signatures": "6dd689693d84fcc4f616e1d85d274dd854961c53",
-          "isolated-runner-reporter": "d6cde5a0983c4c237e6a08b2ee1c63cba1991007",
-          "launchd-scheduler-state": "0dfe75ea40eccb4d1b3f2eb3b64ddf8fe88de30b",
-          "macacfs-command-surface": "f6cad564e662c1ade1af7092ba64e68e0a9ed8f5",
-          "manifest-store": "479ba4444c5a92c63cd2e5899c173614798b16d4",
-          "method-dispatch": "2d3e425939584e6940b0ae8e6688facd1b165ea3",
-          "method-fns-code": "fa006cc1135bdee7edea792e5f94216ebd1425ff",
-          "never-start-services": "26b262ddfaef0e83dcd0826fee7acf33bf2b7c3e",
-          "prereq-autoinstaller": "57595dd16cd3ee618f39c7fc7f1a2f7ad5c8f735",
-          "repo-fetch-replace": "ed38efbeb5f063e69463263cdadb5da2f6a1a09e",
-          "reporter-code": "fc7287c4ea60e93f997f7423b35ae8488d87d6de",
-          "req-dry-run-no-side-effects": "18b48e2d895e1dce37ac46aaaadbb359b2f6aed5",
-          "req-fail-loud": "cc15cacc101bdaa77d7e84b5d932a32995cdbdbd",
-          "req-failure-retry-escalation": "d06a41bc69a25c4ce5f666e302769b7e836b0c4b",
-          "req-install-whole-suite": "2969cc9d226bff9a705a934ae0344381bf8c9382",
-          "req-macos-only": "fc3451760b955b6eada5581964ee409151448c6c",
-          "req-manual-cli-update": "8f4cf0ffb11b0af7e2562e704b606576e5801514",
-          "req-minimal-scope": "e68c70d688a99146709151e2a6d03ca6be360e5a",
-          "req-never-start-servers": "5416fca3c7742873d3936c6e2d68c2e4d65a6df5",
-          "req-no-cross-tool-side-installs": "2902253c79976a66f5426f53c79dfaeed9684313",
-          "req-per-tool-method-dispatch": "c6b562fb37b3c8c631103480e44b66f501139034",
-          "req-prefer-homebrew": "5bb37dab85771e070dbc1b63dc330380f6bcd1bc",
-          "req-prerequisite-autoinstall": "894a146d5c36b06f71a5f30a56ca1778c3db6f8a",
-          "req-public-github-repo": "12317beef538e285c5b2ff3ebbc256e8f655d106",
-          "req-runnable-signatures": "3f82a0215325b571dea3f4808e59a9184ecb6e4c",
-          "req-scheduled-run-tracking": "878ecb22bde87e0cadb0b88ababcf5dd890dbaa1",
-          "req-self-update": "e1cfd717a1bb802a9ae03842f49136005af40a6b",
-          "req-terminal-environment-parity": "06dae2a47cd7dd43f79f70835c76bbf6adb30ff4",
-          "req-weekly-update-launchagent": "63f61a7b3f32fba97a1d9ecf224a77d4b38508ee",
-          "result-capture-and-summary": "3c10963e4ae8310ef9b8c873f41f9a830d45aa00",
-          "run-report-surface": "e6e8cbe25d94716617c17a45618497ce0804b456",
-          "schedule-state-and-plist": "28a06f676d0c90fe035903840b34ab2d16bfe295",
-          "scheduled-update-behavior": "d77495027910a53aaa2b988f497228c0978af770",
-          "scheduler-code": "a80d34b1bb87e3acb103f580ebce2e3da02905d4",
-          "scope-containment": "9309ffd0c822a08c237699e8ee9ee51cb55cdbcc",
-          "self-update-bootstrap": "4f002b9f805f5e04cb97568d45da0a85ac6e9ce2",
-          "self-update-capability": "9ac8648d43e84cf04138ba9e4d7e23907606d103",
-          "selfupdate-code": "27695e2eee80393339269c6e1b45ca0650a40523",
-          "shell-assets-code": "a0041ec7bab44c06c0a5a2aabfa0de64c4b489fb",
-          "shell-environment-catalog": "2383f04f87d7c75c923b127bfda980e3103d6443",
-          "shell-fns-code": "050a9b203227a2d86124f4908ed6fe93d4172b44",
-          "shell-setup-dispatch": "fb822778de76fb8454be35dae07be234fc5eef62",
-          "shell-setup-experience": "9a0f35754cb64c3ef0b4bd87d1768908667b7bb7",
-          "shell-setup-functions": "95d5659c0ca53e9847b9986e539dc5fb790ce1c0",
-          "shell-spec-store": "7a72dcdbd3751870bd60d433fbaddac7ae06c07e",
-          "signature-repair": "932d13b0495d552be85924e1008d7e604dd96ee6",
-          "signature-repair-code": "aa89226cdaade7b24971f9ba88ec360e26c7d56a",
-          "signature-verify-and-resign": "fff00caf42c422c58b668c9d438027dea03d435c",
-          "stateful-schedule-escalation": "f1f6b61cde8997b136ef7ac5df6fa7b085989715",
-          "terminal-environment-parity": "150e70e9022cd6ac9b6cb5fde659decb3c0767ae",
-          "tool-catalog": "4d8c85ca351399dbdbaeea51e4fdc1e47e293795",
-          "toolchain-helpers-code": "d823f4519c0a31f93816d918aa5f0550382c00ea",
-          "toolchain-prereqs-and-order": "969278168d7652542618d1b6763f06ff1b6806a2",
-          "update-equals-reinstall-idempotency": "258758a00867ea3e100eeb0451dc8ea6172fe5ab"
-        },
-        "impact_set": [
-          "argv-and-usage",
-          "argv-code",
-          "catalog-loader-code",
-          "cli-arg-dispatch",
-          "darwin-truth-per-tool",
-          "fb-lib-catalog",
-          "fb-lib-catalog-impl",
-          "fb-lib-codesign",
-          "fb-lib-methods",
-          "fb-lib-methods-impl",
-          "fb-lib-prereq",
-          "fb-lib-prereq-impl",
-          "fb-manifest-tsv",
-          "fb-manifest-tsv-impl",
-          "heterogeneous-install-methods",
-          "homebrew-and-toolchains",
-          "install-experience",
-          "install-method-functions",
-          "invalid-upstream-signatures",
-          "macacfs-command-surface",
-          "manifest-store",
-          "method-dispatch",
-          "method-fns-code",
-          "never-start-services",
-          "prereq-autoinstaller",
-          "req-runnable-signatures",
-          "scope-containment",
-          "shell-setup-experience",
-          "signature-repair",
-          "signature-repair-code",
-          "signature-verify-and-resign",
-          "terminal-environment-parity",
-          "tool-catalog",
-          "toolchain-helpers-code",
-          "toolchain-prereqs-and-order",
-          "update-equals-reinstall-idempotency"
-        ],
-        "phase": 3,
-        "plan": {
-          "steps": [
-            {
-              "aim": "verify signatures non-strictly (what the kernel enforces at launch) so a runnable binary that only fails strict layout validation (brenner 0.4.1) is not mis-flagged and failed",
-              "expect": [
-                "signature-verify-and-resign@v2",
-                "fb-lib-codesign@v2"
-              ],
-              "id": "s1",
-              "kind": "develop",
-              "target": "fb-lib-codesign"
+      "ledger": [
+        {
+          "at": 1792289474,
+          "detail": {
+            "id": "req-per-tool-method-dispatch",
+            "now": {
+              "accept": "Each manifest row names exactly one of brew, installer-sh, cargo-git, go, skip; the dispatcher handles those five and fails loud on any other method; skip rows show their reason as skipped in the summary; installing a sample of each install method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.",
+              "kind": "functional",
+              "text": "Per-tool install/update dispatch across 4 install methods \u2014 brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest) \u2014 plus skip, a reasoned no-op for catalogued tools that cannot run on macOS, and optional per-tool pre-install hooks."
             },
-            {
-              "aim": "prerequisite gate also brew-installs minisign (WA installer verifies releases with it) and flock (PCR installer locks with it) when installer-sh tools are selected",
-              "expect": [
-                "toolchain-helpers-code@v2",
-                "fb-lib-prereq@v2",
-                "fb-lib-prereq-impl@v2"
-              ],
-              "id": "s2",
-              "kind": "develop",
-              "target": "fb-lib-prereq-impl"
+            "prev": {
+              "accept": "Each manifest row names exactly one of brew, installer-sh, cargo-git, go; the dispatcher handles those four and fails loud on any other method; installing a sample of each method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.",
+              "kind": "functional",
+              "text": "Per-tool install/update dispatch across 4 methods: brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest)."
             },
-            {
-              "aim": "README: non-strict verify and the minisign/flock prerequisites",
-              "expect": [
-                "fb-readme-impl@v3"
-              ],
-              "id": "s3",
-              "kind": "develop",
-              "target": "fb-readme-impl"
-            }
-          ]
+            "uid": "n0085"
+          },
+          "id": "op1",
+          "op": "edit-requirement",
+          "step": "s1"
+        },
+        {
+          "at": 1792289474,
+          "detail": {
+            "dependents": [
+              "install-method-functions"
+            ],
+            "name": "method-fns-code",
+            "prev_status": "drafting",
+            "uid": "n0031",
+            "ver": 1
+          },
+          "id": "op2",
+          "op": "retire-succeed",
+          "step": "s1"
+        },
+        {
+          "at": 1792289474,
+          "detail": {
+            "dependents": [
+              "fb-lib-methods"
+            ],
+            "name": "fb-lib-methods-impl",
+            "prev_status": "drafting",
+            "uid": "n0051",
+            "ver": 1
+          },
+          "id": "op3",
+          "op": "retire-succeed",
+          "step": "s1"
+        },
+        {
+          "at": 1792289475,
+          "detail": {
+            "name": "method-fns-code"
+          },
+          "id": "op4",
+          "op": "revise-prose",
+          "step": "s1"
+        },
+        {
+          "at": 1792289475,
+          "detail": {
+            "name": "fb-lib-methods-impl"
+          },
+          "id": "op5",
+          "op": "revise-prose",
+          "step": "s1"
+        },
+        {
+          "at": 1792289523,
+          "detail": {
+            "dependents": [
+              "fb-lib-report"
+            ],
+            "name": "fb-lib-report-impl",
+            "prev_status": "drafting",
+            "uid": "n0053",
+            "ver": 2
+          },
+          "id": "op6",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792289523,
+          "detail": {
+            "dependents": [
+              "fail-loud-aggregation",
+              "dry-run-without-sideeffects"
+            ],
+            "name": "run-report-surface",
+            "prev_status": "drafting",
+            "uid": "n0014",
+            "ver": 2
+          },
+          "id": "op7",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792289523,
+          "detail": {
+            "dependents": [
+              "signature-repair-code"
+            ],
+            "name": "fb-lib-codesign",
+            "prev_status": "drafting",
+            "uid": "n0084",
+            "ver": 2
+          },
+          "id": "op8",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792289524,
+          "detail": {
+            "name": "fb-lib-report-impl"
+          },
+          "id": "op9",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792289524,
+          "detail": {
+            "name": "run-report-surface"
+          },
+          "id": "op10",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792289525,
+          "detail": {
+            "name": "fb-lib-codesign"
+          },
+          "id": "op11",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792289565,
+          "detail": {
+            "name": "tool-install-hooks",
+            "uid": "n0086"
+          },
+          "id": "op12",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792289565,
+          "detail": {
+            "name": "fb-lib-hooks",
+            "uid": "n0087"
+          },
+          "id": "op13",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792289565,
+          "detail": {
+            "impl": "fb-lib-hooks",
+            "in_place": true,
+            "node": "fb-lib-hooks",
+            "path": "lib/hooks.sh"
+          },
+          "id": "op14",
+          "op": "add-impl",
+          "step": "s3"
+        },
+        {
+          "at": 1792289566,
+          "detail": {
+            "name": "install-method-functions"
+          },
+          "id": "op15",
+          "op": "revise-prose",
+          "step": "s3"
+        },
+        {
+          "at": 1792289573,
+          "detail": {
+            "name": "fb-lib-methods-impl"
+          },
+          "id": "op16",
+          "op": "revise-prose",
+          "step": "s3"
+        },
+        {
+          "at": 1792289594,
+          "detail": {
+            "id": "req-install-whole-suite",
+            "now": {
+              "accept": "After 'macacfs install', each non-skipped tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version, and the summary lists SRPS and RP as skipped with their Linux-only reasons.",
+              "kind": "functional",
+              "text": "Install every one of the 39 catalogued Dicklesworthstone ACFS-suite tools/CLIs that can run on macOS (the full list incl. JFP's CLI); catalogued tools that are Linux-only (SRPS, RP) stay in the catalog as skip rows and are reported as skipped with the reason, never silently dropped."
+            },
+            "prev": {
+              "accept": "After 'macacfs install', each tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version.",
+              "kind": "functional",
+              "text": "Install all 39 Dicklesworthstone ACFS-suite tools/CLIs on macOS (the full list incl. JFP's CLI)."
+            },
+            "uid": "n0083"
+          },
+          "id": "op17",
+          "op": "edit-requirement",
+          "step": "s4"
+        },
+        {
+          "at": 1792289594,
+          "detail": {
+            "dependents": [
+              "fb-manifest-tsv"
+            ],
+            "name": "fb-manifest-tsv-impl",
+            "prev_status": "drafting",
+            "uid": "n0050",
+            "ver": 2
+          },
+          "id": "op18",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792289613,
+          "detail": {
+            "name": "fb-manifest-tsv-impl"
+          },
+          "id": "op19",
+          "op": "revise-prose",
+          "step": "s4"
+        },
+        {
+          "at": 1792289630,
+          "detail": {
+            "dependents": [
+              "fb-lib-schedule"
+            ],
+            "name": "fb-lib-schedule-impl",
+            "prev_status": "drafting",
+            "uid": "n0054",
+            "ver": 2
+          },
+          "id": "op20",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1792289640,
+          "detail": {
+            "name": "fb-lib-schedule-impl"
+          },
+          "id": "op21",
+          "op": "revise-prose",
+          "step": "s6"
+        },
+        {
+          "at": 1792289652,
+          "detail": {
+            "name": "req-version-bump-per-commit",
+            "uid": "n0088"
+          },
+          "id": "op22",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1792289652,
+          "detail": {
+            "name": "fb-version-file",
+            "uid": "n0089"
+          },
+          "id": "op23",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1792289652,
+          "detail": {
+            "impl": "fb-version-file",
+            "in_place": true,
+            "node": "fb-version-file",
+            "path": "VERSION"
+          },
+          "id": "op24",
+          "op": "add-impl",
+          "step": "s6"
+        },
+        {
+          "at": 1792289681,
+          "detail": {
+            "dependents": [
+              "fb-readme"
+            ],
+            "name": "fb-readme-impl",
+            "prev_status": "drafting",
+            "uid": "n0058",
+            "ver": 3
+          },
+          "id": "op25",
+          "op": "retire-succeed",
+          "step": "s7"
+        },
+        {
+          "at": 1792289689,
+          "detail": {
+            "name": "fb-readme-impl"
+          },
+          "id": "op26",
+          "op": "revise-prose",
+          "step": "s7"
+        },
+        {
+          "at": 1792289715,
+          "detail": {
+            "dependents": [
+              "method-fns-code"
+            ],
+            "name": "fb-lib-methods",
+            "prev_status": "drafting",
+            "uid": "n0040",
+            "ver": 1
+          },
+          "id": "op27",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1792289757,
+          "detail": {
+            "name": "fb-lib-methods"
+          },
+          "id": "op28",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792289795,
+          "detail": {
+            "dependents": [
+              "fb-bin-macacfs"
+            ],
+            "name": "fb-bin-macacfs-impl",
+            "prev_status": "drafting",
+            "uid": "n0048",
+            "ver": 5
+          },
+          "id": "op29",
+          "op": "retire-succeed",
+          "step": "s8"
+        },
+        {
+          "at": 1792289802,
+          "detail": {
+            "name": "fb-bin-macacfs-impl"
+          },
+          "id": "op30",
+          "op": "revise-prose",
+          "step": "s8"
+        },
+        {
+          "at": 1792289826,
+          "detail": {
+            "cmd": "bash -n lib/hooks.sh && RAW_BASE=x bash -c '. lib/hooks.sh; declare -F pre_install_MDWB'",
+            "exit": 0,
+            "kind": "cmd",
+            "name": "fb-lib-hooks",
+            "reason": null,
+            "uid": "n0087"
+          },
+          "id": "op31",
+          "op": "prove",
+          "step": "s8"
+        },
+        {
+          "at": 1792289826,
+          "detail": {
+            "cmd": "grep -Eq '^[0-9]+\\.[0-9]+\\.[0-9]+$' VERSION",
+            "exit": 0,
+            "kind": "cmd",
+            "name": "fb-version-file",
+            "reason": null,
+            "uid": "n0089"
+          },
+          "id": "op32",
+          "op": "prove",
+          "step": "s8"
+        },
+        {
+          "at": 1792289837,
+          "detail": {
+            "cmd": "rm -f /private/tmp/claude-501/-Users-jeff/129bbe70-acb0-47c7-84c7-91d1e4edfc70/scratchpad/sigtest/bin/fakecli; /private/tmp/claude-501/-Users-jeff/129bbe70-acb0-47c7-84c7-91d1e4edfc70/scratchpad/sigtest/run.sh /private/tmp/claude-501/-Users-jeff/129bbe70-acb0-47c7-84c7-91d1e4edfc70/scratchpad/sigtest | grep -q 'sig valid now'",
+            "exit": 0,
+            "kind": "cmd",
+            "name": "fb-lib-codesign",
+            "reason": null,
+            "uid": "n0084"
+          },
+          "id": "op33",
+          "op": "prove",
+          "step": "s8"
+        },
+        {
+          "at": 1792289883,
+          "detail": {
+            "name": "fb-lib-methods-impl"
+          },
+          "id": "op34",
+          "op": "revise-prose",
+          "step": "s8"
+        },
+        {
+          "at": 1792289884,
+          "detail": {
+            "name": "fb-lib-hooks"
+          },
+          "id": "op35",
+          "op": "revise-prose",
+          "step": "s8"
+        },
+        {
+          "at": 1792289884,
+          "detail": {
+            "name": "fb-lib-codesign"
+          },
+          "id": "op36",
+          "op": "revise-prose",
+          "step": "s8"
+        },
+        {
+          "at": 1792289885,
+          "detail": {
+            "name": "method-fns-code"
+          },
+          "id": "op37",
+          "op": "revise-prose",
+          "step": "s8"
         }
-      },
-      "ledger": [],
-      "mode": "update",
+      ],
+      "mode": null,
       "update": {
         "migrated": false
       }
@@ -2662,5 +2864,5 @@
       "mode": null
     }
   },
-  "uid_seq": 85
+  "uid_seq": 89
 }
