@@ -1,13 +1,16 @@
 <!--stratified-action
 {
   "created": 1789599516,
-  "edges": [],
+  "edges": [
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "This problem identifies that ACFS provisions a whole themed zsh and modern-CLI environment that macOS must reproduce, which the parity requirement then specifies.",
+      "type": "validated-by"
+    }
+  ],
   "is_bead": false,
   "name": "terminal-environment-parity",
   "node_type": "problem",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0059",

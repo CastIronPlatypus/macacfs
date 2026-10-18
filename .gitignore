@@ -1,2 +1,4 @@
 .DS_Store
 *.bak.*
+.stratified-action/state.lock
+.stratified-action/node-vectors-cache.json

@@ -4,15 +4,18 @@
   "edges": [
     {
       "dst": "fb-share-atuin-guard-impl",
+      "reason": "The atuin-guard bead is realized by share/atuin-guard.sh, the wrapper script that detects agent context and no-ops atuin history and hook calls.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "The requirement specifies atuin with an agent-safe shim, and atuin-guard.sh is that shim, preventing agent sessions from polluting history or hitting EPIPE.",
+      "type": "validated-by"
     }
   ],
   "is_bead": true,
   "name": "fb-share-atuin-guard",
   "node_type": "impl",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0073",

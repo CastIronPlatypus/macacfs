@@ -16,14 +16,16 @@
       "dst": "fb-plist-template",
       "reason": "The scheduler writes the plist template asset.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-scheduled-run-tracking",
+      "reason": "The scheduler code unit's state read/write functions persist last-run and outcome after each tick, making the run history readable as required.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "scheduler-code",
   "node_type": "impl",
-  "obligations": [
-    "r-run-tracking"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0034",

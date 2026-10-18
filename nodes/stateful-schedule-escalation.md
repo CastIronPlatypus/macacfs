@@ -6,14 +6,16 @@
       "dst": "scheduled-update-behavior",
       "reason": "The escalation cadence is what the scheduled behavior expresses.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-failure-retry-escalation",
+      "reason": "Since launchd is stateless but the weekly-nightly-2pm cadence is stateful, this problem forces a persisted state file that rewrites the schedule, as the requirement needs.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "stateful-schedule-escalation",
   "node_type": "problem",
-  "obligations": [
-    "r-retry-escalation"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0006",

@@ -6,14 +6,16 @@
       "dst": "macacfs-command-surface",
       "reason": "The install/update commands are where re-run-to-latest idempotency is exercised.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-manual-cli-update",
+      "reason": "Manual update re-runs each tool's latest-installing method, so idempotent in-place upgrades are what make 'macacfs update' for all or named tools safe.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "update-equals-reinstall-idempotency",
   "node_type": "problem",
-  "obligations": [
-    "r-cli-update"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0004",

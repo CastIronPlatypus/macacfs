@@ -1,13 +1,16 @@
 <!--stratified-action
 {
   "created": 1789599679,
-  "edges": [],
+  "edges": [
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "The shipped share/ assets, namely brew bundle, zshrc, p10k preset, tmux config, and atuin shim, are the config files parity setup installs.",
+      "type": "validated-by"
+    }
+  ],
   "is_bead": false,
   "name": "shell-assets-code",
   "node_type": "impl",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "components",
   "succeeds": "shell-assets-code@v1",

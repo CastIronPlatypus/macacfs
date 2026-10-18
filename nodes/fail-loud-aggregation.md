@@ -6,14 +6,16 @@
       "dst": "run-report-surface",
       "reason": "Fail-loud aggregation is surfaced by the run report.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-fail-loud",
+      "reason": "Isolating each of the 39 steps, capturing exit code and stderr, and ending with a non-zero summary exit directly embodies the no-silent-failure requirement.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "fail-loud-aggregation",
   "node_type": "problem",
-  "obligations": [
-    "r-fail-loud"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0007",

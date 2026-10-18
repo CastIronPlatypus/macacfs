@@ -11,15 +11,21 @@
       "dst": "self-update-capability",
       "reason": "One-liner install and self-update are realized by the self-update capability.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-self-update",
+      "reason": "Running 'macacfs self-update' re-fetches the public repo and replaces the installed CLI, which is exactly the observable self-update behavior the requirement specifies.",
+      "type": "validated-by"
+    },
+    {
+      "dst": "req-public-github-repo",
+      "reason": "The curl install.sh one-liner and self-update both fetch from the public GitHub repo, so that published repo with its README is the distribution surface this behavior depends on.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "bootstrap-and-self-update",
   "node_type": "surface",
-  "obligations": [
-    "r-self-update",
-    "r-github-repo"
-  ],
   "status": "drafting",
   "stratum": "surface",
   "uid": "n0015",

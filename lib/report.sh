@@ -16,16 +16,18 @@ report_add() { # abbr status msg
 }
 
 # run_isolated <abbr> <label> <cmd...>
-# Runs cmd, capturing combined output to a temp log. On success records ok;
+# Runs cmd, capturing combined output to a temp log. On success records ok
+# with any RUN_NOTE the step set (e.g. "re-signed <path>");
 # on failure records the last meaningful line of stderr/stdout. Returns cmd rc.
 run_isolated() {
   local abbr="$1" label="$2"; shift 2
   local log rc tail
   log="$(mktemp -t "macacfs.${abbr}.XXXXXX")"
   printf '  → %s (%s)\n' "$abbr" "$label"
+  RUN_NOTE=""
   if "$@" >"$log" 2>&1; then
     rc=0
-    report_add "$abbr" ok ""
+    report_add "$abbr" ok "$RUN_NOTE"
   else
     rc=$?
     tail="$(grep -viE '^\s*$' "$log" | tail -n 3 | tr '\n' ' ' | cut -c1-300)"
@@ -43,7 +45,11 @@ report_render() {
   printf '\n──────── macacfs summary ────────\n'
   for ((i=0; i<n; i++)); do
     if [ "${_R_STATUS[$i]}" = ok ]; then
-      printf '  ✅ %s\n' "${_R_ABBR[$i]}"
+      if [ -n "${_R_MSG[$i]}" ]; then
+        printf '  ✅ %-8s %s\n' "${_R_ABBR[$i]}" "${_R_MSG[$i]}"
+      else
+        printf '  ✅ %s\n' "${_R_ABBR[$i]}"
+      fi
     else
       printf '  ❌ %-8s %s\n' "${_R_ABBR[$i]}" "${_R_MSG[$i]}"
       fails=$((fails+1))

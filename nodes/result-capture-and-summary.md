@@ -11,14 +11,16 @@
       "dst": "reporter-code",
       "reason": "The capture/summary subsystem is realized by the reporter code.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-fail-loud",
+      "reason": "Logging each step's rc and stderr to a temp file and computing an aggregate exit ensures failed tools surface with error output instead of vanishing.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "result-capture-and-summary",
   "node_type": "unclassified",
-  "obligations": [
-    "r-fail-loud"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0026",

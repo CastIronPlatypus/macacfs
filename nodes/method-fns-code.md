@@ -11,14 +11,16 @@
       "dst": "fb-lib-methods",
       "reason": "TEST2: parent accomplished-by its file-bead child.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-per-tool-method-dispatch",
+      "reason": "This code unit holds the per-method functions and the dispatcher that selects one by the row's method field, realizing per-tool dispatch.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "method-fns-code",
   "node_type": "impl",
-  "obligations": [
-    "r-method-dispatch"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0031",

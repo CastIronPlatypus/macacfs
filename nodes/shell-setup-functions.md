@@ -1,13 +1,16 @@
 <!--stratified-action
 {
   "created": 1789599668,
-  "edges": [],
+  "edges": [
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "These functions each perform one parity step, like cask font install, p10k clone, or zshrc write with backup, honoring dry-run and returning status.",
+      "type": "validated-by"
+    }
+  ],
   "is_bead": false,
   "name": "shell-setup-functions",
   "node_type": "unclassified",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0064",

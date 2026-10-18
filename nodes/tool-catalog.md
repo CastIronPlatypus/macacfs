@@ -11,14 +11,16 @@
       "dst": "manifest-store",
       "reason": "The catalog capability is backed by the manifest store.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-install-whole-suite",
+      "reason": "As the single source of truth with one row per tool for all 39, the catalog defines exactly which CLIs install must place on PATH.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "tool-catalog",
   "node_type": "unclassified",
-  "obligations": [
-    "r-install-all"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0016",

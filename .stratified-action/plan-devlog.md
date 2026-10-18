@@ -288,3 +288,83 @@
 - [1789602293] **revise-prose** — fb-lib-shell-impl
 - [1789602293] **change-done** — s3
 - [1789602301] **change** — walk -> settle
+- [1789615404] **begin** — change
+- [1789615410] **comprehend** — modify=['macacfs-command-surface', 'shell-setup-experience']; attach=[]; impact=53 node(s)
+- [1789615423] **change** — comprehend -> plan
+- [1789615423] **set-changeplan** — 3 step(s)
+- [1789615423] **change** — plan -> walk
+- [1789615424] **change-done** — s1 — v2 surface enumerates install/update/shell/self-update/schedule; shell-setup-experience prose describes 'what the user sees on macacfs shell'. Folding into install => surface loses the shell subcommand and install's prose gains shell setup; shell-setup-experience is re-described as running as part of install.
+- [1789615445] **retire** — macacfs-command-surface@v2 -> v3; reason: Fold terminal-environment setup into 'macacfs install'; remove the standalone 'macacfs shell' subcommand.; perturbed: ['cli-arg-dispatch', 'method-dispatch', 'shell-setup-dispatch']
+- [1789615445] **revise-prose** — macacfs-command-surface
+- [1789615445] **revise-prose** — shell-setup-experience
+- [1789615445] **change-done** — s2
+- [1789615458] **retire** — fb-bin-macacfs-impl@v2 -> v3; reason: install now runs run_tools then shell_run (tools + terminal env in one command); remove the standalone shell subcommand.; perturbed: []
+- [1789615458] **revise-prose** — fb-bin-macacfs-impl
+- [1789615459] **absorb** — cli-arg-dispatch absorbed the parent revision (unchanged)
+- [1789615459] **absorb** — method-dispatch absorbed the parent revision (unchanged)
+- [1789615459] **absorb** — shell-setup-dispatch absorbed the parent revision (unchanged)
+- [1789615459] **change-done** — s3
+- [1789615459] **change** — walk -> settle
+- [1792274053] **begin** — update
+- [1792274061] **begin** — change
+- [1792274078] **comprehend** — modify=['fb-bin-macacfs', 'fb-bin-macacfs-impl', 'scheduled-update-behavior']; attach=[]; impact=17 node(s)
+- [1792274085] **change** — comprehend -> plan
+- [1792274094] **set-changeplan** — 1 step(s)
+- [1792274094] **change** — plan -> walk
+- [1792274105] **retire** — fb-bin-macacfs-impl@v3 -> v4; reason: launchd runs the update tick with PATH=/usr/bin:/bin, so '#!/usr/bin/env bash' resolved to macOS /bin/bash 3.2, which aborts on an empty "${SELECTORS[@]}" under set -u (update.err.log: 'SELECTORS[@]: unbound variable'); point the shebang at Homebrew bash and make the selector expansion empty-safe.; perturbed: []
+- [1792274116] **revise-prose** — fb-bin-macacfs-impl
+- [1792274119] **change-done** — s1
+- [1792274119] **change** — walk -> settle
+- [1792285464] **begin** — update
+- [1792285655] **begin** — change
+- [1792285677] **comprehend** — modify=['fb-lib-schedule', 'fb-plist-template', 'install-experience', 'tool-catalog']; attach=['method-fns-code', 'req-fail-loud', 'result-capture-and-summary', 'run-report-surface']; impact=48 node(s)
+- [1792285677] **change** — comprehend -> plan
+- [1792285714] **set-changeplan** — 5 step(s)
+- [1792285714] **change** — plan -> walk
+- [1792285757] **add-requirement** — req-runnable-signatures [functional] Every Mach-O binary a tool install produces must pass macOS code-signature verification; any binary with an invalid signature is re-signed ad-hoc at install time, each re-sign is reported per tool in the summary, and a binary that cannot be repaired fails that tool.
+- [1792285757] **add-node** — invalid-upstream-signatures
+- [1792285757] **add-node** — signature-repair
+- [1792285758] **add-node** — signature-verify-and-resign
+- [1792285758] **add-node** — signature-repair-code
+- [1792285759] **add-node** — fb-lib-codesign
+- [1792285759] **add-impl** — fb-lib-codesign -> lib/codesign.sh (in place)
+- [1792285775] **revise-prose** — signature-verify-and-resign
+- [1792285776] **revise-prose** — signature-repair-code
+- [1792285776] **change-amend** — 0 frozen + 1 re-authored
+- [1792285780] **change-done** — s1
+- [1792285789] **change-amend** — 1 frozen + 4 re-authored
+- [1792285814] **retire** — install-experience@v1 -> v2; reason: Install must leave every tool launchable: upstream Bun-compiled binaries ship invalid signatures that macOS kills, so install now verifies and re-signs them.; perturbed: ['tool-catalog', 'method-dispatch', 'prereq-autoinstaller']
+- [1792285815] **retire** — run-report-surface@v1 -> v2; reason: The summary now names every binary that was re-signed, so a signature repair is visible rather than silent.; perturbed: ['isolated-runner-reporter']
+- [1792285815] **retire** — fb-bin-macacfs-impl@v4 -> v5; reason: run_tools now runs each tool through install_and_verify_row (lib/codesign.sh) so signature repair follows every install.; perturbed: []
+- [1792285815] **retire** — fb-lib-report-impl@v1 -> v2; reason: run_isolated records a step's RUN_NOTE on ok rows and the renderer prints it, carrying re-sign notes into the summary.; perturbed: []
+- [1792285826] **link-requirement** — install-experience -> req-runnable-signatures
+- [1792285826] **link-requirement** — run-report-surface -> req-runnable-signatures
+- [1792285826] **revise-prose** — install-experience
+- [1792285838] **revise-prose** — run-report-surface
+- [1792285838] **revise-prose** — fb-bin-macacfs-impl
+- [1792285838] **revise-prose** — fb-lib-report-impl
+- [1792285839] **change-done** — s2
+- [1792285850] **add-requirement** — req-no-cross-tool-side-installs [constraint] A tool's own installer must not install other suite tools outside their catalogued method; where an installer bundles pinned copies of other suite tools, macacfs passes its skip flags so each tool comes only from its own catalogue row.
+- [1792285850] **retire** — fb-manifest-tsv-impl@v1 -> v2; reason: brenner's install.sh side-installs pinned old ntm/cass/cm into ~/.local/bin, shadowing the brew-catalogued versions on PATH; the BRENNER row now passes --skip-ntm --skip-cass --skip-cm.; perturbed: []
+- [1792285851] **link-requirement** — fb-manifest-tsv -> req-no-cross-tool-side-installs
+- [1792285851] **revise-prose** — fb-manifest-tsv-impl
+- [1792285851] **change-done** — s3
+- [1792285882] **retire** — fb-plist-template@v1 -> v2; reason: The LaunchAgent template now carries a PATH and AbandonProcessGroup: launchd's bare PATH hid brew/cargo/go, and the tick's self-reload needs a helper that outlives the job.; perturbed: ['fb-plist-template-impl']
+- [1792285883] **retire** — fb-plist-template-impl@v1 -> v2; reason: share/macacfs.plist.template gains EnvironmentVariables/PATH (__PATH__) and AbandonProcessGroup=true.; perturbed: []
+- [1792285883] **retire** — fb-lib-schedule@v1 -> v2; reason: The scheduler builds the LaunchAgent PATH and reloads the plist from a detached helper; the inline unload killed the tick and left the agent unloaded since 2026-09-20.; perturbed: ['fb-lib-schedule-impl']
+- [1792285883] **retire** — fb-lib-schedule-impl@v1 -> v2; reason: lib/schedule.sh adds schedule_path (substituted for __PATH__), a detached post-tick reload, and a loud error instead of '|| true' when the plist rewrite fails.; perturbed: []
+- [1792285896] **revise-prose** — fb-plist-template
+- [1792285896] **revise-prose** — fb-plist-template-impl
+- [1792285896] **revise-prose** — fb-lib-schedule
+- [1792285897] **revise-prose** — fb-lib-schedule-impl
+- [1792285897] **change-done** — s4
+- [1792285923] **retire** — fb-readme-impl@v1 -> v2; reason: README documents signature repair, the brenner skip flags, and why the LaunchAgent carries its own PATH, pins Homebrew bash and reloads from a detached helper.; perturbed: []
+- [1792285923] **revise-prose** — fb-readme-impl
+- [1792285924] **change-done** — s5
+- [1792285924] **change** — walk -> settle
+- [1792285930] **absorb** — tool-catalog absorbed the parent revision (unchanged)
+- [1792285930] **absorb** — method-dispatch absorbed the parent revision (unchanged)
+- [1792285930] **absorb** — prereq-autoinstaller absorbed the parent revision (unchanged)
+- [1792285930] **absorb** — isolated-runner-reporter absorbed the parent revision (unchanged)
+- [1792285938] **absorb** — fb-lib-schedule-impl absorbed the parent revision (unchanged)
+- [1792285939] **absorb** — fb-plist-template-impl absorbed the parent revision (unchanged)

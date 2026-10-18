@@ -4,14 +4,14 @@
   "edges": [
     {
       "dst": "fb-lib-shell",
+      "reason": "This lib/shell.sh implementation fulfills the shell bead, adding shell_tmux which installs ~/.tmux.conf from share/tmux.conf with a backup.",
       "type": "serves"
     }
   ],
   "impl_path": "lib/shell.sh",
   "is_bead": true,
-  "is_impl": true,
   "name": "fb-lib-shell-impl",
-  "obligations": [],
+  "node_type": "impl",
   "realized_at": "0.14.0",
   "realized_fp": null,
   "status": "drafting",

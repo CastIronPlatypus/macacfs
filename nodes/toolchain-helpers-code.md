@@ -11,14 +11,16 @@
       "dst": "fb-lib-prereq",
       "reason": "The toolchain helpers live in lib/prereq.sh.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-prerequisite-autoinstall",
+      "reason": "This code unit ensures Homebrew and then installs whichever of rust, go, uv, and node are missing, implementing the installing prerequisite gate.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "toolchain-helpers-code",
   "node_type": "impl",
-  "obligations": [
-    "r-prereq-autoinstall"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0032",

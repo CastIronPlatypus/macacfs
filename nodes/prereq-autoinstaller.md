@@ -16,14 +16,16 @@
       "dst": "shell-setup-experience",
       "reason": "Shell setup reuses the prerequisite auto-installer to ensure Homebrew is present before the brew bundle and casks install.",
       "type": "serves"
+    },
+    {
+      "dst": "req-prerequisite-autoinstall",
+      "reason": "Installing Homebrew first, then rust, go, uv, and node, and reporting what was installed before source builds run satisfies the auto-install gate.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "prereq-autoinstaller",
   "node_type": "unclassified",
-  "obligations": [
-    "r-prereq-autoinstall"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0018",

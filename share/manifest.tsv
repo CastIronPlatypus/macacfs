@@ -31,7 +31,7 @@ RP	rust_proxy	rust_proxy	cargo-git	https://github.com/Dicklesworthstone/rust_pro
 CAUT	coding_agent_usage_tracker	caut	cargo-git	https://github.com/Dicklesworthstone/coding_agent_usage_tracker	-
 JFP	jeffreysprompts.com	jfp	cargo-git	https://github.com/Dicklesworthstone/jeffreysprompts.com	--bin jfp
 WA	frankenterm	wa	installer-sh	install.sh	-
-BRENNER	brenner_bot	brenner	installer-sh	install.sh	-
+BRENNER	brenner_bot	brenner	installer-sh	install.sh	--skip-ntm --skip-cass --skip-cm
 SRPS	system_resource_protection_script	sysmoni	installer-sh	install.sh	--install --yes
 APR	automated_plan_reviser_pro	apr	installer-sh	install.sh	-
 PT	process_triage	pt	installer-sh	install.sh	-

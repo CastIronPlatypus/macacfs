@@ -4,14 +4,14 @@
   "edges": [
     {
       "dst": "fb-share-zshrc-mac",
+      "reason": "The share/zshrc.mac.zsh file is the concrete asset fulfilling the mac-adapted managed zshrc bead.",
       "type": "serves"
     }
   ],
   "impl_path": "share/zshrc.mac.zsh",
   "is_bead": true,
-  "is_impl": true,
   "name": "fb-share-zshrc-mac-impl",
-  "obligations": [],
+  "node_type": "impl",
   "realized_at": "0.14.0",
   "realized_fp": null,
   "status": "drafting",

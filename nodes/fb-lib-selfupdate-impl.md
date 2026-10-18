@@ -4,15 +4,14 @@
   "edges": [
     {
       "dst": "fb-lib-selfupdate",
+      "reason": "The lib/selfupdate.sh file is the concrete implementation that fulfills the self-update bead.",
       "type": "serves"
     }
   ],
   "impl_path": "lib/selfupdate.sh",
   "is_bead": true,
-  "is_impl": true,
   "name": "fb-lib-selfupdate-impl",
   "node_type": "impl",
-  "obligations": [],
   "realized_at": "0.14.0",
   "realized_fp": "1789594727:1863",
   "status": "drafting",

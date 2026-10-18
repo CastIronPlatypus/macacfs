@@ -16,14 +16,16 @@
       "dst": "toolchain-helpers-code",
       "reason": "The toolchain subsystem is realized by the helper code.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-prerequisite-autoinstall",
+      "reason": "These helpers install Homebrew and then rustup, go, uv, and node via brew when absent, delivering the gate that installs missing toolchains rather than reporting.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "homebrew-and-toolchains",
   "node_type": "unclassified",
-  "obligations": [
-    "r-prereq-autoinstall"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0025",

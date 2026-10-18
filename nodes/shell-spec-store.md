@@ -1,13 +1,16 @@
 <!--stratified-action
 {
   "created": 1789599667,
-  "edges": [],
+  "edges": [
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "The share/ data files declare the brew bundle and ship the zshrc, p10k preset, and atuin shim that the parity requirement lists as deliverables.",
+      "type": "validated-by"
+    }
+  ],
   "is_bead": false,
   "name": "shell-spec-store",
   "node_type": "unclassified",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0063",

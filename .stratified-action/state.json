@@ -1,315 +1,825 @@
 {
-  "change": {
-    "comprehend": {
-      "anchors": [
-        "shell-setup-dispatch",
-        "shell-setup-experience"
-      ],
-      "attach_points": [
-        "fb-share-zshrc-mac",
-        "shell-setup-dispatch",
-        "shell-setup-experience"
-      ],
-      "candidates": [
-        "macacfs-command-surface",
-        "shell-setup-experience",
-        "fb-share-zshrc-mac"
-      ],
-      "desc": "Add ACFS's tmux configuration to the shell setup: ship share/tmux.conf and install it to ~/.tmux.conf (backing up any existing one), wired into the shell-assets store and a new shell_tmux function in lib/shell.sh, run during 'macacfs shell'.",
-      "done": true,
-      "impact": [
-        "catalog-loader-code",
-        "fb-lib-catalog",
-        "fb-lib-catalog-impl",
-        "fb-lib-methods",
-        "fb-lib-methods-impl",
-        "fb-lib-prereq",
-        "fb-lib-prereq-impl",
-        "fb-lib-report",
-        "fb-lib-report-impl",
-        "fb-lib-shell",
-        "fb-lib-shell-impl",
-        "fb-manifest-tsv",
-        "fb-manifest-tsv-impl",
-        "fb-share-atuin-guard",
-        "fb-share-atuin-guard-impl",
-        "fb-share-powerlevel-preset",
-        "fb-share-powerlevel-preset-impl",
-        "fb-share-shell-bundle",
-        "fb-share-shell-bundle-impl",
-        "fb-share-zshrc-mac",
-        "fb-share-zshrc-mac-impl",
-        "homebrew-and-toolchains",
-        "install-experience",
-        "install-method-functions",
-        "isolated-runner-reporter",
-        "manifest-store",
-        "method-dispatch",
-        "method-fns-code",
-        "never-start-services",
-        "prereq-autoinstaller",
-        "reporter-code",
-        "result-capture-and-summary",
-        "run-report-surface",
-        "shell-assets-code",
-        "shell-environment-catalog",
-        "shell-fns-code",
-        "shell-setup-dispatch",
-        "shell-setup-experience",
-        "shell-setup-functions",
-        "shell-spec-store",
-        "terminal-environment-parity",
-        "tool-catalog",
-        "toolchain-helpers-code"
-      ],
-      "round": 4,
-      "stage": "attach"
-    },
-    "current": null,
-    "cursor": 3,
-    "done": [
-      "s1",
-      "s2",
-      "s3"
-    ],
-    "graph_fp": {
-      "argv-and-usage": "1518141cf08aa1b167075ac502f4eedeab49f40a",
-      "argv-code": "1c2b129196bb80d4e435f37a5178fedb4327caa2",
-      "bootstrap-and-self-update": "0be74e4a3ada089060e1e326eacef9b04d7fa504",
-      "catalog-loader-code": "82edde40c06d0386e05aeca6e86978733a316567",
-      "cli-arg-dispatch": "c7867968023f19594155b73d431d84db6f9bd9d0",
-      "darwin-truth-per-tool": "19e870ec359c2cfa2e9a2563e753f2a304d1a22e",
-      "dry-run-without-sideeffects": "35fc61da3239dce05ae8cebdd825a8a2904d4fd2",
-      "fail-loud-aggregation": "35d543cdae10f496539797f86e322fb1f6f0cae1",
-      "fb-bin-macacfs": "a1068b653801d124ab39ddd1186cd1aede24d312",
-      "fb-bin-macacfs-impl": "c77ac67fd8ead76db99fc7ffe95ed7fbcd837bd8",
-      "fb-install-sh": "ad41bd60079f6500b6858f9c1f5c48dc5bdbe4bd",
-      "fb-install-sh-impl": "0b43f66e093106a2f8065297146f57975aa29586",
-      "fb-lib-catalog": "9734e2173e4bf22367179cee3487dbd1f3ea5a58",
-      "fb-lib-catalog-impl": "1e139867824e95cc63292d1a518755a1475ab3c8",
-      "fb-lib-methods": "067dc08256ecadd1c8d89a5efd9b36af1fee6075",
-      "fb-lib-methods-impl": "c7804c460bf08ec86dd832aa8b822c59a79905bb",
-      "fb-lib-prereq": "b704485baa67ddba5b012e1e5f5e441dce766ca9",
-      "fb-lib-prereq-impl": "fa823835dd2356f2602386a0d8ec31e9ae4c73ab",
-      "fb-lib-report": "9ea3a849a464c91546b9b3049581b21cfd3fca42",
-      "fb-lib-report-impl": "574a197a0054b8353084736234ac04d09ce43957",
-      "fb-lib-schedule": "7a6dd9fa92bce1b1f508963c2a023cee30414e5c",
-      "fb-lib-schedule-impl": "ff73437a2ace1cf1662b4f956f0203cf47d5be48",
-      "fb-lib-selfupdate": "1fb407ea3702d5c142738ac6c6073fd3f04d5950",
-      "fb-lib-selfupdate-impl": "2765c970bf61033d89c49e2aa01a657b933fa1c4",
-      "fb-lib-shell": "185098feeed7ea59b03bcaeb4c7231b8504fa64c",
-      "fb-lib-shell-impl": "f7403eb55af43e86ba2f3fd4ac46f8b3934d0d50",
-      "fb-manifest-tsv": "ff1299333884ffb884206b1719e12f813adaec85",
-      "fb-manifest-tsv-impl": "d62edfb54f3ff710d069cbc85b8b0dfeb9a306a6",
-      "fb-plist-template": "57c466244aa13eecb84880d85fc35061ed018942",
-      "fb-plist-template-impl": "4d2be08f425f128c16c041bdb72186222662552f",
-      "fb-readme": "61d53b6b77325b641456ee8f04c2b8ca022f3a61",
-      "fb-readme-impl": "2c3ef29f3d791d69d6e581941517e8bc9b95fb08",
-      "fb-share-atuin-guard": "aa96b101ff74ee9d2b798c37dfc6ec948eef7b6d",
-      "fb-share-atuin-guard-impl": "4e7a604f643ebed51d4cbacea35c165d43ff2655",
-      "fb-share-powerlevel-preset": "7da1a52fe17e79aab12f8a89a4378cebab0623ee",
-      "fb-share-powerlevel-preset-impl": "278c854b6f17c339eb28f3295b38d6eddb8d2a40",
-      "fb-share-shell-bundle": "d9dcec3a0ac35c1fa7859ed72fe8e00f308350fa",
-      "fb-share-shell-bundle-impl": "32f65d0bb97e16ca2e2fc3fcf994438b53bbd729",
-      "fb-share-zshrc-mac": "faa35b63f6f0963777303b2ab024c6269cf87168",
-      "fb-share-zshrc-mac-impl": "6ad3d2731f3e4be1bf95e0fc6ade690e914af738",
-      "heterogeneous-install-methods": "10579231a603707d0352e928f211746353c5c2a4",
-      "homebrew-and-toolchains": "c7736c63778262eaebe4ebb0b281ecf7b7c2781e",
-      "install-experience": "3ba46944460d00335639e9592c3bdab928941a97",
-      "install-method-functions": "513fb86c03e3c1015c6ff2170128e912b4ffaf25",
-      "isolated-runner-reporter": "14ea181bca9f22a982307abdad9033cb886a836a",
-      "launchd-scheduler-state": "7666a46b6d8d3ddd26d144248b9473058a161cf0",
-      "macacfs-command-surface": "e71effa3373e4e40af8d39128eeb38e94876be81",
-      "manifest-store": "558b8d2e5a86c19b5745ed44da34c7342278cb36",
-      "method-dispatch": "4f1cac97d0b71a0eac911ba5a8f74e940d0386c6",
-      "method-fns-code": "76b1c9a0535ea283aaf822e9fe0edd674fd42d15",
-      "never-start-services": "8e0c7918c85d3fda38b8a39975683e31a6e4c5b4",
-      "prereq-autoinstaller": "244491cdd0878f742ffefd500ade7765a430a15a",
-      "repo-fetch-replace": "e6c647450ed45ec7dd1f25657d29e262d8f6b119",
-      "reporter-code": "3a56f3873dbfd1b5f7bd1d3af72247dde1b4b6db",
-      "result-capture-and-summary": "99ca8ce56d3648a9665d0593f3f376ed90b9dea0",
-      "run-report-surface": "c509a31b5d8349f2e71cae4641f517d198c29596",
-      "schedule-state-and-plist": "49228e442bc302e79fbdc6dbeadc088be9c31035",
-      "scheduled-update-behavior": "a0052c4d96d61ce045f92527136a61be40c50d1a",
-      "scheduler-code": "a2b14ad428ac494ac4950d23c3da6714522a1eee",
-      "scope-containment": "8018309f6b66c6ea014e71087471e961219e5b0c",
-      "self-update-bootstrap": "ddf3f9675a2aacbc54a0f610c461dd6d99914e3f",
-      "self-update-capability": "1824ab364f93f3e253eaa5961c4a79c8f634f193",
-      "selfupdate-code": "8f4ad72069448cca2dd0ed3ffce8bf6b1bb42f27",
-      "shell-assets-code": "9e236fa3ebf1323e544c71a9ac7ac0ca4ef86106",
-      "shell-environment-catalog": "c745e6d2f5b348a1483cc7ecadd9c42e0967d99c",
-      "shell-fns-code": "0c3e63acf0fd50e5cb1654b898e0f1c49e8bbe2a",
-      "shell-setup-dispatch": "b16d57846a9efdddae15735d4551d40660315a10",
-      "shell-setup-experience": "0a9c403a1bc0989f7ac724f65cde33f8288cd911",
-      "shell-setup-functions": "3f4f2b21e002df36350f7e55877fb863e4f4f316",
-      "shell-spec-store": "70cd12bf44d46e6c89016e92715df46bde6d0103",
-      "stateful-schedule-escalation": "d212b1c5b86791cbbcc2beeab3a43a0320a9797a",
-      "terminal-environment-parity": "48484a25c52d6e78bbd6984413a159461353897d",
-      "tool-catalog": "d0ea9e595594833ec2a1504e02202e8eee82dbfd",
-      "toolchain-helpers-code": "9a4281759b254644c3c1967a615024b382f799e4",
-      "toolchain-prereqs-and-order": "08064f5f401706c9124f493b4e8b72da682f4d70",
-      "update-equals-reinstall-idempotency": "8db2aa0b59dd998479e5d3fd9464dcefd5a04f68"
-    },
-    "impact_set": [
-      "catalog-loader-code",
-      "fb-lib-catalog",
-      "fb-lib-catalog-impl",
-      "fb-lib-methods",
-      "fb-lib-methods-impl",
-      "fb-lib-prereq",
-      "fb-lib-prereq-impl",
-      "fb-lib-report",
-      "fb-lib-report-impl",
-      "fb-lib-shell",
-      "fb-lib-shell-impl",
-      "fb-manifest-tsv",
-      "fb-manifest-tsv-impl",
-      "fb-share-atuin-guard",
-      "fb-share-atuin-guard-impl",
-      "fb-share-powerlevel-preset",
-      "fb-share-powerlevel-preset-impl",
-      "fb-share-shell-bundle",
-      "fb-share-shell-bundle-impl",
-      "fb-share-zshrc-mac",
-      "fb-share-zshrc-mac-impl",
-      "homebrew-and-toolchains",
-      "install-experience",
-      "install-method-functions",
-      "isolated-runner-reporter",
-      "manifest-store",
-      "method-dispatch",
-      "method-fns-code",
-      "never-start-services",
-      "prereq-autoinstaller",
-      "reporter-code",
-      "result-capture-and-summary",
-      "run-report-surface",
-      "shell-assets-code",
-      "shell-environment-catalog",
-      "shell-fns-code",
-      "shell-setup-dispatch",
-      "shell-setup-experience",
-      "shell-setup-functions",
-      "shell-spec-store",
-      "terminal-environment-parity",
-      "tool-catalog",
-      "toolchain-helpers-code"
-    ],
-    "notes": {
-      "s1": "shell-assets-code (component) is accomplished-by the four asset file-boundaries (fb-share-shell-bundle/-zshrc-mac/-powerlevel-preset/-atuin-guard), each a bead with an impl bound to its share/ file; lib/shell.sh functions live under fb-lib-shell -> fb-lib-shell-impl (impl_path lib/shell.sh) and are orchestrated by shell_run. tmux.conf mirrors the zshrc asset (fb under shell-assets-code) and shell_tmux mirrors shell_zshrc (a function in fb-lib-shell-impl, added to shell_run's install list)."
-    },
-    "phase": 3,
-    "plan": {
-      "steps": [
-        {
-          "aim": "confirm how sibling assets (zshrc/p10k) attach under shell-assets-code and how shell_run/shell functions live in fb-lib-shell, so tmux.conf + shell_tmux mirror them",
-          "id": "s1",
-          "kind": "investigate",
-          "target": "shell-assets-code"
-        },
-        {
-          "aim": "add the tmux.conf file-boundary + impl, wire it under shell-assets-code, and broaden r-terminal-env to name the tmux config",
-          "expect": [
-            "fb-share-tmux-conf",
-            "fb-share-tmux-conf-impl"
-          ],
-          "id": "s2",
-          "kind": "develop"
-        },
-        {
-          "aim": "succeed the lib/shell.sh implementation to add shell_tmux (install ~/.tmux.conf with backup) and run it during shell setup",
-          "expect": [
-            "fb-lib-shell-impl@v2"
-          ],
-          "id": "s3",
-          "kind": "develop",
-          "target": "fb-lib-shell-impl"
-        }
-      ]
-    }
-  },
   "dirty": [],
   "grants": [],
-  "ledger": [
-    {
-      "at": 1789602259,
-      "detail": {
-        "name": "fb-share-tmux-conf",
-        "uid": "n0077"
-      },
-      "id": "op1",
-      "op": "add-node",
-      "step": "s2"
-    },
-    {
-      "at": 1789602259,
-      "detail": {
-        "impl": "fb-share-tmux-conf-impl",
-        "node": "fb-share-tmux-conf",
-        "path": "share/tmux.conf"
-      },
-      "id": "op2",
-      "op": "add-impl",
-      "step": "s2"
-    },
-    {
-      "at": 1789602270,
-      "detail": {
-        "name": "shell-assets-code"
-      },
-      "id": "op3",
-      "op": "revise-prose",
-      "step": "s2"
-    },
-    {
-      "at": 1789602281,
-      "detail": {
-        "id": "r-terminal-env",
-        "now": {
-          "accept": "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.",
-          "created": 1789599516,
-          "kind": "functional",
-          "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."
-        },
-        "prev": {
-          "accept": "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.",
-          "created": 1789599516,
-          "kind": "functional",
-          "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."
-        }
-      },
-      "id": "op4",
-      "op": "edit-requirement",
-      "step": "s2"
-    },
-    {
-      "at": 1789602293,
-      "detail": {
-        "dependents": [
-          "fb-lib-shell"
-        ],
-        "name": "fb-lib-shell-impl",
-        "prev_status": "drafting",
-        "uid": "n0068",
-        "ver": 1
-      },
-      "id": "op5",
-      "op": "retire-succeed",
-      "step": "s3"
-    },
-    {
-      "at": 1789602293,
-      "detail": {
-        "name": "fb-lib-shell-impl"
-      },
-      "id": "op6",
-      "op": "revise-prose",
-      "step": "s3"
-    }
-  ],
-  "mode": "change",
   "processed": [
     "scope-containment"
   ],
-  "uid_seq": 78
+  "runs": {
+    "jeff-sg-shebang-1792274040": {
+      "change": {
+        "comprehend": {
+          "anchors": [
+            "fb-lib-schedule",
+            "fb-plist-template",
+            "install-experience",
+            "tool-catalog"
+          ],
+          "attach_points": [
+            "method-fns-code",
+            "req-fail-loud",
+            "result-capture-and-summary",
+            "run-report-surface"
+          ],
+          "candidates": [
+            "req-per-tool-method-dispatch",
+            "method-fns-code",
+            "heterogeneous-install-methods"
+          ],
+          "desc": "post-install code signature verification and ad-hoc re-sign of each installed tool's Mach-O binaries, reported per tool in the run summary",
+          "done": true,
+          "impact": [
+            "argv-and-usage",
+            "argv-code",
+            "catalog-loader-code",
+            "cli-arg-dispatch",
+            "darwin-truth-per-tool",
+            "dry-run-without-sideeffects",
+            "fail-loud-aggregation",
+            "fb-lib-catalog",
+            "fb-lib-catalog-impl",
+            "fb-lib-methods",
+            "fb-lib-methods-impl",
+            "fb-lib-prereq",
+            "fb-lib-prereq-impl",
+            "fb-lib-report",
+            "fb-lib-report-impl",
+            "fb-lib-schedule",
+            "fb-lib-schedule-impl",
+            "fb-manifest-tsv",
+            "fb-manifest-tsv-impl",
+            "fb-plist-template",
+            "fb-plist-template-impl",
+            "heterogeneous-install-methods",
+            "homebrew-and-toolchains",
+            "install-experience",
+            "install-method-functions",
+            "isolated-runner-reporter",
+            "launchd-scheduler-state",
+            "macacfs-command-surface",
+            "manifest-store",
+            "method-dispatch",
+            "method-fns-code",
+            "never-start-services",
+            "prereq-autoinstaller",
+            "reporter-code",
+            "req-fail-loud",
+            "result-capture-and-summary",
+            "run-report-surface",
+            "schedule-state-and-plist",
+            "scheduled-update-behavior",
+            "scheduler-code",
+            "scope-containment",
+            "shell-setup-experience",
+            "stateful-schedule-escalation",
+            "terminal-environment-parity",
+            "tool-catalog",
+            "toolchain-helpers-code",
+            "toolchain-prereqs-and-order",
+            "update-equals-reinstall-idempotency"
+          ],
+          "round": 4,
+          "stage": "attach"
+        },
+        "current": null,
+        "cursor": 5,
+        "done": [
+          "s1",
+          "s2",
+          "s3",
+          "s4",
+          "s5"
+        ],
+        "graph_fp": {
+          "argv-and-usage": "520a6130ba38091c7d784e3487e9d6abcff45154",
+          "argv-code": "d5271fe6c7632a82790cd1549eae3329457c0db6",
+          "bootstrap-and-self-update": "fcfc42c3f62405f5b8c7b121cb53bea965145c00",
+          "catalog-loader-code": "f186c96d5e6024b15fbebd9f9d64106d5835fa02",
+          "cli-arg-dispatch": "07d6bbb37c99932b8298cf8cd5da8fb7415a1782",
+          "darwin-truth-per-tool": "40eae413940f1a57de913e368407091da02811d9",
+          "dry-run-without-sideeffects": "e1185842376cf1a43283aa1a2ed4dbf4780d1457",
+          "fail-loud-aggregation": "6fdfd27726f7e3136823690125e45f8444cd2f13",
+          "fb-bin-macacfs": "f5af4afa62577a35769f038860cb3179decb1fee",
+          "fb-bin-macacfs-impl": "10eb246991164f6646331a61f62b3a7dda814d63",
+          "fb-install-sh": "a17a5ff707d437f1afd8ede00aace2d74ed59a15",
+          "fb-install-sh-impl": "643cc89bb8afa7aee92efa6aef9b5acfe5f88c6d",
+          "fb-lib-catalog": "1a125ff53a1dd2ec73c29f43f15845256b23f602",
+          "fb-lib-catalog-impl": "b52fe596b9bc9f41201c106b97cff1770946e332",
+          "fb-lib-methods": "32714bda931c0fe91bc8e3f2fe35b0ae35799626",
+          "fb-lib-methods-impl": "0b62591b7feabd838fca75cb52dc2adb86db46e6",
+          "fb-lib-prereq": "a354bab61aeec8713f99347a1dde25793aba0ef3",
+          "fb-lib-prereq-impl": "8f456ce0eb499e591ded21265c40c2cb25a06c29",
+          "fb-lib-report": "973cf84dba4f4384802f0228facb0e99e619bfdf",
+          "fb-lib-report-impl": "920e55383830590dbc93507a8bd44477c61c6574",
+          "fb-lib-schedule": "dba7b4663231b5eecb1f4e946b4a8b6a6b503b11",
+          "fb-lib-schedule-impl": "2f849f6b8d0ed04cdf87bd8985436be6a9e949bd",
+          "fb-lib-selfupdate": "0c351987afba816796c93e42658e9167bad056cb",
+          "fb-lib-selfupdate-impl": "fe8c4447b478647ac990fff5c3647e7a33f03d3a",
+          "fb-lib-shell": "34018d69b4835f7f2ae401ff0901a336190d45fb",
+          "fb-lib-shell-impl": "63dd755d8b7b197364e34958c603309430fc29f2",
+          "fb-manifest-tsv": "379b60ba9cbdde98629fd59d4cc1a26e17e84b11",
+          "fb-manifest-tsv-impl": "09fd973318c5fd6402f225c894e942d9504d68a7",
+          "fb-plist-template": "d7e9fdb6ef5e3c07ea470a954b08d6ce435fac73",
+          "fb-plist-template-impl": "876e64d4b1bc70d7d7a4cff13d23937a24363997",
+          "fb-readme": "7c5c7f8f14c2f6fa6fc49d58669b75244f82563e",
+          "fb-readme-impl": "86d102f8476446c4c3085cc1b7b7e671239d959d",
+          "fb-share-atuin-guard": "ee706b46b5677a9d13f6324419cbfef0c755d567",
+          "fb-share-atuin-guard-impl": "cb4f94974be8ed3d107281046b6759b20ec8800b",
+          "fb-share-powerlevel-preset": "9ae15df57cd7be927a6cf6097e648670537a72ed",
+          "fb-share-powerlevel-preset-impl": "3aeb1e61e663e23f2bf90f673dfd4f3b09241b75",
+          "fb-share-shell-bundle": "7937d887bbbfb4092fc7f23f7e06e4e12c7af856",
+          "fb-share-shell-bundle-impl": "b9c3165f5a6d46ecef62cc6d03c676cba094a7cb",
+          "fb-share-tmux-conf": "b18399a8f051be7f2a2cdc30de03e7457b3ced02",
+          "fb-share-tmux-conf-impl": "d18d66eabff4fcdd1110730ce46e1c3b659fce5e",
+          "fb-share-zshrc-mac": "1e38f726d4a050e99e40de681262ff44c00c198d",
+          "fb-share-zshrc-mac-impl": "d6aa66cb389887bc4a5f35520d096f266a671bf7",
+          "heterogeneous-install-methods": "8d2c6c53ca33d4c77c7d8e76a06c9d438b59529c",
+          "homebrew-and-toolchains": "ee1e8a1e5550333e78b9a5025ce5bfcca83fae62",
+          "install-experience": "3936059e66552a5072e6d98fc17aaa123e69ef4e",
+          "install-method-functions": "a45ac9f842f5d2fd081779564885c97aab83b39b",
+          "isolated-runner-reporter": "d6cde5a0983c4c237e6a08b2ee1c63cba1991007",
+          "launchd-scheduler-state": "0dfe75ea40eccb4d1b3f2eb3b64ddf8fe88de30b",
+          "macacfs-command-surface": "f6cad564e662c1ade1af7092ba64e68e0a9ed8f5",
+          "manifest-store": "479ba4444c5a92c63cd2e5899c173614798b16d4",
+          "method-dispatch": "2d3e425939584e6940b0ae8e6688facd1b165ea3",
+          "method-fns-code": "fa006cc1135bdee7edea792e5f94216ebd1425ff",
+          "never-start-services": "26b262ddfaef0e83dcd0826fee7acf33bf2b7c3e",
+          "prereq-autoinstaller": "57595dd16cd3ee618f39c7fc7f1a2f7ad5c8f735",
+          "repo-fetch-replace": "ed38efbeb5f063e69463263cdadb5da2f6a1a09e",
+          "reporter-code": "fc7287c4ea60e93f997f7423b35ae8488d87d6de",
+          "req-dry-run-no-side-effects": "18b48e2d895e1dce37ac46aaaadbb359b2f6aed5",
+          "req-fail-loud": "cc15cacc101bdaa77d7e84b5d932a32995cdbdbd",
+          "req-failure-retry-escalation": "d06a41bc69a25c4ce5f666e302769b7e836b0c4b",
+          "req-install-whole-suite": "2969cc9d226bff9a705a934ae0344381bf8c9382",
+          "req-macos-only": "fc3451760b955b6eada5581964ee409151448c6c",
+          "req-manual-cli-update": "8f4cf0ffb11b0af7e2562e704b606576e5801514",
+          "req-minimal-scope": "e68c70d688a99146709151e2a6d03ca6be360e5a",
+          "req-never-start-servers": "5416fca3c7742873d3936c6e2d68c2e4d65a6df5",
+          "req-per-tool-method-dispatch": "c6b562fb37b3c8c631103480e44b66f501139034",
+          "req-prefer-homebrew": "5bb37dab85771e070dbc1b63dc330380f6bcd1bc",
+          "req-prerequisite-autoinstall": "894a146d5c36b06f71a5f30a56ca1778c3db6f8a",
+          "req-public-github-repo": "12317beef538e285c5b2ff3ebbc256e8f655d106",
+          "req-scheduled-run-tracking": "878ecb22bde87e0cadb0b88ababcf5dd890dbaa1",
+          "req-self-update": "e1cfd717a1bb802a9ae03842f49136005af40a6b",
+          "req-terminal-environment-parity": "06dae2a47cd7dd43f79f70835c76bbf6adb30ff4",
+          "req-weekly-update-launchagent": "63f61a7b3f32fba97a1d9ecf224a77d4b38508ee",
+          "result-capture-and-summary": "3c10963e4ae8310ef9b8c873f41f9a830d45aa00",
+          "run-report-surface": "047b80cf4902cc73e90d088e1027e6c94f88d0a2",
+          "schedule-state-and-plist": "28a06f676d0c90fe035903840b34ab2d16bfe295",
+          "scheduled-update-behavior": "d77495027910a53aaa2b988f497228c0978af770",
+          "scheduler-code": "a80d34b1bb87e3acb103f580ebce2e3da02905d4",
+          "scope-containment": "9309ffd0c822a08c237699e8ee9ee51cb55cdbcc",
+          "self-update-bootstrap": "4f002b9f805f5e04cb97568d45da0a85ac6e9ce2",
+          "self-update-capability": "9ac8648d43e84cf04138ba9e4d7e23907606d103",
+          "selfupdate-code": "27695e2eee80393339269c6e1b45ca0650a40523",
+          "shell-assets-code": "a0041ec7bab44c06c0a5a2aabfa0de64c4b489fb",
+          "shell-environment-catalog": "2383f04f87d7c75c923b127bfda980e3103d6443",
+          "shell-fns-code": "050a9b203227a2d86124f4908ed6fe93d4172b44",
+          "shell-setup-dispatch": "fb822778de76fb8454be35dae07be234fc5eef62",
+          "shell-setup-experience": "9a0f35754cb64c3ef0b4bd87d1768908667b7bb7",
+          "shell-setup-functions": "95d5659c0ca53e9847b9986e539dc5fb790ce1c0",
+          "shell-spec-store": "7a72dcdbd3751870bd60d433fbaddac7ae06c07e",
+          "stateful-schedule-escalation": "f1f6b61cde8997b136ef7ac5df6fa7b085989715",
+          "terminal-environment-parity": "150e70e9022cd6ac9b6cb5fde659decb3c0767ae",
+          "tool-catalog": "4d8c85ca351399dbdbaeea51e4fdc1e47e293795",
+          "toolchain-helpers-code": "d823f4519c0a31f93816d918aa5f0550382c00ea",
+          "toolchain-prereqs-and-order": "969278168d7652542618d1b6763f06ff1b6806a2",
+          "update-equals-reinstall-idempotency": "258758a00867ea3e100eeb0451dc8ea6172fe5ab"
+        },
+        "impact_set": [
+          "argv-and-usage",
+          "argv-code",
+          "catalog-loader-code",
+          "cli-arg-dispatch",
+          "darwin-truth-per-tool",
+          "dry-run-without-sideeffects",
+          "fail-loud-aggregation",
+          "fb-lib-catalog",
+          "fb-lib-catalog-impl",
+          "fb-lib-methods",
+          "fb-lib-methods-impl",
+          "fb-lib-prereq",
+          "fb-lib-prereq-impl",
+          "fb-lib-report",
+          "fb-lib-report-impl",
+          "fb-lib-schedule",
+          "fb-lib-schedule-impl",
+          "fb-manifest-tsv",
+          "fb-manifest-tsv-impl",
+          "fb-plist-template",
+          "fb-plist-template-impl",
+          "heterogeneous-install-methods",
+          "homebrew-and-toolchains",
+          "install-experience",
+          "install-method-functions",
+          "isolated-runner-reporter",
+          "launchd-scheduler-state",
+          "macacfs-command-surface",
+          "manifest-store",
+          "method-dispatch",
+          "method-fns-code",
+          "never-start-services",
+          "prereq-autoinstaller",
+          "reporter-code",
+          "req-fail-loud",
+          "result-capture-and-summary",
+          "run-report-surface",
+          "schedule-state-and-plist",
+          "scheduled-update-behavior",
+          "scheduler-code",
+          "scope-containment",
+          "shell-setup-experience",
+          "stateful-schedule-escalation",
+          "terminal-environment-parity",
+          "tool-catalog",
+          "toolchain-helpers-code",
+          "toolchain-prereqs-and-order",
+          "update-equals-reinstall-idempotency"
+        ],
+        "phase": 3,
+        "plan": {
+          "steps": [
+            {
+              "aim": "add the signature-repair ladder: requirement, problem, capability, subsystem, component, file bead bound in place to lib/codesign.sh (v0.15 add-impl binds the bead itself; no separate -impl node)",
+              "expect": [
+                "req-runnable-signatures",
+                "invalid-upstream-signatures",
+                "signature-repair",
+                "signature-verify-and-resign",
+                "signature-repair-code",
+                "fb-lib-codesign"
+              ],
+              "id": "s1",
+              "kind": "develop"
+            },
+            {
+              "aim": "wire signature repair into install: install-experience and run-report-surface gain it; bin/macacfs runs each tool through install-then-verify; lib/report.sh shows per-tool notes on ok rows",
+              "expect": [
+                "install-experience@v2",
+                "run-report-surface@v2",
+                "fb-bin-macacfs-impl@v5",
+                "fb-lib-report-impl@v2"
+              ],
+              "id": "s2",
+              "kind": "develop",
+              "target": "install-experience"
+            },
+            {
+              "aim": "stop brenner installer side-installing pinned ntm/cass/cm into ~/.local/bin (skip flags in manifest), under a new no-side-installs requirement",
+              "expect": [
+                "req-no-cross-tool-side-installs",
+                "fb-manifest-tsv-impl@v2"
+              ],
+              "id": "s3",
+              "kind": "develop",
+              "target": "fb-manifest-tsv-impl"
+            },
+            {
+              "aim": "LaunchAgent gets a real PATH (EnvironmentVariables) and the tick reloads its own job from a detached helper so it stays loaded",
+              "expect": [
+                "fb-plist-template-impl@v2",
+                "fb-lib-schedule-impl@v2",
+                "fb-plist-template@v2",
+                "fb-lib-schedule@v2"
+              ],
+              "id": "s4",
+              "kind": "develop",
+              "target": "fb-lib-schedule-impl"
+            },
+            {
+              "aim": "document signature repair, brenner skip flags and LaunchAgent PATH in README",
+              "expect": [
+                "fb-readme-impl@v2"
+              ],
+              "id": "s5",
+              "kind": "develop",
+              "target": "fb-readme-impl"
+            }
+          ]
+        }
+      },
+      "ledger": [
+        {
+          "at": 1792285757,
+          "detail": {
+            "name": "req-runnable-signatures",
+            "uid": "n0079"
+          },
+          "id": "op1",
+          "op": "add-node",
+          "step": "s1"
+        },
+        {
+          "at": 1792285757,
+          "detail": {
+            "name": "invalid-upstream-signatures",
+            "uid": "n0080"
+          },
+          "id": "op2",
+          "op": "add-node",
+          "step": "s1"
+        },
+        {
+          "at": 1792285757,
+          "detail": {
+            "name": "signature-repair",
+            "uid": "n0081"
+          },
+          "id": "op3",
+          "op": "add-node",
+          "step": "s1"
+        },
+        {
+          "at": 1792285758,
+          "detail": {
+            "name": "signature-verify-and-resign",
+            "uid": "n0082"
+          },
+          "id": "op4",
+          "op": "add-node",
+          "step": "s1"
+        },
+        {
+          "at": 1792285758,
+          "detail": {
+            "name": "signature-repair-code",
+            "uid": "n0083"
+          },
+          "id": "op5",
+          "op": "add-node",
+          "step": "s1"
+        },
+        {
+          "at": 1792285759,
+          "detail": {
+            "name": "fb-lib-codesign",
+            "uid": "n0084"
+          },
+          "id": "op6",
+          "op": "add-node",
+          "step": "s1"
+        },
+        {
+          "at": 1792285759,
+          "detail": {
+            "impl": "fb-lib-codesign",
+            "in_place": true,
+            "node": "fb-lib-codesign",
+            "path": "lib/codesign.sh"
+          },
+          "id": "op7",
+          "op": "add-impl",
+          "step": "s1"
+        },
+        {
+          "at": 1792285775,
+          "detail": {
+            "name": "signature-verify-and-resign"
+          },
+          "id": "op8",
+          "op": "revise-prose",
+          "step": "s1"
+        },
+        {
+          "at": 1792285776,
+          "detail": {
+            "name": "signature-repair-code"
+          },
+          "id": "op9",
+          "op": "revise-prose",
+          "step": "s1"
+        },
+        {
+          "at": 1792285814,
+          "detail": {
+            "dependents": [
+              "heterogeneous-install-methods",
+              "darwin-truth-per-tool",
+              "toolchain-prereqs-and-order",
+              "never-start-services"
+            ],
+            "name": "install-experience",
+            "prev_status": "drafting",
+            "uid": "n0012",
+            "ver": 1
+          },
+          "id": "op10",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792285815,
+          "detail": {
+            "dependents": [
+              "fail-loud-aggregation",
+              "dry-run-without-sideeffects"
+            ],
+            "name": "run-report-surface",
+            "prev_status": "drafting",
+            "uid": "n0014",
+            "ver": 1
+          },
+          "id": "op11",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792285815,
+          "detail": {
+            "dependents": [
+              "fb-bin-macacfs"
+            ],
+            "name": "fb-bin-macacfs-impl",
+            "prev_status": "drafting",
+            "uid": "n0048",
+            "ver": 4
+          },
+          "id": "op12",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792285815,
+          "detail": {
+            "dependents": [
+              "fb-lib-report"
+            ],
+            "name": "fb-lib-report-impl",
+            "prev_status": "drafting",
+            "uid": "n0053",
+            "ver": 1
+          },
+          "id": "op13",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792285826,
+          "detail": {
+            "dst": "req-runnable-signatures",
+            "src": "install-experience",
+            "type": "validated-by"
+          },
+          "id": "op14",
+          "op": "add-edge",
+          "step": "s2"
+        },
+        {
+          "at": 1792285826,
+          "detail": {
+            "dst": "req-runnable-signatures",
+            "src": "run-report-surface",
+            "type": "validated-by"
+          },
+          "id": "op15",
+          "op": "add-edge",
+          "step": "s2"
+        },
+        {
+          "at": 1792285826,
+          "detail": {
+            "name": "install-experience"
+          },
+          "id": "op16",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792285838,
+          "detail": {
+            "name": "run-report-surface"
+          },
+          "id": "op17",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792285838,
+          "detail": {
+            "name": "fb-bin-macacfs-impl"
+          },
+          "id": "op18",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792285838,
+          "detail": {
+            "name": "fb-lib-report-impl"
+          },
+          "id": "op19",
+          "op": "revise-prose",
+          "step": "s2"
+        },
+        {
+          "at": 1792285850,
+          "detail": {
+            "name": "req-no-cross-tool-side-installs",
+            "uid": "n0085"
+          },
+          "id": "op20",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792285850,
+          "detail": {
+            "dependents": [
+              "fb-manifest-tsv"
+            ],
+            "name": "fb-manifest-tsv-impl",
+            "prev_status": "drafting",
+            "uid": "n0050",
+            "ver": 1
+          },
+          "id": "op21",
+          "op": "retire-succeed",
+          "step": "s3"
+        },
+        {
+          "at": 1792285851,
+          "detail": {
+            "dst": "req-no-cross-tool-side-installs",
+            "src": "fb-manifest-tsv",
+            "type": "validated-by"
+          },
+          "id": "op22",
+          "op": "add-edge",
+          "step": "s3"
+        },
+        {
+          "at": 1792285851,
+          "detail": {
+            "name": "fb-manifest-tsv-impl"
+          },
+          "id": "op23",
+          "op": "revise-prose",
+          "step": "s3"
+        },
+        {
+          "at": 1792285882,
+          "detail": {
+            "dependents": [
+              "scheduler-code"
+            ],
+            "name": "fb-plist-template",
+            "prev_status": "drafting",
+            "uid": "n0044",
+            "ver": 1
+          },
+          "id": "op24",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792285883,
+          "detail": {
+            "dependents": [
+              "fb-plist-template"
+            ],
+            "name": "fb-plist-template-impl",
+            "prev_status": "drafting",
+            "uid": "n0055",
+            "ver": 1
+          },
+          "id": "op25",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792285883,
+          "detail": {
+            "dependents": [
+              "scheduler-code"
+            ],
+            "name": "fb-lib-schedule",
+            "prev_status": "drafting",
+            "uid": "n0043",
+            "ver": 1
+          },
+          "id": "op26",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792285883,
+          "detail": {
+            "dependents": [
+              "fb-lib-schedule"
+            ],
+            "name": "fb-lib-schedule-impl",
+            "prev_status": "drafting",
+            "uid": "n0054",
+            "ver": 1
+          },
+          "id": "op27",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792285896,
+          "detail": {
+            "name": "fb-plist-template"
+          },
+          "id": "op28",
+          "op": "revise-prose",
+          "step": "s4"
+        },
+        {
+          "at": 1792285896,
+          "detail": {
+            "name": "fb-plist-template-impl"
+          },
+          "id": "op29",
+          "op": "revise-prose",
+          "step": "s4"
+        },
+        {
+          "at": 1792285896,
+          "detail": {
+            "name": "fb-lib-schedule"
+          },
+          "id": "op30",
+          "op": "revise-prose",
+          "step": "s4"
+        },
+        {
+          "at": 1792285897,
+          "detail": {
+            "name": "fb-lib-schedule-impl"
+          },
+          "id": "op31",
+          "op": "revise-prose",
+          "step": "s4"
+        },
+        {
+          "at": 1792285923,
+          "detail": {
+            "dependents": [
+              "fb-readme"
+            ],
+            "name": "fb-readme-impl",
+            "prev_status": "drafting",
+            "uid": "n0058",
+            "ver": 1
+          },
+          "id": "op32",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1792285923,
+          "detail": {
+            "name": "fb-readme-impl"
+          },
+          "id": "op33",
+          "op": "revise-prose",
+          "step": "s5"
+        }
+      ],
+      "mode": "change",
+      "update": {
+        "edge_reasons": {
+          "argv-and-usage -validated-by-> req-minimal-scope": "Argument parsing admits only the closed verb+flag set and rejects anything else, so no ACFS-style provisioning or phase-runner command can ever be invoked.",
+          "argv-code -validated-by-> req-minimal-scope": "The argv parser code hard-codes the small verb set and errors on unknown input, enforcing in code that macacfs exposes only install, update, self-update, and schedule.",
+          "bootstrap-and-self-update -validated-by-> req-public-github-repo": "The curl install.sh one-liner and self-update both fetch from the public GitHub repo, so that published repo with its README is the distribution surface this behavior depends on.",
+          "bootstrap-and-self-update -validated-by-> req-self-update": "Running 'macacfs self-update' re-fetches the public repo and replaces the installed CLI, which is exactly the observable self-update behavior the requirement specifies.",
+          "catalog-loader-code -validated-by-> req-install-whole-suite": "Loading every manifest row and offering select-all iteration is what lets 'macacfs install' reach all 39 suite tools rather than a hard-coded subset.",
+          "cli-arg-dispatch -validated-by-> req-minimal-scope": "Restricting argv to install, update, self-update, and schedule plus global flags is the code-level enforcement of the deliberately minimal feature set.",
+          "darwin-truth-per-tool -validated-by-> req-install-whole-suite": "Recording verified per-tool macOS behavior, including SRPS, GIIL, and ASB lacking Darwin branches, is needed so all 39 tools actually install on a Mac.",
+          "dry-run-without-sideeffects -validated-by-> req-dry-run-no-side-effects": "This problem states the dry-run must be threaded through every dispatch branch with no network installs or disk changes, which is the requirement's acceptance condition.",
+          "fail-loud-aggregation -validated-by-> req-fail-loud": "Isolating each of the 39 steps, capturing exit code and stderr, and ending with a non-zero summary exit directly embodies the no-silent-failure requirement.",
+          "fb-bin-macacfs -accomplished-by-> fb-bin-macacfs-impl": "The bin/macacfs entrypoint bead is realized by its concrete implementation, which wires install/update/self-update/schedule dispatch and pins the Homebrew bash shebang.",
+          "fb-bin-macacfs -validated-by-> req-macos-only": "The entrypoint enforces the macOS-only check before dispatching, so the requirement's refusal on non-darwin hosts is implemented in bin/macacfs.",
+          "fb-bin-macacfs -validated-by-> req-manual-cli-update": "bin/macacfs dispatches the 'update' verb with optional tool selectors, giving users the manual all-tools or named-tools update the requirement demands.",
+          "fb-bin-macacfs -validated-by-> req-minimal-scope": "The entrypoint dispatches only install, update, self-update, and schedule, so its closed verb set is where minimal scope is concretely held in the shipped file.",
+          "fb-bin-macacfs-impl -serves-> fb-bin-macacfs": "This implementation fulfills the bin/macacfs bead, running tools then shell setup under install and guarding empty selector arrays against set -u aborts.",
+          "fb-install-sh -accomplished-by-> fb-install-sh-impl": "The install.sh bootstrap bead is delivered by the actual install.sh file that performs the darwin check, clones the repo, and puts macacfs on PATH.",
+          "fb-install-sh -validated-by-> req-macos-only": "install.sh performs a darwin check before cloning or installing anything, so the one-liner bootstrap itself refuses to run off macOS.",
+          "fb-install-sh -validated-by-> req-public-github-repo": "install.sh is the curl-able one-liner served from the public GitHub repo, making it the entry point of the public distribution the requirement describes.",
+          "fb-install-sh -validated-by-> req-self-update": "Self-update reuses install.sh's clone-and-install path, so this bootstrap script is the mechanism that reinstalls macacfs from the freshly fetched repo.",
+          "fb-install-sh-impl -serves-> fb-install-sh": "The concrete install.sh file is the implementation artifact that satisfies the install.sh bootstrap bead.",
+          "fb-lib-catalog -accomplished-by-> fb-lib-catalog-impl": "The catalog bead is realized by lib/catalog.sh, the shell code that parses share/manifest.tsv and resolves all or named tool selections.",
+          "fb-lib-catalog -validated-by-> req-install-whole-suite": "lib/catalog.sh resolves an 'all' selection to every manifest row, which is how a bare 'macacfs install' covers the whole 39-tool suite.",
+          "fb-lib-catalog-impl -serves-> fb-lib-catalog": "The lib/catalog.sh source file is the implementation that fulfills the catalog-loader bead's responsibilities.",
+          "fb-lib-methods -accomplished-by-> fb-lib-methods-impl": "The methods bead is delivered by lib/methods.sh, which contains the do_installer_sh, do_brew, do_cargo_git, do_go, do_npm, do_bash functions and dispatcher.",
+          "fb-lib-methods -validated-by-> req-dry-run-no-side-effects": "Every install method in lib/methods.sh is dry-run-aware, so tool installs print intended actions instead of executing them when --dry-run is set.",
+          "fb-lib-methods -validated-by-> req-never-start-servers": "lib/methods.sh only builds, installs, or upgrades binaries and never starts a service, which is where the no-daemon rule is enforced for the 39 tools.",
+          "fb-lib-methods -validated-by-> req-per-tool-method-dispatch": "lib/methods.sh supplies one function per install method plus a dispatcher keyed on the manifest's method field, exactly the per-tool dispatch required.",
+          "fb-lib-methods-impl -serves-> fb-lib-methods": "The lib/methods.sh file is the concrete implementation that fulfills the install-methods bead.",
+          "fb-lib-prereq -accomplished-by-> fb-lib-prereq-impl": "The prerequisite bead is realized by lib/prereq.sh, the script that ensures Homebrew and then the rust, go, uv, and node toolchains.",
+          "fb-lib-prereq -validated-by-> req-prerequisite-autoinstall": "lib/prereq.sh installs missing Homebrew, rust, go, uv, and node and reports what it installed, meeting the install-not-just-report gate requirement.",
+          "fb-lib-prereq-impl -serves-> fb-lib-prereq": "The lib/prereq.sh source file is the implementation satisfying the toolchain-prerequisite bead.",
+          "fb-lib-report -accomplished-by-> fb-lib-report-impl": "The reporter bead is delivered by lib/report.sh, which implements run_isolated, result accumulation, the summary table, and aggregate exit code.",
+          "fb-lib-report -validated-by-> req-dry-run-no-side-effects": "lib/report.sh renders the same table under --dry-run listing only intended actions, providing the 'prints what it would do' half of the requirement.",
+          "fb-lib-report -validated-by-> req-fail-loud": "lib/report.sh captures each tool's rc and stderr, renders failures as \u274c rows, and returns a non-zero aggregate exit, so failures are never swallowed.",
+          "fb-lib-report-impl -serves-> fb-lib-report": "The lib/report.sh file is the concrete implementation that fulfills the isolated-runner and summary reporter bead.",
+          "fb-lib-schedule -accomplished-by-> fb-lib-schedule-impl": "The scheduling bead is realized by lib/schedule.sh, holding state I/O, cadence calculation, plist writing, and the LaunchAgent tick entrypoint.",
+          "fb-lib-schedule -validated-by-> req-failure-retry-escalation": "lib/schedule.sh tracks consecutive failures and computes weekly, nightly, or 2pm cadence from them, implementing the retry-then-escalate schedule.",
+          "fb-lib-schedule -validated-by-> req-scheduled-run-tracking": "lib/schedule.sh reads and writes the state file holding last-run time and status, which is the recorded run history the requirement asks for.",
+          "fb-lib-schedule -validated-by-> req-weekly-update-launchagent": "lib/schedule.sh writes the LaunchAgent plist and reloads it via launchctl with a weekly default cadence, installing the required weekly updater.",
+          "fb-lib-schedule-impl -serves-> fb-lib-schedule": "The lib/schedule.sh source file is the implementation that fulfills the scheduler bead.",
+          "fb-lib-selfupdate -accomplished-by-> fb-lib-selfupdate-impl": "The self-update bead is delivered by lib/selfupdate.sh, which fetches the public repo into cache and atomically swaps the installed files.",
+          "fb-lib-selfupdate -validated-by-> req-self-update": "lib/selfupdate.sh re-downloads the repo and atomically replaces the installed CLI, libs, and manifest, which is the self-update behavior required.",
+          "fb-lib-selfupdate-impl -serves-> fb-lib-selfupdate": "The lib/selfupdate.sh file is the concrete implementation that fulfills the self-update bead.",
+          "fb-lib-shell -accomplished-by-> fb-lib-shell-impl": "The shell-provisioning bead is realized by lib/shell.sh, containing shell_brew_bundle, shell_omz, shell_p10k, shell_tmux and the other per-action functions plus shell_run.",
+          "fb-lib-shell -validated-by-> req-dry-run-no-side-effects": "Each lib/shell.sh provisioning function is dry-run-aware, so terminal setup under 'install --dry-run' changes nothing and only reports intended actions.",
+          "fb-lib-shell -validated-by-> req-never-start-servers": "lib/shell.sh functions never start a daemon such as atuin's, keeping terminal-environment setup within the install-binaries-only rule.",
+          "fb-lib-shell -validated-by-> req-terminal-environment-parity": "lib/shell.sh performs each ACFS-parity provisioning step, from Oh My Zsh and p10k to the brew bundle, font, zshrc, atuin, zoxide, lazygit, and ast-grep.",
+          "fb-lib-shell-impl -serves-> fb-lib-shell": "This lib/shell.sh implementation fulfills the shell bead, adding shell_tmux which installs ~/.tmux.conf from share/tmux.conf with a backup.",
+          "fb-manifest-tsv -accomplished-by-> fb-manifest-tsv-impl": "The manifest bead is delivered by the actual share/manifest.tsv data file with its 39 tab-separated tool rows.",
+          "fb-manifest-tsv -validated-by-> req-install-whole-suite": "share/manifest.tsv lists all 39 suite tools with repo and CLI name, so it defines the complete set 'macacfs install' must put on PATH.",
+          "fb-manifest-tsv -validated-by-> req-per-tool-method-dispatch": "Each manifest.tsv row carries a method column, which is the per-tool data the dispatcher uses to choose installer.sh, brew, cargo, go, npm, or bash.",
+          "fb-manifest-tsv -validated-by-> req-prefer-homebrew": "manifest.tsv marks MS and SRPS with the brew method, encoding the Homebrew preference for tools that publish a tap.",
+          "fb-manifest-tsv-impl -serves-> fb-manifest-tsv": "The share/manifest.tsv file is the implementation artifact that satisfies the 39-row catalog bead.",
+          "fb-plist-template -accomplished-by-> fb-plist-template-impl": "The plist-template bead is realized by share/macacfs.plist.template, the file with placeholders for program path and StartCalendarInterval.",
+          "fb-plist-template -validated-by-> req-weekly-update-launchagent": "The plist template is the LaunchAgent skeleton that gets filled with the weekly StartCalendarInterval and installed into ~/Library/LaunchAgents.",
+          "fb-plist-template-impl -serves-> fb-plist-template": "The share/macacfs.plist.template file is the concrete asset fulfilling the LaunchAgent template bead.",
+          "fb-readme -accomplished-by-> fb-readme-impl": "The README bead is delivered by the actual README.md describing macacfs as a mini-ACFS for Mac with install, update, and self-update usage.",
+          "fb-readme -validated-by-> req-public-github-repo": "The README frames macacfs plainly as a mini-ACFS-for-Mac with only its few functions, which the public-repo requirement explicitly calls for.",
+          "fb-readme-impl -serves-> fb-readme": "The README.md file is the implementation artifact that satisfies the documentation bead.",
+          "fb-share-atuin-guard -accomplished-by-> fb-share-atuin-guard-impl": "The atuin-guard bead is realized by share/atuin-guard.sh, the wrapper script that detects agent context and no-ops atuin history and hook calls.",
+          "fb-share-atuin-guard -validated-by-> req-terminal-environment-parity": "The requirement specifies atuin with an agent-safe shim, and atuin-guard.sh is that shim, preventing agent sessions from polluting history or hitting EPIPE.",
+          "fb-share-atuin-guard-impl -serves-> fb-share-atuin-guard": "The share/atuin-guard.sh file is the concrete implementation of the agent-safe atuin wrapper bead.",
+          "fb-share-powerlevel-preset -accomplished-by-> fb-share-powerlevel-preset-impl": "The p10k preset bead is delivered by share/p10k.zsh, the pre-baked Powerlevel10k config copied to ~/.p10k.zsh.",
+          "fb-share-powerlevel-preset -validated-by-> req-terminal-environment-parity": "Shipping a pre-baked p10k.zsh lets Powerlevel10k come up configured without the wizard, completing the themed-zsh part of terminal parity.",
+          "fb-share-powerlevel-preset-impl -serves-> fb-share-powerlevel-preset": "The share/p10k.zsh file is the implementation asset that fulfills the Powerlevel10k preset bead.",
+          "fb-share-shell-bundle -accomplished-by-> fb-share-shell-bundle-impl": "The shell-bundle bead is realized by share/shell-bundle.tsv, listing brew formulae like ripgrep, fd, bat, eza and the Meslo Nerd Font cask.",
+          "fb-share-shell-bundle -validated-by-> req-terminal-environment-parity": "shell-bundle.tsv declares the modern-CLI Homebrew bundle and Nerd Font cask that the parity requirement lists among required terminal components.",
+          "fb-share-shell-bundle-impl -serves-> fb-share-shell-bundle": "The share/shell-bundle.tsv file is the concrete data artifact fulfilling the modern-CLI bundle bead.",
+          "fb-share-tmux-conf -accomplished-by-> fb-share-tmux-conf-impl": "The tmux-config bead is delivered by share/tmux.conf, the ACFS configuration with Ctrl-a prefix, mouse, 50k scrollback, and agent-friendly settings.",
+          "fb-share-tmux-conf -validated-by-> req-terminal-environment-parity": "share/tmux.conf is the ACFS tmux config installed to ~/.tmux.conf with backup, satisfying the requirement's tmux-config component.",
+          "fb-share-tmux-conf-impl -serves-> fb-share-tmux-conf": "The share/tmux.conf file is the implementation asset that fulfills the ACFS tmux configuration bead.",
+          "fb-share-zshrc-mac -accomplished-by-> fb-share-zshrc-mac-impl": "The managed-zshrc bead is realized by share/zshrc.mac.zsh, which sources oh-my-zsh with p10k, plugins, brew shellenv, aliases, and zoxide/atuin init.",
+          "fb-share-zshrc-mac -validated-by-> req-terminal-environment-parity": "zshrc.mac.zsh is the mac-adapted managed zshrc installed with the prior ~/.zshrc backed up, a named component of the parity requirement.",
+          "fb-share-zshrc-mac-impl -serves-> fb-share-zshrc-mac": "The share/zshrc.mac.zsh file is the concrete asset fulfilling the mac-adapted managed zshrc bead.",
+          "heterogeneous-install-methods -validated-by-> req-per-tool-method-dispatch": "Because the 39 tools split across install.sh, Homebrew, go, cargo, npm, and bash, a naive loop fails on about nine, which motivates per-tool method dispatch.",
+          "homebrew-and-toolchains -validated-by-> req-prerequisite-autoinstall": "These helpers install Homebrew and then rustup, go, uv, and node via brew when absent, delivering the gate that installs missing toolchains rather than reporting.",
+          "install-experience -validated-by-> req-install-whole-suite": "'macacfs install' installs all 39 tools or a named subset using each one's correct method, the observable outcome the whole-suite requirement checks.",
+          "install-experience -validated-by-> req-macos-only": "The install experience is designed around Homebrew and macOS-specific per-tool methods, with no apt, systemctl, or VPS provisioning steps involved.",
+          "install-experience -validated-by-> req-never-start-servers": "The install experience explicitly never starts any tool's server or daemon, which is what the never-start-servers requirement verifies.",
+          "install-experience -validated-by-> req-prefer-homebrew": "During install the user sees Homebrew chosen wherever a tool has a tap, which is the observable form of the prefer-Homebrew requirement.",
+          "install-experience -validated-by-> req-prerequisite-autoinstall": "'macacfs install' first verifies and auto-installs missing toolchains before tool installs, matching the requirement that the gate installs prerequisites.",
+          "install-method-functions -validated-by-> req-per-tool-method-dispatch": "Providing do_installer_sh, do_brew, do_cargo_git, do_go, do_npm, and do_bash covers each of the roughly five methods the dispatch requirement enumerates.",
+          "isolated-runner-reporter -validated-by-> req-fail-loud": "Running each step in isolation without aborting, then printing a \u2705/\u274c summary and returning non-zero on any failure, is the fail-loud spine.",
+          "launchd-scheduler-state -validated-by-> req-failure-retry-escalation": "Persisting consecutive failures and rewriting the plist's StartCalendarInterval to weekly, nightly, or 2pm-daily on each fire implements the escalation policy.",
+          "macacfs-command-surface -validated-by-> req-minimal-scope": "The command surface intentionally omits user-provisioning, OS-upgrade, service-start, and phase-runner commands, so the limited verb set is how scope is contained.",
+          "macacfs-command-surface -validated-by-> req-terminal-environment-parity": "Terminal-environment setup is exposed through 'macacfs install' and refreshed by a full 'macacfs update', making the command surface the user's path to parity.",
+          "manifest-store -validated-by-> req-install-whole-suite": "A repo-shipped TSV manifest with one row per tool plus a select-all loader gives install a complete enumeration of the 39 tools.",
+          "method-dispatch -validated-by-> req-per-tool-method-dispatch": "Taking one catalog row and running its install or update through the matching method is the per-tool dispatch behavior the requirement defines.",
+          "method-fns-code -validated-by-> req-per-tool-method-dispatch": "This code unit holds the per-method functions and the dispatcher that selects one by the row's method field, realizing per-tool dispatch.",
+          "never-start-services -validated-by-> req-never-start-servers": "Because mcp_agent_mail, rust_proxy, and SRPS have daemon modes their installers may launch, this problem requires installing binaries only, as the requirement states.",
+          "prereq-autoinstaller -validated-by-> req-prerequisite-autoinstall": "Installing Homebrew first, then rust, go, uv, and node, and reporting what was installed before source builds run satisfies the auto-install gate.",
+          "repo-fetch-replace -validated-by-> req-self-update": "Cloning or pulling the public repo and atomically replacing the installed script, libs, and manifest is the core mechanism of self-update.",
+          "reporter-code -validated-by-> req-fail-loud": "This code unit captures rc and stderr per tool, renders the \u2705/\u274c table, and computes the aggregate exit, so a forced failure yields non-zero.",
+          "result-capture-and-summary -validated-by-> req-fail-loud": "Logging each step's rc and stderr to a temp file and computing an aggregate exit ensures failed tools surface with error output instead of vanishing.",
+          "run-report-surface -validated-by-> req-dry-run-no-side-effects": "Under --dry-run the end-of-run table shows only each tool's intended action and nothing is installed, the user-visible proof of side-effect-free dry-run.",
+          "run-report-surface -validated-by-> req-fail-loud": "Every run ends with a per-tool \u2705/\u274c table including captured errors and a non-zero exit on any failure, which is what fail-loud acceptance checks.",
+          "schedule-state-and-plist -validated-by-> req-scheduled-run-tracking": "Its state file with last-run time, status, and consecutive_failures plus read/write helpers is the persisted record the run-tracking requirement needs.",
+          "scheduled-update-behavior -validated-by-> req-failure-retry-escalation": "The user observes weekly runs that drop to nightly after a failure and to 2pm-daily after three, returning to weekly on success, matching the requirement.",
+          "scheduled-update-behavior -validated-by-> req-scheduled-run-tracking": "The scheduled behavior includes recording the last run's time and success or failure in a readable form, directly fulfilling run tracking.",
+          "scheduled-update-behavior -validated-by-> req-weekly-update-launchagent": "The installed LaunchAgent runs updates weekly by default, which is the baseline cadence the weekly-LaunchAgent requirement specifies.",
+          "scheduler-code -validated-by-> req-scheduled-run-tracking": "The scheduler code unit's state read/write functions persist last-run and outcome after each tick, making the run history readable as required.",
+          "scope-containment -validated-by-> req-minimal-scope": "This problem names scope creep toward full ACFS as the main risk and demands every node trace to the four allowed features, mirroring the minimal-scope requirement.",
+          "self-update-bootstrap -validated-by-> req-self-update": "This problem states macacfs must self-update via the ACFS bootstrap pattern using a canonical repo URL and atomic replace, which the requirement formalizes.",
+          "self-update-capability -validated-by-> req-self-update": "Fetching the public repo and atomically replacing the installed CLI, via the same path as install.sh, is the capability that delivers self-update.",
+          "selfupdate-code -validated-by-> req-self-update": "This code unit performs the repo fetch and atomic replacement of the installed CLI and manifest, so 'macacfs self-update' yields the latest version.",
+          "shell-assets-code -validated-by-> req-terminal-environment-parity": "The shipped share/ assets, namely brew bundle, zshrc, p10k preset, tmux config, and atuin shim, are the config files parity setup installs.",
+          "shell-environment-catalog -validated-by-> req-terminal-environment-parity": "This declarative catalog enumerates the brew formulae, font cask, zsh components, and standalone tools that together constitute the ACFS-parity terminal.",
+          "shell-fns-code -validated-by-> req-terminal-environment-parity": "lib/shell.sh's per-action functions and shell_run dispatcher are the concrete code that provisions each parity component and reports per item.",
+          "shell-setup-dispatch -validated-by-> req-terminal-environment-parity": "Routing each catalog entry to brew, cask, the omz installer, git clones, zshrc writing, or tool installs is how every parity component gets provisioned on macOS.",
+          "shell-setup-experience -validated-by-> req-macos-only": "Terminal setup relies on Homebrew, brew casks, and a mac-adapted zshrc, keeping it on macOS-native mechanisms with no Ubuntu or systemd machinery.",
+          "shell-setup-experience -validated-by-> req-never-start-servers": "Shell setup never runs 'atuin daemon' and reloads tmux only if a server is already running, so it starts no long-running service.",
+          "shell-setup-experience -validated-by-> req-terminal-environment-parity": "Under 'macacfs install' the user gets Oh My Zsh, p10k, plugins, managed zshrc, tmux config, Nerd Font, brew bundle, and atuin/zoxide/lazygit/ast-grep, i.e. parity.",
+          "shell-setup-functions -validated-by-> req-terminal-environment-parity": "These functions each perform one parity step, like cask font install, p10k clone, or zshrc write with backup, honoring dry-run and returning status.",
+          "shell-spec-store -validated-by-> req-terminal-environment-parity": "The share/ data files declare the brew bundle and ship the zshrc, p10k preset, and atuin shim that the parity requirement lists as deliverables.",
+          "stateful-schedule-escalation -validated-by-> req-failure-retry-escalation": "Since launchd is stateless but the weekly-nightly-2pm cadence is stateful, this problem forces a persisted state file that rewrites the schedule, as the requirement needs.",
+          "terminal-environment-parity -validated-by-> req-terminal-environment-parity": "This problem identifies that ACFS provisions a whole themed zsh and modern-CLI environment that macOS must reproduce, which the parity requirement then specifies.",
+          "tool-catalog -validated-by-> req-install-whole-suite": "As the single source of truth with one row per tool for all 39, the catalog defines exactly which CLIs install must place on PATH.",
+          "toolchain-helpers-code -validated-by-> req-prerequisite-autoinstall": "This code unit ensures Homebrew and then installs whichever of rust, go, uv, and node are missing, implementing the installing prerequisite gate.",
+          "toolchain-prereqs-and-order -validated-by-> req-prerequisite-autoinstall": "Source-built tools need cargo, go, uv, or node first, so on a fresh Mac Homebrew and toolchains must be installed in order, motivating an installing gate.",
+          "update-equals-reinstall-idempotency -validated-by-> req-manual-cli-update": "Manual update re-runs each tool's latest-installing method, so idempotent in-place upgrades are what make 'macacfs update' for all or named tools safe."
+        },
+        "migrated": true,
+        "requirement_names": {
+          "r-cli-update": "req-manual-cli-update",
+          "r-dry-run": "req-dry-run-no-side-effects",
+          "r-fail-loud": "req-fail-loud",
+          "r-github-repo": "req-public-github-repo",
+          "r-install-all": "req-install-whole-suite",
+          "r-macos-only": "req-macos-only",
+          "r-method-dispatch": "req-per-tool-method-dispatch",
+          "r-no-servers": "req-never-start-servers",
+          "r-prefer-brew": "req-prefer-homebrew",
+          "r-prereq-autoinstall": "req-prerequisite-autoinstall",
+          "r-retry-escalation": "req-failure-retry-escalation",
+          "r-run-tracking": "req-scheduled-run-tracking",
+          "r-scope-min": "req-minimal-scope",
+          "r-self-update": "req-self-update",
+          "r-terminal-env": "req-terminal-environment-parity",
+          "r-weekly-plist": "req-weekly-update-launchagent"
+        }
+      }
+    }
+  },
+  "uid_seq": 85
 }

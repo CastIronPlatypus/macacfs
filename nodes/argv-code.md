@@ -11,14 +11,16 @@
       "dst": "fb-bin-macacfs",
       "reason": "The argv/dispatch code lives in bin/macacfs.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-minimal-scope",
+      "reason": "The argv parser code hard-codes the small verb set and errors on unknown input, enforcing in code that macacfs exposes only install, update, self-update, and schedule.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "argv-code",
   "node_type": "impl",
-  "obligations": [
-    "r-scope-min"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0036",

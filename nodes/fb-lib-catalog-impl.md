@@ -4,15 +4,14 @@
   "edges": [
     {
       "dst": "fb-lib-catalog",
+      "reason": "The lib/catalog.sh source file is the implementation that fulfills the catalog-loader bead's responsibilities.",
       "type": "serves"
     }
   ],
   "impl_path": "lib/catalog.sh",
   "is_bead": true,
-  "is_impl": true,
   "name": "fb-lib-catalog-impl",
   "node_type": "impl",
-  "obligations": [],
   "realized_at": "0.14.0",
   "realized_fp": "1789594579:1905",
   "status": "drafting",

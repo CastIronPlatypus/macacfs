@@ -9,15 +9,18 @@
     },
     {
       "dst": "fb-readme-impl",
+      "reason": "The README bead is delivered by the actual README.md describing macacfs as a mini-ACFS for Mac with install, update, and self-update usage.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-public-github-repo",
+      "reason": "The README frames macacfs plainly as a mini-ACFS-for-Mac with only its few functions, which the public-repo requirement explicitly calls for.",
+      "type": "validated-by"
     }
   ],
   "is_bead": true,
   "name": "fb-readme",
   "node_type": "impl",
-  "obligations": [
-    "r-github-repo"
-  ],
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0047",

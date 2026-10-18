@@ -9,16 +9,23 @@
     },
     {
       "dst": "fb-lib-report-impl",
+      "reason": "The reporter bead is delivered by lib/report.sh, which implements run_isolated, result accumulation, the summary table, and aggregate exit code.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-fail-loud",
+      "reason": "lib/report.sh captures each tool's rc and stderr, renders failures as \u274c rows, and returns a non-zero aggregate exit, so failures are never swallowed.",
+      "type": "validated-by"
+    },
+    {
+      "dst": "req-dry-run-no-side-effects",
+      "reason": "lib/report.sh renders the same table under --dry-run listing only intended actions, providing the 'prints what it would do' half of the requirement.",
+      "type": "validated-by"
     }
   ],
   "is_bead": true,
   "name": "fb-lib-report",
   "node_type": "impl",
-  "obligations": [
-    "r-fail-loud",
-    "r-dry-run"
-  ],
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0042",

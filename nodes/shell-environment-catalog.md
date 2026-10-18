@@ -1,13 +1,16 @@
 <!--stratified-action
 {
   "created": 1789599605,
-  "edges": [],
+  "edges": [
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "This declarative catalog enumerates the brew formulae, font cask, zsh components, and standalone tools that together constitute the ACFS-parity terminal.",
+      "type": "validated-by"
+    }
+  ],
   "is_bead": false,
   "name": "shell-environment-catalog",
   "node_type": "unclassified",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0061",

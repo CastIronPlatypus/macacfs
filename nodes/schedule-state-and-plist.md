@@ -11,14 +11,16 @@
       "dst": "scheduler-code",
       "reason": "The scheduling subsystem is realized by the scheduler code.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-scheduled-run-tracking",
+      "reason": "Its state file with last-run time, status, and consecutive_failures plus read/write helpers is the persisted record the run-tracking requirement needs.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "schedule-state-and-plist",
   "node_type": "unclassified",
-  "obligations": [
-    "r-run-tracking"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0027",

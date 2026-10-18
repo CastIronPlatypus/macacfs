@@ -1,13 +1,16 @@
 <!--stratified-action
 {
   "created": 1789599605,
-  "edges": [],
+  "edges": [
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "Routing each catalog entry to brew, cask, the omz installer, git clones, zshrc writing, or tool installs is how every parity component gets provisioned on macOS.",
+      "type": "validated-by"
+    }
+  ],
   "is_bead": false,
   "name": "shell-setup-dispatch",
   "node_type": "unclassified",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0062",

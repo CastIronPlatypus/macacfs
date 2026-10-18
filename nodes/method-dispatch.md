@@ -21,14 +21,16 @@
       "dst": "homebrew-and-toolchains",
       "reason": "The brew branch of dispatch relies on the Homebrew helper.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-per-tool-method-dispatch",
+      "reason": "Taking one catalog row and running its install or update through the matching method is the per-tool dispatch behavior the requirement defines.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "method-dispatch",
   "node_type": "unclassified",
-  "obligations": [
-    "r-method-dispatch"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0017",

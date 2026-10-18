@@ -16,14 +16,16 @@
       "dst": "shell-setup-experience",
       "reason": "Shell setup reuses the isolated runner + summary so each component (omz, p10k, font, brew bundle, atuin, zoxide, lazygit) reports success/failure independently.",
       "type": "serves"
+    },
+    {
+      "dst": "req-fail-loud",
+      "reason": "Running each step in isolation without aborting, then printing a \u2705/\u274c summary and returning non-zero on any failure, is the fail-loud spine.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "isolated-runner-reporter",
   "node_type": "unclassified",
-  "obligations": [
-    "r-fail-loud"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0019",

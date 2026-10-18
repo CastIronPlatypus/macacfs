@@ -11,14 +11,16 @@
       "dst": "catalog-loader-code",
       "reason": "The manifest store is realized by the loader code (+ data).",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-install-whole-suite",
+      "reason": "A repo-shipped TSV manifest with one row per tool plus a select-all loader gives install a complete enumeration of the 39 tools.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "manifest-store",
   "node_type": "unclassified",
-  "obligations": [
-    "r-install-all"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0023",

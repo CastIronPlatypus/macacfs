@@ -21,21 +21,27 @@
       "dst": "method-dispatch",
       "reason": "install/update commands are realized by method dispatch.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-minimal-scope",
+      "reason": "The command surface intentionally omits user-provisioning, OS-upgrade, service-start, and phase-runner commands, so the limited verb set is how scope is contained.",
+      "type": "validated-by"
+    },
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "Terminal-environment setup is exposed through 'macacfs install' and refreshed by a full 'macacfs update', making the command surface the user's path to parity.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "macacfs-command-surface",
   "node_type": "surface",
-  "obligations": [
-    "r-scope-min",
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "surface",
-  "succeeds": "macacfs-command-surface@v1",
+  "succeeds": "macacfs-command-surface@v2",
   "uid": "n0011",
-  "version": 2
+  "version": 3
 }
 -->
 
-The only things an observer can invoke: 'macacfs install [TOOL...]', 'macacfs update [TOOL...]', 'macacfs shell' (set up the terminal environment: omz/p10k/plugins/font, the modern-CLI brew bundle, atuin(+shim)/zoxide/lazygit/ast-grep), 'macacfs self-update', 'macacfs schedule [--install|--uninstall|--status]', plus global flags --dry-run, --list, --version, --help. 'macacfs update' also brew-upgrades the shell bundle. There is intentionally NO user-provisioning, OS-upgrade, service-start, or phase-runner command — the limited surface IS how scope containment ([[scope-containment]]) is enforced, and it carries the manual per-tool/all update contract ([[update-equals-reinstall-idempotency]]). Accomplished by [[cli-arg-dispatch|accomplished-by]], [[method-dispatch|accomplished-by]], and [[shell-setup-dispatch|accomplished-by]].
+The only things an observer can invoke: 'macacfs install [TOOL...]' — which installs BOTH the 39 tools AND the terminal environment (omz/p10k/plugins/tmux/font, the modern-CLI brew bundle, atuin(+shim)/zoxide/lazygit/ast-grep) in one command — 'macacfs update [TOOL...]' (a full update also brew-upgrades the shell bundle), 'macacfs self-update', 'macacfs schedule [--install|--uninstall|--status]', plus global flags --dry-run, --list, --version, --help. There is NO standalone shell command; terminal setup happens under install. There is intentionally NO user-provisioning, OS-upgrade, service-start, or phase-runner command — the limited surface IS how scope containment ([[scope-containment]]) is enforced, and it carries the manual per-tool/all update contract ([[update-equals-reinstall-idempotency]]). Accomplished by [[cli-arg-dispatch|accomplished-by]], [[method-dispatch|accomplished-by]], and [[shell-setup-dispatch|accomplished-by]].

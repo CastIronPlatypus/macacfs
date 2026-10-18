@@ -21,14 +21,16 @@
       "dst": "fb-readme",
       "reason": "The README documents distribution/bootstrap.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-self-update",
+      "reason": "This code unit performs the repo fetch and atomic replacement of the installed CLI and manifest, so 'macacfs self-update' yields the latest version.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "selfupdate-code",
   "node_type": "impl",
-  "obligations": [
-    "r-self-update"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0035",

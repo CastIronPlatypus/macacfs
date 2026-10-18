@@ -11,14 +11,16 @@
       "dst": "method-fns-code",
       "reason": "The method-functions subsystem is realized by the method fns code.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-per-tool-method-dispatch",
+      "reason": "Providing do_installer_sh, do_brew, do_cargo_git, do_go, do_npm, and do_bash covers each of the roughly five methods the dispatch requirement enumerates.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "install-method-functions",
   "node_type": "unclassified",
-  "obligations": [
-    "r-method-dispatch"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0024",

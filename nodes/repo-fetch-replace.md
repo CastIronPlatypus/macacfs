@@ -11,14 +11,16 @@
       "dst": "selfupdate-code",
       "reason": "The fetch/replace subsystem is realized by the self-update code.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-self-update",
+      "reason": "Cloning or pulling the public repo and atomically replacing the installed script, libs, and manifest is the core mechanism of self-update.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "repo-fetch-replace",
   "node_type": "unclassified",
-  "obligations": [
-    "r-self-update"
-  ],
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0028",

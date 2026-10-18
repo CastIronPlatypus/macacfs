@@ -4,15 +4,18 @@
   "edges": [
     {
       "dst": "fb-share-zshrc-mac-impl",
+      "reason": "The managed-zshrc bead is realized by share/zshrc.mac.zsh, which sources oh-my-zsh with p10k, plugins, brew shellenv, aliases, and zoxide/atuin init.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "zshrc.mac.zsh is the mac-adapted managed zshrc installed with the prior ~/.zshrc backed up, a named component of the parity requirement.",
+      "type": "validated-by"
     }
   ],
   "is_bead": true,
   "name": "fb-share-zshrc-mac",
   "node_type": "impl",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0071",

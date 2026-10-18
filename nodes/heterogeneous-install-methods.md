@@ -6,14 +6,16 @@
       "dst": "install-experience",
       "reason": "The install experience is where per-tool method dispatch is made observable.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-per-tool-method-dispatch",
+      "reason": "Because the 39 tools split across install.sh, Homebrew, go, cargo, npm, and bash, a naive loop fails on about nine, which motivates per-tool method dispatch.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "heterogeneous-install-methods",
   "node_type": "problem",
-  "obligations": [
-    "r-method-dispatch"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0001",

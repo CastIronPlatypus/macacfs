@@ -69,8 +69,9 @@ X
 
 # --- plist -----------------------------------------------------------------
 schedule_write_plist() { # cadence
-  local cadence="$1" cal prog tmpl out err line
+  local cadence="$1" cal prog tmpl out err line path
   _sched_ensure_dirs
+  path="$(schedule_path)" || return 1
   prog="$MACACFS_HOME/bin/macacfs"
   tmpl="$MACACFS_HOME/share/macacfs.plist.template"
   out="$LOG_DIR/update.out.log"; err="$LOG_DIR/update.err.log"
@@ -86,8 +87,18 @@ schedule_write_plist() { # cadence
     line="${line//__LABEL__/$LABEL}"
     line="${line//__STDOUT__/$out}"
     line="${line//__STDERR__/$err}"
+    line="${line//__PATH__/$path}"
     printf '%s\n' "$line" >>"$PLIST"
   done <"$tmpl"
+}
+
+# The PATH the LaunchAgent runs with. launchd's default is /usr/bin:/bin:/usr/sbin:/sbin,
+# where brew, cargo, go, uv and node are invisible (prereq would try to reinstall
+# them) — so bake in the same toolchain dirs an interactive shell has.
+schedule_path() {
+  local prefix
+  prefix="$(brew --prefix)" || { printf 'macacfs: brew not found; cannot build the LaunchAgent PATH\n' >&2; return 1; }
+  printf '%s' "$HOME/.local/bin:$prefix/bin:$prefix/sbin:$HOME/.cargo/bin:$HOME/go/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 }
 
 schedule_reload() {
@@ -144,6 +155,14 @@ schedule_tick() {
   else
     state_save "$now" fail "$fails" "$cadence"
   fi
-  schedule_write_plist "$cadence" && schedule_reload || true
+  if schedule_write_plist "$cadence"; then
+    # Reload from a detached helper, never inline: unloading this job from inside
+    # its own tick kills the tick before `load` runs, leaving the agent unloaded.
+    # The plist's AbandonProcessGroup keeps the helper alive after the tick exits.
+    nohup /bin/sh -c 'sleep 5; launchctl unload -w "$1" >/dev/null 2>&1; launchctl load -w "$1" || echo "macacfs: failed to reload LaunchAgent $1" >&2' _ "$PLIST" >>"$LOG_DIR/update.err.log" 2>&1 &
+  else
+    printf 'macacfs: failed to rewrite LaunchAgent plist for cadence %s\n' "$cadence" >&2
+    [ "$rc" -eq 0 ] && rc=1
+  fi
   return "$rc"
 }

@@ -6,14 +6,16 @@
       "dst": "bootstrap-and-self-update",
       "reason": "The bootstrap/self-update mechanism is delivered by this surface.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-self-update",
+      "reason": "This problem states macacfs must self-update via the ACFS bootstrap pattern using a canonical repo URL and atomic replace, which the requirement formalizes.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "self-update-bootstrap",
   "node_type": "problem",
-  "obligations": [
-    "r-self-update"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0009",

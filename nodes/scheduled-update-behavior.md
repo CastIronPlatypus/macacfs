@@ -11,16 +11,26 @@
       "dst": "launchd-scheduler-state",
       "reason": "The observed cadence is produced by the scheduler+state capability.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-weekly-update-launchagent",
+      "reason": "The installed LaunchAgent runs updates weekly by default, which is the baseline cadence the weekly-LaunchAgent requirement specifies.",
+      "type": "validated-by"
+    },
+    {
+      "dst": "req-failure-retry-escalation",
+      "reason": "The user observes weekly runs that drop to nightly after a failure and to 2pm-daily after three, returning to weekly on success, matching the requirement.",
+      "type": "validated-by"
+    },
+    {
+      "dst": "req-scheduled-run-tracking",
+      "reason": "The scheduled behavior includes recording the last run's time and success or failure in a readable form, directly fulfilling run tracking.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "scheduled-update-behavior",
   "node_type": "surface",
-  "obligations": [
-    "r-weekly-plist",
-    "r-retry-escalation",
-    "r-run-tracking"
-  ],
   "status": "drafting",
   "stratum": "surface",
   "uid": "n0013",

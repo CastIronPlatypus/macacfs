@@ -20,12 +20,11 @@ This clones macacfs to `~/.macacfs` and links `macacfs` into `~/.local/bin`. Mak
 ## Usage
 
 ```bash
-macacfs install            # install all 39 tools (or: macacfs install BR NTM)
-macacfs shell              # set up the terminal environment (omz, p10k, CLI bundle, ...)
+macacfs install            # install all 39 tools AND set up the terminal environment
+macacfs install BR NTM     # install just the named tools (no shell setup)
 macacfs update             # update all tools + refresh the shell bundle
 macacfs update BR NTM      # update just the named tools (no shell refresh)
 macacfs install --dry-run  # show what would happen, change nothing
-macacfs shell --dry-run    # same, for the terminal setup
 macacfs self-update        # update macacfs itself from its repo
 macacfs schedule           # install the weekly auto-update LaunchAgent
 macacfs schedule --status  # show cadence, last run, and failure count
@@ -35,9 +34,9 @@ macacfs list               # show the tool catalog
 
 Tools are named by abbreviation (`BR`) or cli (`br`), case-insensitive.
 
-## Terminal environment (`macacfs shell`)
+## Terminal environment (part of `macacfs install`)
 
-`macacfs shell` reproduces the terminal setup ACFS installs, adapted for macOS + Homebrew:
+A full `macacfs install` also reproduces the terminal setup ACFS installs, adapted for macOS + Homebrew (this runs automatically as part of install; there is no separate shell command):
 
 - **Shell UX:** Oh My Zsh, **Powerlevel10k** (with a pre-baked `~/.p10k.zsh` so there's no wizard), and the `zsh-autosuggestions` / `zsh-syntax-highlighting` plugins.
 - **Managed zshrc:** a mac-adapted `~/.zshrc` (Homebrew shellenv, PATH, modern-CLI aliases, zoxide/atuin init). Your existing `~/.zshrc` is **backed up** to `~/.zshrc.bak.<timestamp>` first; the managed body lives in `~/.macacfs.zshrc`.
@@ -48,7 +47,7 @@ Tools are named by abbreviation (`BR`) or cli (`br`), case-insensitive.
 
 **The atuin shim** is installed at `~/.local/bin/atuin` (ahead of Homebrew's atuin on `PATH`). It detects coding-agent sessions — via env markers (`CLAUDE_PROJECT_DIR`, `CODEX_THREAD_ID`, …) or the parent process name — and no-ops history recording and the atuin hook there, so agent-run commands never flood your history or trigger `EPIPE`. Interactive use passes straight through to the real atuin.
 
-Re-running `macacfs shell` is idempotent (it upgrades brew packages and fast-forwards the git-cloned pieces). A full `macacfs update` refreshes the Homebrew part of this bundle too, so the weekly LaunchAgent keeps your CLI tools current without ever rewriting your shell config.
+Re-running `macacfs install` is idempotent (it upgrades brew packages and fast-forwards the git-cloned pieces). A full `macacfs update` refreshes the Homebrew part of this bundle too, so the weekly LaunchAgent keeps your CLI tools current without ever rewriting your shell config.
 
 ## How it installs each tool
 
@@ -63,6 +62,10 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 | `cargo-git` | `cargo install --git … --force` | MS, RP, CAUT, JFP |
 
 **Install and update are the same operation** — every method installs the latest, so re-running upgrades in place.
+
+**Code-signature repair.** Several suite tools (cm, brenner, csctf, s2p, ntm) are Bun-compiled single-file binaries that upstream ships with an invalid code signature, and macOS kills them at launch (your shell just prints `killed`). After every tool installs, macacfs checks each Mach-O binary it produced with `codesign -v`, re-signs any invalid one ad-hoc (`codesign --force -s -`), and re-verifies it. Each re-signed path is listed on that tool's ✅ row in the summary; a binary that can't be repaired fails the tool.
+
+**No side-installs.** brenner's installer normally also drops pinned (older) copies of ntm, cass and cm into `~/.local/bin`, which then shadow the Homebrew versions on `PATH`. macacfs runs it with `--skip-ntm --skip-cass --skip-cm` so each of those comes only from its own row.
 
 ## Prerequisites
 
@@ -85,6 +88,8 @@ any tool that truly needs a missing toolchain fails loudly rather than silently.
 Run state (last run time, status, consecutive failures, current cadence) lives in
 `~/.local/state/macacfs/state.env`; logs are under `~/.local/state/macacfs/logs/`.
 
+launchd runs jobs with a bare `PATH` (`/usr/bin:/bin:/usr/sbin:/sbin`) and no shell, so `~/.zshrc` is never read. The plist therefore carries its own `PATH` (`~/.local/bin`, Homebrew, `~/.cargo/bin`, `~/go/bin`, system dirs), and `bin/macacfs` is pinned to Homebrew's bash (`#!/opt/homebrew/bin/bash`) rather than macOS's `/bin/bash` 3.2. Each run rewrites the plist for the next cadence and reloads it from a detached helper (with `AbandonProcessGroup`), because unloading the job from inside its own run would kill the run before it could reload.
+
 ## Design notes
 
 - **macOS only.** Refuses to run elsewhere.
@@ -97,6 +102,7 @@ Run state (last run time, status, consecutive failures, current cadence) lives i
 bin/macacfs                 CLI entrypoint + dispatch
 lib/catalog.sh              manifest loader
 lib/methods.sh              per-method install/update functions
+lib/codesign.sh             post-install code-signature check + ad-hoc re-sign
 lib/shell.sh               terminal-environment setup (omz/p10k/CLI bundle/atuin...)
 lib/prereq.sh               toolchain auto-installer
 lib/report.sh              isolated runner + ✅/❌ summary

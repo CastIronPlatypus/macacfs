@@ -6,14 +6,16 @@
       "dst": "macacfs-command-surface",
       "reason": "TEST: is accomplished-by the ladder edge that clears leaf-not-bead?",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-minimal-scope",
+      "reason": "This problem names scope creep toward full ACFS as the main risk and demands every node trace to the four allowed features, mirroring the minimal-scope requirement.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "scope-containment",
   "node_type": "problem",
-  "obligations": [
-    "r-scope-min"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0010",

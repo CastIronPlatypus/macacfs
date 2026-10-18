@@ -16,14 +16,16 @@
       "dst": "fb-manifest-tsv",
       "reason": "The loader reads the manifest data file.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-install-whole-suite",
+      "reason": "Loading every manifest row and offering select-all iteration is what lets 'macacfs install' reach all 39 suite tools rather than a hard-coded subset.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "catalog-loader-code",
   "node_type": "impl",
-  "obligations": [
-    "r-install-all"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0030",

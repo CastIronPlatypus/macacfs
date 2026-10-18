@@ -6,14 +6,16 @@
       "dst": "run-report-surface",
       "reason": "Dry-run is shown through the run report.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-dry-run-no-side-effects",
+      "reason": "This problem states the dry-run must be threaded through every dispatch branch with no network installs or disk changes, which is the requirement's acceptance condition.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "dry-run-without-sideeffects",
   "node_type": "problem",
-  "obligations": [
-    "r-dry-run"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0008",

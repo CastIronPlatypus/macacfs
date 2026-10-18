@@ -4,15 +4,14 @@
   "edges": [
     {
       "dst": "fb-install-sh",
+      "reason": "The concrete install.sh file is the implementation artifact that satisfies the install.sh bootstrap bead.",
       "type": "serves"
     }
   ],
   "impl_path": "install.sh",
   "is_bead": true,
-  "is_impl": true,
   "name": "fb-install-sh-impl",
   "node_type": "impl",
-  "obligations": [],
   "realized_at": "0.14.0",
   "realized_fp": "1789594767:1466",
   "status": "drafting",

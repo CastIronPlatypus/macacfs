@@ -11,14 +11,16 @@
       "dst": "schedule-state-and-plist",
       "reason": "The scheduler is realized by state + plist subsystem.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-failure-retry-escalation",
+      "reason": "Persisting consecutive failures and rewriting the plist's StartCalendarInterval to weekly, nightly, or 2pm-daily on each fire implements the escalation policy.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "launchd-scheduler-state",
   "node_type": "unclassified",
-  "obligations": [
-    "r-retry-escalation"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0020",

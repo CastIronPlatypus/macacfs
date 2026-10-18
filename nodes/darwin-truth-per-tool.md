@@ -6,14 +6,16 @@
       "dst": "install-experience",
       "reason": "Correct macOS installs are delivered through the install experience.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-install-whole-suite",
+      "reason": "Recording verified per-tool macOS behavior, including SRPS, GIIL, and ASB lacking Darwin branches, is needed so all 39 tools actually install on a Mac.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "darwin-truth-per-tool",
   "node_type": "problem",
-  "obligations": [
-    "r-install-all"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0002",

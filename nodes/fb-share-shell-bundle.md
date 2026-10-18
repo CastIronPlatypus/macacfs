@@ -4,15 +4,18 @@
   "edges": [
     {
       "dst": "fb-share-shell-bundle-impl",
+      "reason": "The shell-bundle bead is realized by share/shell-bundle.tsv, listing brew formulae like ripgrep, fd, bat, eza and the Meslo Nerd Font cask.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-terminal-environment-parity",
+      "reason": "shell-bundle.tsv declares the modern-CLI Homebrew bundle and Nerd Font cask that the parity requirement lists among required terminal components.",
+      "type": "validated-by"
     }
   ],
   "is_bead": true,
   "name": "fb-share-shell-bundle",
   "node_type": "impl",
-  "obligations": [
-    "r-terminal-env"
-  ],
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0069",

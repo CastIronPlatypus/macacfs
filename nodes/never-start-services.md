@@ -6,14 +6,16 @@
       "dst": "install-experience",
       "reason": "The no-servers constraint is honored by the install experience.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-never-start-servers",
+      "reason": "Because mcp_agent_mail, rust_proxy, and SRPS have daemon modes their installers may launch, this problem requires installing binaries only, as the requirement states.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "never-start-services",
   "node_type": "problem",
-  "obligations": [
-    "r-no-servers"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0005",

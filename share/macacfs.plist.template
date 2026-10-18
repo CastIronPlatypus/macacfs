@@ -9,6 +9,11 @@
     <string>__PROGRAM__</string>
     <string>_tick</string>
   </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>__PATH__</string>
+  </dict>
 __CALENDAR__
   <key>StandardOutPath</key>
   <string>__STDOUT__</string>
@@ -18,5 +23,7 @@ __CALENDAR__
   <false/>
   <key>ProcessType</key>
   <string>Background</string>
+  <key>AbandonProcessGroup</key>
+  <true/>
 </dict>
 </plist>

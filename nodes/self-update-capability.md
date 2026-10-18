@@ -11,14 +11,16 @@
       "dst": "repo-fetch-replace",
       "reason": "Self-update is realized by fetch-and-replace.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-self-update",
+      "reason": "Fetching the public repo and atomically replacing the installed CLI, via the same path as install.sh, is the capability that delivers self-update.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "self-update-capability",
   "node_type": "unclassified",
-  "obligations": [
-    "r-self-update"
-  ],
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0021",

@@ -11,14 +11,16 @@
       "dst": "fb-lib-report",
       "reason": "The reporter lives in lib/report.sh.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-fail-loud",
+      "reason": "This code unit captures rc and stderr per tool, renders the \u2705/\u274c table, and computes the aggregate exit, so a forced failure yields non-zero.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "reporter-code",
   "node_type": "impl",
-  "obligations": [
-    "r-fail-loud"
-  ],
   "status": "drafting",
   "stratum": "components",
   "uid": "n0033",

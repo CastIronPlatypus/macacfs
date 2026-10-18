@@ -6,14 +6,16 @@
       "dst": "install-experience",
       "reason": "The install flow triggers toolchain auto-install in order.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-prerequisite-autoinstall",
+      "reason": "Source-built tools need cargo, go, uv, or node first, so on a fresh Mac Homebrew and toolchains must be installed in order, motivating an installing gate.",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
   "name": "toolchain-prereqs-and-order",
   "node_type": "problem",
-  "obligations": [
-    "r-prereq-autoinstall"
-  ],
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0003",
