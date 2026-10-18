@@ -655,3 +655,25 @@
 - [1792289884] **revise-prose** — fb-lib-codesign
 - [1792289885] **revise-prose** — method-fns-code
 - [1792289887] **change** — settle -> idle (finalized)
+- [1792290053] **begin** — change
+- [1792290062] **comprehend** — modify=['fb-lib-methods', 'fb-manifest-tsv-impl', 'method-fns-code']; attach=[]; impact=19 node(s)
+- [1792290062] **change** — comprehend -> plan
+- [1792290063] **set-changeplan** — 4 step(s)
+- [1792290063] **change** — plan -> walk
+- [1792290094] **retire** — method-fns-code@v2 -> v3; reason: installer-sh refs can now name @latest-release/<path>: frankenterm's main installer refuses its current release, so the installer published with that release is used.; perturbed: ['fb-lib-methods']
+- [1792290094] **retire** — fb-lib-methods-impl@v2 -> v3; reason: do_installer_sh resolves @latest-release/<path> refs via the GitHub releases API and fetches the installer from that tag.; perturbed: []
+- [1792290095] **revise-prose** — method-fns-code
+- [1792290096] **revise-prose** — fb-lib-methods-impl
+- [1792290096] **change-done** — s1
+- [1792290107] **retire** — fb-manifest-tsv-impl@v3 -> v4; reason: --no-verify did not help: frankenterm's main installer refuses v0.15.1's single-binary archive. The WA row now uses the installer published with the latest release, drops --no-verify, and names its real CLI, ft.; perturbed: []
+- [1792290108] **revise-prose** — fb-manifest-tsv-impl
+- [1792290109] **change-done** — s2
+- [1792290109] **retire** — fb-readme-impl@v4 -> v5; reason: README: WA uses its release-tagged installer (ft, FrankenTerm.app), not --no-verify.; perturbed: []
+- [1792290110] **revise-prose** — fb-readme-impl
+- [1792290110] **change-done** — s3
+- [1792290118] **retire** — fb-version-file@v1 -> v2; reason: VERSION 0.3.3 -> 0.3.4 for the WA release-installer commit (one bump per commit).; perturbed: []
+- [1792290118] **change-done** — s4
+- [1792290118] **change** — walk -> settle
+- [1792290118] **absorb** — fb-lib-methods absorbed the parent revision (unchanged)
+- [1792290119] **prove** — fb-version-file: cmd exit 0
+- [1792290120] **change** — settle -> idle (finalized)

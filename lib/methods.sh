@@ -32,14 +32,25 @@ do_brew() { # ref args...
 }
 
 # installer-sh: run the repo's own installer (installs latest = updates too).
-# ref = installer path within the repo; args = optional flags for the installer.
+# ref = installer path within the repo, fetched from main; or
+# @latest-release/<path> to fetch the installer published with the repo's
+# latest GitHub release (for repos whose main installer is ahead of their
+# releases). args = optional flags for the installer.
 do_installer_sh() { # repo ref args...
   local repo="$1" ref="$2"; shift 2
-  local url="$RAW_BASE/$repo/main/$ref"
+  local path="$ref" tag=main url
+  case "$ref" in @latest-release/*) path="${ref#@latest-release/}"; tag="<latest-release>" ;; esac
   if [ "${DRY_RUN:-0}" = 1 ]; then
-    printf '    [dry-run] curl -fsSL %s | bash%s\n' "$url" "${*:+ -s -- $*}"
+    printf '    [dry-run] curl -fsSL %s | bash%s\n' "$RAW_BASE/$repo/$tag/$path" "${*:+ -s -- $*}"
     return 0
   fi
+  if [ "$tag" = "<latest-release>" ]; then
+    tag="$(curl -fsSL "https://api.github.com/repos/Dicklesworthstone/$repo/releases/latest" \
+      | grep -m1 '"tag_name"' | sed -E 's/.*"tag_name": *"([^"]+)".*/\1/')"
+    [ -n "$tag" ] || { printf 'macacfs: could not resolve the latest release of %s\n' "$repo" >&2; return 1; }
+    printf '    using the installer from %s %s\n' "$repo" "$tag"
+  fi
+  url="$RAW_BASE/$repo/$tag/$path"
   # HOOK_ENV (set by a pre-install hook) is applied to the installer only.
   if [ "$#" -gt 0 ]; then
     curl -fsSL "$url" | env ${HOOK_ENV[@]+"${HOOK_ENV[@]}"} bash -s -- "$@"

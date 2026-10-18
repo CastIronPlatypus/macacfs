@@ -8,27 +8,7 @@
     "jeff-sg-shebang-1792274040": {
       "ledger": [
         {
-          "at": 1792289474,
-          "detail": {
-            "id": "req-per-tool-method-dispatch",
-            "now": {
-              "accept": "Each manifest row names exactly one of brew, installer-sh, cargo-git, go, skip; the dispatcher handles those five and fails loud on any other method; skip rows show their reason as skipped in the summary; installing a sample of each install method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.",
-              "kind": "functional",
-              "text": "Per-tool install/update dispatch across 4 install methods \u2014 brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest) \u2014 plus skip, a reasoned no-op for catalogued tools that cannot run on macOS, and optional per-tool pre-install hooks."
-            },
-            "prev": {
-              "accept": "Each manifest row names exactly one of brew, installer-sh, cargo-git, go; the dispatcher handles those four and fails loud on any other method; installing a sample of each method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.",
-              "kind": "functional",
-              "text": "Per-tool install/update dispatch across 4 methods: brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest)."
-            },
-            "uid": "n0085"
-          },
-          "id": "op1",
-          "op": "edit-requirement",
-          "step": "s1"
-        },
-        {
-          "at": 1792289474,
+          "at": 1792290094,
           "detail": {
             "dependents": [
               "install-method-functions"
@@ -36,14 +16,14 @@
             "name": "method-fns-code",
             "prev_status": "drafting",
             "uid": "n0031",
-            "ver": 1
+            "ver": 2
           },
-          "id": "op2",
+          "id": "op1",
           "op": "retire-succeed",
           "step": "s1"
         },
         {
-          "at": 1792289474,
+          "at": 1792290094,
           "detail": {
             "dependents": [
               "fb-lib-methods"
@@ -51,175 +31,32 @@
             "name": "fb-lib-methods-impl",
             "prev_status": "drafting",
             "uid": "n0051",
-            "ver": 1
+            "ver": 2
           },
-          "id": "op3",
+          "id": "op2",
           "op": "retire-succeed",
           "step": "s1"
         },
         {
-          "at": 1792289475,
+          "at": 1792290095,
           "detail": {
             "name": "method-fns-code"
+          },
+          "id": "op3",
+          "op": "revise-prose",
+          "step": "s1"
+        },
+        {
+          "at": 1792290096,
+          "detail": {
+            "name": "fb-lib-methods-impl"
           },
           "id": "op4",
           "op": "revise-prose",
           "step": "s1"
         },
         {
-          "at": 1792289475,
-          "detail": {
-            "name": "fb-lib-methods-impl"
-          },
-          "id": "op5",
-          "op": "revise-prose",
-          "step": "s1"
-        },
-        {
-          "at": 1792289523,
-          "detail": {
-            "dependents": [
-              "fb-lib-report"
-            ],
-            "name": "fb-lib-report-impl",
-            "prev_status": "drafting",
-            "uid": "n0053",
-            "ver": 2
-          },
-          "id": "op6",
-          "op": "retire-succeed",
-          "step": "s2"
-        },
-        {
-          "at": 1792289523,
-          "detail": {
-            "dependents": [
-              "fail-loud-aggregation",
-              "dry-run-without-sideeffects"
-            ],
-            "name": "run-report-surface",
-            "prev_status": "drafting",
-            "uid": "n0014",
-            "ver": 2
-          },
-          "id": "op7",
-          "op": "retire-succeed",
-          "step": "s2"
-        },
-        {
-          "at": 1792289523,
-          "detail": {
-            "dependents": [
-              "signature-repair-code"
-            ],
-            "name": "fb-lib-codesign",
-            "prev_status": "drafting",
-            "uid": "n0084",
-            "ver": 2
-          },
-          "id": "op8",
-          "op": "retire-succeed",
-          "step": "s2"
-        },
-        {
-          "at": 1792289524,
-          "detail": {
-            "name": "fb-lib-report-impl"
-          },
-          "id": "op9",
-          "op": "revise-prose",
-          "step": "s2"
-        },
-        {
-          "at": 1792289524,
-          "detail": {
-            "name": "run-report-surface"
-          },
-          "id": "op10",
-          "op": "revise-prose",
-          "step": "s2"
-        },
-        {
-          "at": 1792289525,
-          "detail": {
-            "name": "fb-lib-codesign"
-          },
-          "id": "op11",
-          "op": "revise-prose",
-          "step": "s2"
-        },
-        {
-          "at": 1792289565,
-          "detail": {
-            "name": "tool-install-hooks",
-            "uid": "n0086"
-          },
-          "id": "op12",
-          "op": "add-node",
-          "step": "s3"
-        },
-        {
-          "at": 1792289565,
-          "detail": {
-            "name": "fb-lib-hooks",
-            "uid": "n0087"
-          },
-          "id": "op13",
-          "op": "add-node",
-          "step": "s3"
-        },
-        {
-          "at": 1792289565,
-          "detail": {
-            "impl": "fb-lib-hooks",
-            "in_place": true,
-            "node": "fb-lib-hooks",
-            "path": "lib/hooks.sh"
-          },
-          "id": "op14",
-          "op": "add-impl",
-          "step": "s3"
-        },
-        {
-          "at": 1792289566,
-          "detail": {
-            "name": "install-method-functions"
-          },
-          "id": "op15",
-          "op": "revise-prose",
-          "step": "s3"
-        },
-        {
-          "at": 1792289573,
-          "detail": {
-            "name": "fb-lib-methods-impl"
-          },
-          "id": "op16",
-          "op": "revise-prose",
-          "step": "s3"
-        },
-        {
-          "at": 1792289594,
-          "detail": {
-            "id": "req-install-whole-suite",
-            "now": {
-              "accept": "After 'macacfs install', each non-skipped tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version, and the summary lists SRPS and RP as skipped with their Linux-only reasons.",
-              "kind": "functional",
-              "text": "Install every one of the 39 catalogued Dicklesworthstone ACFS-suite tools/CLIs that can run on macOS (the full list incl. JFP's CLI); catalogued tools that are Linux-only (SRPS, RP) stay in the catalog as skip rows and are reported as skipped with the reason, never silently dropped."
-            },
-            "prev": {
-              "accept": "After 'macacfs install', each tool's CLI (br, ntm, am, ...) resolves on PATH and reports a version.",
-              "kind": "functional",
-              "text": "Install all 39 Dicklesworthstone ACFS-suite tools/CLIs on macOS (the full list incl. JFP's CLI)."
-            },
-            "uid": "n0083"
-          },
-          "id": "op17",
-          "op": "edit-requirement",
-          "step": "s4"
-        },
-        {
-          "at": 1792289594,
+          "at": 1792290107,
           "detail": {
             "dependents": [
               "fb-manifest-tsv"
@@ -227,79 +64,23 @@
             "name": "fb-manifest-tsv-impl",
             "prev_status": "drafting",
             "uid": "n0050",
-            "ver": 2
+            "ver": 3
           },
-          "id": "op18",
+          "id": "op5",
           "op": "retire-succeed",
-          "step": "s4"
+          "step": "s2"
         },
         {
-          "at": 1792289613,
+          "at": 1792290108,
           "detail": {
             "name": "fb-manifest-tsv-impl"
           },
-          "id": "op19",
+          "id": "op6",
           "op": "revise-prose",
-          "step": "s4"
+          "step": "s2"
         },
         {
-          "at": 1792289630,
-          "detail": {
-            "dependents": [
-              "fb-lib-schedule"
-            ],
-            "name": "fb-lib-schedule-impl",
-            "prev_status": "drafting",
-            "uid": "n0054",
-            "ver": 2
-          },
-          "id": "op20",
-          "op": "retire-succeed",
-          "step": "s5"
-        },
-        {
-          "at": 1792289640,
-          "detail": {
-            "name": "fb-lib-schedule-impl"
-          },
-          "id": "op21",
-          "op": "revise-prose",
-          "step": "s6"
-        },
-        {
-          "at": 1792289652,
-          "detail": {
-            "name": "req-version-bump-per-commit",
-            "uid": "n0088"
-          },
-          "id": "op22",
-          "op": "add-node",
-          "step": "s6"
-        },
-        {
-          "at": 1792289652,
-          "detail": {
-            "name": "fb-version-file",
-            "uid": "n0089"
-          },
-          "id": "op23",
-          "op": "add-node",
-          "step": "s6"
-        },
-        {
-          "at": 1792289652,
-          "detail": {
-            "impl": "fb-version-file",
-            "in_place": true,
-            "node": "fb-version-file",
-            "path": "VERSION"
-          },
-          "id": "op24",
-          "op": "add-impl",
-          "step": "s6"
-        },
-        {
-          "at": 1792289681,
+          "at": 1792290109,
           "detail": {
             "dependents": [
               "fb-readme"
@@ -307,85 +88,38 @@
             "name": "fb-readme-impl",
             "prev_status": "drafting",
             "uid": "n0058",
-            "ver": 3
+            "ver": 4
           },
-          "id": "op25",
+          "id": "op7",
           "op": "retire-succeed",
-          "step": "s7"
+          "step": "s3"
         },
         {
-          "at": 1792289689,
+          "at": 1792290110,
           "detail": {
             "name": "fb-readme-impl"
           },
-          "id": "op26",
+          "id": "op8",
           "op": "revise-prose",
-          "step": "s7"
+          "step": "s3"
         },
         {
-          "at": 1792289715,
+          "at": 1792290118,
           "detail": {
             "dependents": [
-              "method-fns-code"
+              "argv-code"
             ],
-            "name": "fb-lib-methods",
+            "name": "fb-version-file",
             "prev_status": "drafting",
-            "uid": "n0040",
+            "uid": "n0089",
             "ver": 1
           },
-          "id": "op27",
+          "id": "op9",
           "op": "retire-succeed",
-          "step": null
+          "step": "s4"
         },
         {
-          "at": 1792289757,
-          "detail": {
-            "name": "fb-lib-methods"
-          },
-          "id": "op28",
-          "op": "revise-prose",
-          "step": null
-        },
-        {
-          "at": 1792289795,
-          "detail": {
-            "dependents": [
-              "fb-bin-macacfs"
-            ],
-            "name": "fb-bin-macacfs-impl",
-            "prev_status": "drafting",
-            "uid": "n0048",
-            "ver": 5
-          },
-          "id": "op29",
-          "op": "retire-succeed",
-          "step": "s8"
-        },
-        {
-          "at": 1792289802,
-          "detail": {
-            "name": "fb-bin-macacfs-impl"
-          },
-          "id": "op30",
-          "op": "revise-prose",
-          "step": "s8"
-        },
-        {
-          "at": 1792289826,
-          "detail": {
-            "cmd": "bash -n lib/hooks.sh && RAW_BASE=x bash -c '. lib/hooks.sh; declare -F pre_install_MDWB'",
-            "exit": 0,
-            "kind": "cmd",
-            "name": "fb-lib-hooks",
-            "reason": null,
-            "uid": "n0087"
-          },
-          "id": "op31",
-          "op": "prove",
-          "step": "s8"
-        },
-        {
-          "at": 1792289826,
+          "at": 1792290119,
           "detail": {
             "cmd": "grep -Eq '^[0-9]+\\.[0-9]+\\.[0-9]+$' VERSION",
             "exit": 0,
@@ -394,59 +128,9 @@
             "reason": null,
             "uid": "n0089"
           },
-          "id": "op32",
+          "id": "op10",
           "op": "prove",
-          "step": "s8"
-        },
-        {
-          "at": 1792289837,
-          "detail": {
-            "cmd": "rm -f /private/tmp/claude-501/-Users-jeff/129bbe70-acb0-47c7-84c7-91d1e4edfc70/scratchpad/sigtest/bin/fakecli; /private/tmp/claude-501/-Users-jeff/129bbe70-acb0-47c7-84c7-91d1e4edfc70/scratchpad/sigtest/run.sh /private/tmp/claude-501/-Users-jeff/129bbe70-acb0-47c7-84c7-91d1e4edfc70/scratchpad/sigtest | grep -q 'sig valid now'",
-            "exit": 0,
-            "kind": "cmd",
-            "name": "fb-lib-codesign",
-            "reason": null,
-            "uid": "n0084"
-          },
-          "id": "op33",
-          "op": "prove",
-          "step": "s8"
-        },
-        {
-          "at": 1792289883,
-          "detail": {
-            "name": "fb-lib-methods-impl"
-          },
-          "id": "op34",
-          "op": "revise-prose",
-          "step": "s8"
-        },
-        {
-          "at": 1792289884,
-          "detail": {
-            "name": "fb-lib-hooks"
-          },
-          "id": "op35",
-          "op": "revise-prose",
-          "step": "s8"
-        },
-        {
-          "at": 1792289884,
-          "detail": {
-            "name": "fb-lib-codesign"
-          },
-          "id": "op36",
-          "op": "revise-prose",
-          "step": "s8"
-        },
-        {
-          "at": 1792289885,
-          "detail": {
-            "name": "method-fns-code"
-          },
-          "id": "op37",
-          "op": "revise-prose",
-          "step": "s8"
+          "step": null
         }
       ],
       "mode": null,

@@ -70,7 +70,7 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 
 **Linux-only tools are skipped, visibly.** SRPS (apt-get, ananicy-cpp, sudo) and RP (iptables/ipset and Linux socket APIs) cannot run on macOS. They stay in the catalog as `skip` rows and show up in the summary as `⏭ skipped: <reason>`; a skip never fails the run.
 
-**WA** runs its installer with `--no-verify`: frankenterm's latest release isn't minisign-signed, so verification would refuse it. The SHA-256 check still applies, and the code-signature repair above still runs afterwards.
+**WA** (frankenterm, CLI `ft`) uses the installer published with its latest release (`@latest-release/install.sh` in the manifest), because the installer on `main` only accepts newer multi-binary releases and refuses the current one. It installs `ft` into `~/.local/bin` and `FrankenTerm.app` into `/Applications`; the code-signature repair above still runs afterwards.
 
 **MDWB** gets a pre-install hook (`lib/hooks.sh`). Its installer only fetches Chrome for Testing on Linux x86_64, so on a Mac its self-test fails. macacfs always downloads the Chrome for Testing build MDWB tests (`CFT_VERSION` from your environment, else MDWB's `.env`, else the installer's pinned build) into `~/.cache/mdwb/cft/<build>/`, without checking what is already there, and hands the installer `CFT_VERSION` and `CFT_EXECUTABLE` for it. It also pins the install to `~/markdown_web_browser` (`--dir`), since the installer's default is a folder under whatever directory you run it from.
 
