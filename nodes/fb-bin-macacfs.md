@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789594075,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "argv-code",
@@ -31,6 +39,7 @@
   "is_bead": true,
   "name": "fb-bin-macacfs",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0037",
@@ -38,4 +47,4 @@
 }
 -->
 
-bin/macacfs — the entrypoint: sources the libs, parses argv into the closed verb+flag set, dispatches install/update/self-update/schedule, enforces macOS-only. Bead.
+The bin/macacfs file boundary: the CLI entrypoint that resolves its install home through the ~/.local/bin symlink, sources the lib/*.sh modules, parses argv into the closed verb+flag set, runs require_darwin before install/update/self-update/schedule/_tick, and dispatches each verb (with run_tools as the shared install/update engine). It [[argv-code|serves|This entrypoint file holds the argv/dispatch code unit.]] and is [[fb-bin-macacfs-impl|accomplished-by|The concrete bin/macacfs implementation wires the dispatch and pins the Homebrew bash shebang.]]. It [[fb-plist-template|couples-with|The LaunchAgent plist invokes this file by absolute path with the _tick verb under a baked PATH, so the file location, the _tick verb and the Homebrew-bash shebang must stay in agreement with the template.]].

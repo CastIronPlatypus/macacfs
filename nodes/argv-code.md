@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789594033,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "argv-and-usage",
@@ -21,6 +29,7 @@
   "is_bead": false,
   "name": "argv-code",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "components",
   "uid": "n0036",
@@ -28,4 +37,4 @@
 }
 -->
 
-Code unit: parse argv into the closed verb+flag set, dispatch to subcommands, print usage; reject unknown input. Realizes [[cli-arg-dispatch|flow]]. Accomplished by [[fb-bin-macacfs|accomplished-by]].
+Code unit in bin/macacfs that parses argv and dispatches: main() case-matches the verb (install, update, self-update, schedule, list, version, help, internal _tick), calls require_darwin for the mutating verbs, uses parse_dry_run to separate --dry-run from TOOL selectors, routes to run_tools / shell_run / selfupdate_run / schedule_* / catalog_rows, and rejects unknown verbs or schedule options on stderr with exit 2; usage() prints the help text. It [[argv-and-usage|serves|This code realizes the argv/usage subsystem's closed verb+flag parsing and help text.]] and is [[fb-bin-macacfs|accomplished-by|The main, usage and parse_dry_run functions live in the bin/macacfs file.]]. The internal _tick verb [[fb-plist-template|couples-with|The plist template hard-codes _tick as the second ProgramArguments string, so renaming the verb here silently breaks every scheduled run.]].

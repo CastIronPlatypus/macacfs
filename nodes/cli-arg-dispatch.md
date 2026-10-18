@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789593894,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "macacfs-command-surface",
@@ -21,6 +29,7 @@
   "is_bead": false,
   "name": "cli-arg-dispatch",
   "node_type": "unclassified",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "capabilities",
   "uid": "n0022",
@@ -28,4 +37,4 @@
 }
 -->
 
-Parse argv into exactly the closed verb set (install, update, self-update, schedule) plus global flags, rejecting anything else. Enforces the deliberately small [[macacfs-command-surface|flow]] in code. Accomplished by [[argv-and-usage|accomplished-by]].
+The capability to route argv into exactly the closed verb set: the mutating verbs install, update, self-update and schedule, the read-only list, version and help, and the internal _tick, with --dry-run as the only per-verb flag on install/update/self-update and --install/--uninstall/--status on schedule; anything else is rejected with an error and a non-zero exit. It [[macacfs-command-surface|serves|It enforces in code the deliberately small command surface the user sees.]] and is [[argv-and-usage|accomplished-by|The argv parsing and usage subsystem realizes this dispatch.]].

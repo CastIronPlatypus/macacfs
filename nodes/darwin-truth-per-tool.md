@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789593708,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "install-experience",
@@ -16,6 +24,7 @@
   "is_bead": false,
   "name": "darwin-truth-per-tool",
   "node_type": "problem",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "problem",
   "uid": "n0002",
@@ -23,4 +32,4 @@
 }
 -->
 
-Most installers branch on Darwin, but 3 (SRPS, GIIL, ASB) lack an explicit macOS branch — yet GIIL (node) and ASB (bash) still run on Mac, and SRPS is Linux-oriented. We must encode the VERIFIED per-tool truth rather than assume install.sh works everywhere. Accomplished by [[install-experience|accomplished-by]].
+The problem of per-tool macOS truth: most upstream installers branch on Darwin, but three (SRPS, GIIL, ASB) lack an explicit macOS branch, yet GIIL (node) and ASB (bash) still run on a Mac and SRPS is Linux-oriented, so macacfs must encode the verified per-tool install method and flags in its catalog rather than assume every install.sh works everywhere. It is [[install-experience|accomplished-by|The install experience delivers correct per-tool macOS installs driven by those verified catalog entries.]].

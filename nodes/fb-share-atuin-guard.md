@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789599737,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "fb-share-atuin-guard-impl",
@@ -16,6 +24,7 @@
   "is_bead": true,
   "name": "fb-share-atuin-guard",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0073",
@@ -23,4 +32,4 @@
 }
 -->
 
-share/atuin-guard.sh — the agent-safe wrapper installed in front of the real atuin binary: detects agent context (env vars or parent process name via ps -o comm=) and no-ops 'atuin history start/end' and 'atuin hook' so agent sessions never pollute history or hit EPIPE; passes through for interactive use. Realizes [[shell-assets-code|serves]]. Bead.
+The share/atuin-guard.sh file boundary: the agent-safe shim installed at ~/.local/bin/atuin in front of the real Homebrew atuin. It always no-ops 'atuin hook' (draining stdin so callers never hit EPIPE), no-ops 'atuin history start/end' when it detects agent context (agent env vars or the parent process name via ps -o comm=) so agent sessions never pollute history, and passes everything else through to the real binary. Bead. It [[shell-assets-code|serves|This file is one of the shell asset files the shell-assets code unit installs.]] and is [[fb-share-atuin-guard-impl|accomplished-by|share/atuin-guard.sh is the wrapper script that implements the detection and no-op behavior.]]. It [[fb-lib-shell|couples-with|lib/shell.sh substitutes this file's __REAL_ATUIN__ placeholder and identifies an installed shim by its marker comment, so those strings must match across both files.]].

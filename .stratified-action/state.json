@@ -246,156 +246,2420 @@
           ]
         }
       },
-      "ledger": [
-        {
-          "at": 1792287055,
-          "detail": {
-            "dependents": [
-              "signature-repair"
-            ],
-            "name": "signature-verify-and-resign",
-            "prev_status": "drafting",
-            "uid": "n0082",
-            "ver": 1
-          },
-          "id": "op1",
-          "op": "retire-succeed",
-          "step": "s1"
-        },
-        {
-          "at": 1792287055,
-          "detail": {
-            "dependents": [
-              "signature-repair-code"
-            ],
-            "name": "fb-lib-codesign",
-            "prev_status": "drafting",
-            "uid": "n0084",
-            "ver": 1
-          },
-          "id": "op2",
-          "op": "retire-succeed",
-          "step": "s1"
-        },
-        {
-          "at": 1792287056,
-          "detail": {
-            "name": "signature-verify-and-resign"
-          },
-          "id": "op3",
-          "op": "revise-prose",
-          "step": "s1"
-        },
-        {
-          "at": 1792287056,
-          "detail": {
-            "name": "fb-lib-codesign"
-          },
-          "id": "op4",
-          "op": "revise-prose",
-          "step": "s1"
-        },
-        {
-          "at": 1792287075,
-          "detail": {
-            "dependents": [
-              "homebrew-and-toolchains"
-            ],
-            "name": "toolchain-helpers-code",
-            "prev_status": "drafting",
-            "uid": "n0032",
-            "ver": 1
-          },
-          "id": "op5",
-          "op": "retire-succeed",
-          "step": "s2"
-        },
-        {
-          "at": 1792287076,
-          "detail": {
-            "dependents": [
-              "toolchain-helpers-code"
-            ],
-            "name": "fb-lib-prereq",
-            "prev_status": "drafting",
-            "uid": "n0041",
-            "ver": 1
-          },
-          "id": "op6",
-          "op": "retire-succeed",
-          "step": "s2"
-        },
-        {
-          "at": 1792287076,
-          "detail": {
-            "dependents": [
-              "fb-lib-prereq"
-            ],
-            "name": "fb-lib-prereq-impl",
-            "prev_status": "drafting",
-            "uid": "n0052",
-            "ver": 1
-          },
-          "id": "op7",
-          "op": "retire-succeed",
-          "step": "s2"
-        },
-        {
-          "at": 1792287077,
-          "detail": {
-            "name": "toolchain-helpers-code"
-          },
-          "id": "op8",
-          "op": "revise-prose",
-          "step": "s2"
-        },
-        {
-          "at": 1792287077,
-          "detail": {
-            "name": "fb-lib-prereq"
-          },
-          "id": "op9",
-          "op": "revise-prose",
-          "step": "s2"
-        },
-        {
-          "at": 1792287078,
-          "detail": {
-            "name": "fb-lib-prereq-impl"
-          },
-          "id": "op10",
-          "op": "revise-prose",
-          "step": "s2"
-        },
-        {
-          "at": 1792287087,
-          "detail": {
-            "dependents": [
-              "fb-readme"
-            ],
-            "name": "fb-readme-impl",
-            "prev_status": "drafting",
-            "uid": "n0058",
-            "ver": 2
-          },
-          "id": "op11",
-          "op": "retire-succeed",
-          "step": "s3"
-        },
-        {
-          "at": 1792287088,
-          "detail": {
-            "name": "fb-readme-impl"
-          },
-          "id": "op12",
-          "op": "revise-prose",
-          "step": "s3"
-        }
-      ],
-      "mode": "change",
+      "ledger": [],
+      "mode": "update",
       "update": {
         "migrated": false
       }
+    },
+    "jeff-sg-walk1-1792287151": {
+      "ledger": [
+        {
+          "at": 1792287204,
+          "detail": {
+            "name": "argv-and-usage"
+          },
+          "id": "op1",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287209,
+          "detail": {
+            "name": "argv-and-usage",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0029"
+          },
+          "id": "op2",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287226,
+          "detail": {
+            "name": "argv-code"
+          },
+          "id": "op3",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287235,
+          "detail": {
+            "name": "argv-code"
+          },
+          "id": "op4",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287235,
+          "detail": {
+            "name": "argv-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0036"
+          },
+          "id": "op5",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287267,
+          "detail": {
+            "name": "bootstrap-and-self-update"
+          },
+          "id": "op6",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287267,
+          "detail": {
+            "name": "bootstrap-and-self-update",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0015"
+          },
+          "id": "op7",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287282,
+          "detail": {
+            "name": "catalog-loader-code"
+          },
+          "id": "op8",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287282,
+          "detail": {
+            "name": "catalog-loader-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0030"
+          },
+          "id": "op9",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287291,
+          "detail": {
+            "name": "cli-arg-dispatch"
+          },
+          "id": "op10",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287292,
+          "detail": {
+            "name": "cli-arg-dispatch",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0022"
+          },
+          "id": "op11",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287303,
+          "detail": {
+            "name": "darwin-truth-per-tool"
+          },
+          "id": "op12",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287303,
+          "detail": {
+            "name": "darwin-truth-per-tool",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0002"
+          },
+          "id": "op13",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287314,
+          "detail": {
+            "name": "dry-run-without-sideeffects"
+          },
+          "id": "op14",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287314,
+          "detail": {
+            "name": "dry-run-without-sideeffects",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0008"
+          },
+          "id": "op15",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287322,
+          "detail": {
+            "name": "fail-loud-aggregation"
+          },
+          "id": "op16",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287322,
+          "detail": {
+            "name": "fail-loud-aggregation",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0007"
+          },
+          "id": "op17",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287335,
+          "detail": {
+            "name": "fb-bin-macacfs-impl"
+          },
+          "id": "op18",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287339,
+          "detail": {
+            "name": "fb-bin-macacfs-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0048"
+          },
+          "id": "op19",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287352,
+          "detail": {
+            "name": "fb-bin-macacfs"
+          },
+          "id": "op20",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287352,
+          "detail": {
+            "name": "fb-bin-macacfs",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0037"
+          },
+          "id": "op21",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287361,
+          "detail": {
+            "name": "fb-install-sh-impl"
+          },
+          "id": "op22",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287361,
+          "detail": {
+            "name": "fb-install-sh-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0057"
+          },
+          "id": "op23",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287373,
+          "detail": {
+            "name": "fb-install-sh"
+          },
+          "id": "op24",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287397,
+          "detail": {
+            "name": "fb-install-sh",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0046"
+          },
+          "id": "op25",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287406,
+          "detail": {
+            "name": "fb-lib-catalog-impl"
+          },
+          "id": "op26",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287406,
+          "detail": {
+            "name": "fb-lib-catalog-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0049"
+          },
+          "id": "op27",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287416,
+          "detail": {
+            "name": "fb-lib-catalog"
+          },
+          "id": "op28",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287416,
+          "detail": {
+            "name": "fb-lib-catalog",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0038"
+          },
+          "id": "op29",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287428,
+          "detail": {
+            "name": "fb-lib-codesign"
+          },
+          "id": "op30",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287428,
+          "detail": {
+            "name": "fb-lib-codesign",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0084"
+          },
+          "id": "op31",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287440,
+          "detail": {
+            "name": "fb-lib-methods-impl"
+          },
+          "id": "op32",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287440,
+          "detail": {
+            "name": "fb-lib-methods-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0051"
+          },
+          "id": "op33",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287451,
+          "detail": {
+            "name": "fb-lib-methods"
+          },
+          "id": "op34",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287470,
+          "detail": {
+            "name": "fb-lib-methods",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0040"
+          },
+          "id": "op35",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287480,
+          "detail": {
+            "name": "fb-lib-prereq-impl"
+          },
+          "id": "op36",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287481,
+          "detail": {
+            "name": "fb-lib-prereq-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0052"
+          },
+          "id": "op37",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287493,
+          "detail": {
+            "name": "fb-lib-prereq"
+          },
+          "id": "op38",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287494,
+          "detail": {
+            "name": "fb-lib-prereq",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0041"
+          },
+          "id": "op39",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287505,
+          "detail": {
+            "name": "fb-lib-report-impl"
+          },
+          "id": "op40",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287505,
+          "detail": {
+            "name": "fb-lib-report-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0053"
+          },
+          "id": "op41",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287513,
+          "detail": {
+            "name": "fb-lib-report"
+          },
+          "id": "op42",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287514,
+          "detail": {
+            "name": "fb-lib-report",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0042"
+          },
+          "id": "op43",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287526,
+          "detail": {
+            "name": "fb-lib-schedule-impl"
+          },
+          "id": "op44",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287526,
+          "detail": {
+            "name": "fb-lib-schedule-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0054"
+          },
+          "id": "op45",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287537,
+          "detail": {
+            "name": "fb-lib-schedule"
+          },
+          "id": "op46",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287537,
+          "detail": {
+            "name": "fb-lib-schedule",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0043"
+          },
+          "id": "op47",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287547,
+          "detail": {
+            "name": "fb-lib-selfupdate-impl"
+          },
+          "id": "op48",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287548,
+          "detail": {
+            "name": "fb-lib-selfupdate-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0056"
+          },
+          "id": "op49",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287557,
+          "detail": {
+            "name": "fb-lib-selfupdate"
+          },
+          "id": "op50",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287558,
+          "detail": {
+            "name": "fb-lib-selfupdate",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0045"
+          },
+          "id": "op51",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287574,
+          "detail": {
+            "name": "fb-lib-shell-impl"
+          },
+          "id": "op52",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287574,
+          "detail": {
+            "name": "fb-lib-shell-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0068"
+          },
+          "id": "op53",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287585,
+          "detail": {
+            "name": "fb-lib-shell"
+          },
+          "id": "op54",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287586,
+          "detail": {
+            "name": "fb-lib-shell",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0067"
+          },
+          "id": "op55",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287597,
+          "detail": {
+            "name": "fb-manifest-tsv-impl"
+          },
+          "id": "op56",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287598,
+          "detail": {
+            "name": "fb-manifest-tsv-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0050"
+          },
+          "id": "op57",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287615,
+          "detail": {
+            "name": "fb-manifest-tsv"
+          },
+          "id": "op58",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287615,
+          "detail": {
+            "name": "fb-manifest-tsv",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0039"
+          },
+          "id": "op59",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287625,
+          "detail": {
+            "name": "fb-plist-template-impl"
+          },
+          "id": "op60",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287625,
+          "detail": {
+            "name": "fb-plist-template-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0055"
+          },
+          "id": "op61",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287636,
+          "detail": {
+            "name": "fb-plist-template"
+          },
+          "id": "op62",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287636,
+          "detail": {
+            "name": "fb-plist-template",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0044"
+          },
+          "id": "op63",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287655,
+          "detail": {
+            "name": "fb-readme-impl"
+          },
+          "id": "op64",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287655,
+          "detail": {
+            "name": "fb-readme-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0058"
+          },
+          "id": "op65",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287663,
+          "detail": {
+            "name": "fb-readme"
+          },
+          "id": "op66",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287664,
+          "detail": {
+            "name": "fb-readme",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0047"
+          },
+          "id": "op67",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287676,
+          "detail": {
+            "name": "fb-share-atuin-guard-impl"
+          },
+          "id": "op68",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287676,
+          "detail": {
+            "name": "fb-share-atuin-guard-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0074"
+          },
+          "id": "op69",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287690,
+          "detail": {
+            "name": "fb-share-atuin-guard"
+          },
+          "id": "op70",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287690,
+          "detail": {
+            "name": "fb-share-atuin-guard",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0073"
+          },
+          "id": "op71",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287707,
+          "detail": {
+            "name": "fb-share-powerlevel-preset-impl"
+          },
+          "id": "op72",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287707,
+          "detail": {
+            "name": "fb-share-powerlevel-preset-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0076"
+          },
+          "id": "op73",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287716,
+          "detail": {
+            "name": "fb-share-powerlevel-preset"
+          },
+          "id": "op74",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287716,
+          "detail": {
+            "name": "fb-share-powerlevel-preset",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0075"
+          },
+          "id": "op75",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287729,
+          "detail": {
+            "name": "fb-share-shell-bundle-impl"
+          },
+          "id": "op76",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287729,
+          "detail": {
+            "name": "fb-share-shell-bundle-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0070"
+          },
+          "id": "op77",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287739,
+          "detail": {
+            "name": "fb-share-shell-bundle"
+          },
+          "id": "op78",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287740,
+          "detail": {
+            "name": "fb-share-shell-bundle",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0069"
+          },
+          "id": "op79",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287756,
+          "detail": {
+            "name": "fb-share-tmux-conf-impl"
+          },
+          "id": "op80",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287756,
+          "detail": {
+            "name": "fb-share-tmux-conf-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0078"
+          },
+          "id": "op81",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287769,
+          "detail": {
+            "name": "fb-share-tmux-conf"
+          },
+          "id": "op82",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287770,
+          "detail": {
+            "name": "fb-share-tmux-conf",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0077"
+          },
+          "id": "op83",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287782,
+          "detail": {
+            "name": "fb-share-zshrc-mac-impl"
+          },
+          "id": "op84",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287782,
+          "detail": {
+            "name": "fb-share-zshrc-mac-impl",
+            "now": "0.15.0",
+            "prev": "0.14.0",
+            "uid": "n0072"
+          },
+          "id": "op85",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287795,
+          "detail": {
+            "name": "fb-share-zshrc-mac"
+          },
+          "id": "op86",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287795,
+          "detail": {
+            "name": "fb-share-zshrc-mac",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0071"
+          },
+          "id": "op87",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287811,
+          "detail": {
+            "name": "heterogeneous-install-methods"
+          },
+          "id": "op88",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287812,
+          "detail": {
+            "name": "heterogeneous-install-methods",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0001"
+          },
+          "id": "op89",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287823,
+          "detail": {
+            "name": "homebrew-and-toolchains"
+          },
+          "id": "op90",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287824,
+          "detail": {
+            "name": "homebrew-and-toolchains",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0025"
+          },
+          "id": "op91",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287842,
+          "detail": {
+            "name": "install-experience"
+          },
+          "id": "op92",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287842,
+          "detail": {
+            "name": "install-experience",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0012"
+          },
+          "id": "op93",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287852,
+          "detail": {
+            "name": "install-method-functions"
+          },
+          "id": "op94",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287853,
+          "detail": {
+            "name": "install-method-functions",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0024"
+          },
+          "id": "op95",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287862,
+          "detail": {
+            "name": "invalid-upstream-signatures"
+          },
+          "id": "op96",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287862,
+          "detail": {
+            "name": "invalid-upstream-signatures",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0080"
+          },
+          "id": "op97",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287872,
+          "detail": {
+            "name": "isolated-runner-reporter"
+          },
+          "id": "op98",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287872,
+          "detail": {
+            "name": "isolated-runner-reporter",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0019"
+          },
+          "id": "op99",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287885,
+          "detail": {
+            "dst": "req-scheduled-run-tracking",
+            "src": "launchd-scheduler-state",
+            "type": "validated-by"
+          },
+          "id": "op100",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792287885,
+          "detail": {
+            "dst": "req-weekly-update-launchagent",
+            "src": "launchd-scheduler-state",
+            "type": "validated-by"
+          },
+          "id": "op101",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792287885,
+          "detail": {
+            "name": "launchd-scheduler-state"
+          },
+          "id": "op102",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287886,
+          "detail": {
+            "name": "launchd-scheduler-state",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0020"
+          },
+          "id": "op103",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287900,
+          "detail": {
+            "dst": "req-manual-cli-update",
+            "src": "macacfs-command-surface",
+            "type": "validated-by"
+          },
+          "id": "op104",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792287901,
+          "detail": {
+            "name": "macacfs-command-surface"
+          },
+          "id": "op105",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287901,
+          "detail": {
+            "name": "macacfs-command-surface",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0011"
+          },
+          "id": "op106",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287910,
+          "detail": {
+            "name": "manifest-store"
+          },
+          "id": "op107",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287911,
+          "detail": {
+            "name": "manifest-store",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0023"
+          },
+          "id": "op108",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287922,
+          "detail": {
+            "name": "method-dispatch"
+          },
+          "id": "op109",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287923,
+          "detail": {
+            "name": "method-dispatch",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0017"
+          },
+          "id": "op110",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792287930,
+          "detail": {
+            "dst": "fb-lib-methods",
+            "src": "method-fns-code",
+            "type": "accomplished-by"
+          },
+          "id": "op111",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287943,
+          "detail": {
+            "dst": "fb-lib-methods-impl",
+            "src": "fb-lib-methods",
+            "type": "accomplished-by"
+          },
+          "id": "op112",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287944,
+          "detail": {
+            "dst": "req-self-update",
+            "src": "fb-install-sh",
+            "type": "validated-by"
+          },
+          "id": "op113",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287944,
+          "detail": {
+            "dst": "fb-lib-selfupdate-impl",
+            "src": "fb-lib-selfupdate",
+            "type": "accomplished-by"
+          },
+          "id": "op114",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287944,
+          "detail": {
+            "dst": "fb-share-shell-bundle-impl",
+            "src": "fb-share-shell-bundle",
+            "type": "accomplished-by"
+          },
+          "id": "op115",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287945,
+          "detail": {
+            "dst": "req-terminal-environment-parity",
+            "src": "fb-share-shell-bundle",
+            "type": "validated-by"
+          },
+          "id": "op116",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287945,
+          "detail": {
+            "dst": "req-per-tool-method-dispatch",
+            "src": "install-method-functions",
+            "type": "validated-by"
+          },
+          "id": "op117",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287945,
+          "detail": {
+            "dst": "req-per-tool-method-dispatch",
+            "src": "fb-manifest-tsv",
+            "type": "validated-by"
+          },
+          "id": "op118",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287946,
+          "detail": {
+            "dst": "req-prefer-homebrew",
+            "src": "fb-manifest-tsv",
+            "type": "validated-by"
+          },
+          "id": "op119",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792287962,
+          "detail": {
+            "name": "method-fns-code"
+          },
+          "id": "op120",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792287962,
+          "detail": {
+            "name": "method-fns-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0031"
+          },
+          "id": "op121",
+          "op": "update-reviewed",
+          "step": null
+        }
+      ],
+      "mode": "update",
+      "update": {
+        "migrated": false
+      }
+    },
+    "jeff-sg-walk2-1792287151": {
+      "ledger": [
+        {
+          "at": 1792288080,
+          "detail": {
+            "name": "never-start-services"
+          },
+          "id": "op1",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288083,
+          "detail": {
+            "name": "never-start-services",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0005"
+          },
+          "id": "op2",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288104,
+          "detail": {
+            "name": "prereq-autoinstaller"
+          },
+          "id": "op3",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288104,
+          "detail": {
+            "name": "prereq-autoinstaller",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0018"
+          },
+          "id": "op4",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288116,
+          "detail": {
+            "name": "repo-fetch-replace"
+          },
+          "id": "op5",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288116,
+          "detail": {
+            "name": "repo-fetch-replace",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0028"
+          },
+          "id": "op6",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288127,
+          "detail": {
+            "name": "reporter-code"
+          },
+          "id": "op7",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288127,
+          "detail": {
+            "name": "reporter-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0033"
+          },
+          "id": "op8",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288133,
+          "detail": {
+            "name": "req-dry-run-no-side-effects",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0080"
+          },
+          "id": "op9",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288139,
+          "detail": {
+            "name": "req-fail-loud",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0081"
+          },
+          "id": "op10",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288159,
+          "detail": {
+            "id": "req-failure-retry-escalation",
+            "now": {
+              "accept": "Simulated failure states drive the schedule: fail->nightly; 3 fails->2pm daily; success->back to weekly.",
+              "kind": "functional",
+              "text": "If a scheduled run fails, retry nightly (03:00) until success; once 3 consecutive scheduled runs have failed, switch to daily 2pm attempts until success, then return to weekly."
+            },
+            "prev": {
+              "accept": "Simulated failure states drive the schedule: fail->nightly; 3 fails->2pm daily; success->back to weekly.",
+              "kind": "functional",
+              "text": "If a scheduled run fails, retry the next night nightly until success; after 3 consecutive nightly failures switch to daily 2pm attempts until success, then return to weekly."
+            },
+            "uid": "n0089"
+          },
+          "id": "op11",
+          "op": "edit-requirement",
+          "step": null
+        },
+        {
+          "at": 1792288159,
+          "detail": {
+            "name": "req-failure-retry-escalation",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0089"
+          },
+          "id": "op12",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288166,
+          "detail": {
+            "name": "req-install-whole-suite",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0083"
+          },
+          "id": "op13",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288167,
+          "detail": {
+            "name": "req-macos-only",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0084"
+          },
+          "id": "op14",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288167,
+          "detail": {
+            "name": "req-manual-cli-update",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0079"
+          },
+          "id": "op15",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288167,
+          "detail": {
+            "name": "req-minimal-scope",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0091"
+          },
+          "id": "op16",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288175,
+          "detail": {
+            "id": "req-minimal-scope",
+            "now": {
+              "accept": "Feature set maps only to those items; none of the ACFS VPS machinery is present.",
+              "kind": "constraint",
+              "text": "Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+            },
+            "prev": {
+              "accept": "Feature set maps only to those items; none of the ACFS VPS machinery is present.",
+              "kind": "constraint",
+              "text": "Minimal scope: install tools, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+            },
+            "uid": "n0091"
+          },
+          "id": "op17",
+          "op": "edit-requirement",
+          "step": null
+        },
+        {
+          "at": 1792288182,
+          "detail": {
+            "name": "req-never-start-servers",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0086"
+          },
+          "id": "op18",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288182,
+          "detail": {
+            "name": "req-no-cross-tool-side-installs",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0085"
+          },
+          "id": "op19",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288189,
+          "detail": {
+            "id": "req-per-tool-method-dispatch",
+            "now": {
+              "accept": "Each manifest row names exactly one of brew, installer-sh, cargo-git, go; the dispatcher handles those four and fails loud on any other method; installing a sample of each method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.",
+              "kind": "functional",
+              "text": "Per-tool install/update dispatch across 4 methods: brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest)."
+            },
+            "prev": {
+              "accept": "Manifest row per tool names its method; installing a sample of each method type succeeds on the Mac.",
+              "kind": "functional",
+              "text": "Per-tool install/update dispatch across ~5 methods: own install.sh (curl|bash), Homebrew tap, cargo install --git, go install/Makefile, npm/bash."
+            },
+            "uid": "n0085"
+          },
+          "id": "op20",
+          "op": "edit-requirement",
+          "step": null
+        },
+        {
+          "at": 1792288190,
+          "detail": {
+            "name": "req-per-tool-method-dispatch",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0085"
+          },
+          "id": "op21",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288198,
+          "detail": {
+            "id": "req-prefer-homebrew",
+            "now": {
+              "accept": "The 15 tap-formula tools (NTM, MAIL, UBS, BV, CASS, CM, SLB, DCG, BR, CAAM, RU, RCH, XF, TRU, EE) use the brew method with a dicklesworthstone/tap/<formula> ref and install/update through brew; no tool with a tap formula uses a non-brew method.",
+              "kind": "constraint",
+              "text": "Prefer Homebrew wherever dicklesworthstone/tap publishes a formula for a tool; tools with no tap formula (e.g. MS via cargo-git, SRPS via its installer-sh) use their own method."
+            },
+            "prev": {
+              "accept": "MS and SRPS rows use the brew method; install/update go through brew for them.",
+              "kind": "constraint",
+              "text": "Prefer Homebrew where a tool publishes a tap/formula (e.g. MS, SRPS)."
+            },
+            "uid": "n0087"
+          },
+          "id": "op22",
+          "op": "edit-requirement",
+          "step": null
+        },
+        {
+          "at": 1792288198,
+          "detail": {
+            "name": "req-prefer-homebrew",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0087"
+          },
+          "id": "op23",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288207,
+          "detail": {
+            "id": "req-prerequisite-autoinstall",
+            "now": {
+              "accept": "On a Mac missing e.g. go, running macacfs installs go before the tools that need it; gate reports what it installed.",
+              "kind": "functional",
+              "text": "Prerequisite gate checks for the toolchains the selected tools need (Homebrew, git, rust/cargo, go, uv, node, plus minisign and flock for installers that verify or serialize with them; curl is assumed from macOS) and INSTALLS any that are missing, not just reports them."
+            },
+            "prev": {
+              "accept": "On a Mac missing e.g. go, running macacfs installs go before the tools that need it; gate reports what it installed.",
+              "kind": "functional",
+              "text": "Prerequisite gate checks for required toolchains (git, curl, Homebrew, rust/cargo, go, uv, node/bun) and INSTALLS any that are missing, not just reports them."
+            },
+            "uid": "n0088"
+          },
+          "id": "op24",
+          "op": "edit-requirement",
+          "step": null
+        },
+        {
+          "at": 1792288208,
+          "detail": {
+            "name": "req-prerequisite-autoinstall",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0088"
+          },
+          "id": "op25",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288208,
+          "detail": {
+            "name": "req-public-github-repo",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0082"
+          },
+          "id": "op26",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288208,
+          "detail": {
+            "name": "req-runnable-signatures",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0079"
+          },
+          "id": "op27",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288209,
+          "detail": {
+            "name": "req-scheduled-run-tracking",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0090"
+          },
+          "id": "op28",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288209,
+          "detail": {
+            "name": "req-self-update",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0092"
+          },
+          "id": "op29",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288223,
+          "detail": {
+            "id": "req-terminal-environment-parity",
+            "now": {
+              "accept": "Running a full 'macacfs install' (no TOOL args) installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; 'macacfs install TOOL...' skips shell setup; --dry-run performs no installs; a full 'macacfs update' brew-upgrades the bundle, font, zoxide, lazygit, ast-grep and atuin.",
+              "kind": "functional",
+              "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), performed as part of a full 'macacfs install' (no tool selectors); a full 'macacfs update' also refreshes the Homebrew bundle and the brew-installed standalone tools without rewriting shell config."
+            },
+            "prev": {
+              "accept": "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle.",
+              "kind": "functional",
+              "text": "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle."
+            },
+            "uid": "n0093"
+          },
+          "id": "op30",
+          "op": "edit-requirement",
+          "step": null
+        },
+        {
+          "at": 1792288223,
+          "detail": {
+            "name": "req-terminal-environment-parity",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0093"
+          },
+          "id": "op31",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288223,
+          "detail": {
+            "name": "req-weekly-update-launchagent",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0094"
+          },
+          "id": "op32",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288233,
+          "detail": {
+            "name": "result-capture-and-summary"
+          },
+          "id": "op33",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288233,
+          "detail": {
+            "name": "result-capture-and-summary",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0026"
+          },
+          "id": "op34",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288245,
+          "detail": {
+            "name": "run-report-surface"
+          },
+          "id": "op35",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288246,
+          "detail": {
+            "name": "run-report-surface",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0014"
+          },
+          "id": "op36",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288264,
+          "detail": {
+            "name": "schedule-state-and-plist"
+          },
+          "id": "op37",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288265,
+          "detail": {
+            "dst": "req-failure-retry-escalation",
+            "src": "schedule-state-and-plist",
+            "type": "validated-by"
+          },
+          "id": "op38",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288265,
+          "detail": {
+            "name": "schedule-state-and-plist",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0027"
+          },
+          "id": "op39",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288275,
+          "detail": {
+            "name": "scheduled-update-behavior"
+          },
+          "id": "op40",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288276,
+          "detail": {
+            "name": "scheduled-update-behavior",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0013"
+          },
+          "id": "op41",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288289,
+          "detail": {
+            "dst": "fb-plist-template",
+            "src": "scheduler-code",
+            "type": "accomplished-by"
+          },
+          "id": "op42",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288290,
+          "detail": {
+            "name": "scheduler-code"
+          },
+          "id": "op43",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288290,
+          "detail": {
+            "dst": "req-failure-retry-escalation",
+            "src": "scheduler-code",
+            "type": "validated-by"
+          },
+          "id": "op44",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288291,
+          "detail": {
+            "dst": "req-weekly-update-launchagent",
+            "src": "scheduler-code",
+            "type": "validated-by"
+          },
+          "id": "op45",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288291,
+          "detail": {
+            "name": "scheduler-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0034"
+          },
+          "id": "op46",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288304,
+          "detail": {
+            "dst": "macacfs-command-surface",
+            "src": "scope-containment",
+            "type": "accomplished-by"
+          },
+          "id": "op47",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288304,
+          "detail": {
+            "name": "scope-containment"
+          },
+          "id": "op48",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288305,
+          "detail": {
+            "name": "scope-containment",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0010"
+          },
+          "id": "op49",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288315,
+          "detail": {
+            "dst": "req-minimal-scope",
+            "src": "scope-containment",
+            "type": "validated-by"
+          },
+          "id": "op50",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288323,
+          "detail": {
+            "name": "self-update-bootstrap"
+          },
+          "id": "op51",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288324,
+          "detail": {
+            "name": "self-update-bootstrap",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0009"
+          },
+          "id": "op52",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288333,
+          "detail": {
+            "dst": "req-self-update",
+            "src": "self-update-capability",
+            "type": "validated-by"
+          },
+          "id": "op53",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288334,
+          "detail": {
+            "name": "self-update-capability"
+          },
+          "id": "op54",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288334,
+          "detail": {
+            "name": "self-update-capability",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0021"
+          },
+          "id": "op55",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288351,
+          "detail": {
+            "dst": "fb-install-sh",
+            "src": "selfupdate-code",
+            "type": "accomplished-by"
+          },
+          "id": "op56",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288351,
+          "detail": {
+            "dst": "fb-readme",
+            "src": "selfupdate-code",
+            "type": "accomplished-by"
+          },
+          "id": "op57",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288351,
+          "detail": {
+            "dst": "req-self-update",
+            "src": "selfupdate-code",
+            "type": "validated-by"
+          },
+          "id": "op58",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288352,
+          "detail": {
+            "name": "selfupdate-code"
+          },
+          "id": "op59",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288352,
+          "detail": {
+            "name": "selfupdate-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0035"
+          },
+          "id": "op60",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288374,
+          "detail": {
+            "name": "shell-assets-code"
+          },
+          "id": "op61",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288374,
+          "detail": {
+            "name": "shell-assets-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0066"
+          },
+          "id": "op62",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288387,
+          "detail": {
+            "name": "shell-environment-catalog"
+          },
+          "id": "op63",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288387,
+          "detail": {
+            "name": "shell-environment-catalog",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0061"
+          },
+          "id": "op64",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288399,
+          "detail": {
+            "name": "shell-fns-code"
+          },
+          "id": "op65",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288400,
+          "detail": {
+            "dst": "req-never-start-servers",
+            "src": "shell-fns-code",
+            "type": "validated-by"
+          },
+          "id": "op66",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288400,
+          "detail": {
+            "name": "shell-fns-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0065"
+          },
+          "id": "op67",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288412,
+          "detail": {
+            "name": "shell-setup-dispatch"
+          },
+          "id": "op68",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288412,
+          "detail": {
+            "name": "shell-setup-dispatch",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0062"
+          },
+          "id": "op69",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288429,
+          "detail": {
+            "dst": "terminal-environment-parity",
+            "src": "shell-setup-experience",
+            "type": "serves"
+          },
+          "id": "op70",
+          "op": "edge-reason",
+          "step": null
+        },
+        {
+          "at": 1792288429,
+          "detail": {
+            "name": "shell-setup-experience"
+          },
+          "id": "op71",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288430,
+          "detail": {
+            "name": "shell-setup-experience",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0060"
+          },
+          "id": "op72",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288441,
+          "detail": {
+            "name": "shell-setup-functions"
+          },
+          "id": "op73",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288441,
+          "detail": {
+            "name": "shell-setup-functions",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0064"
+          },
+          "id": "op74",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288452,
+          "detail": {
+            "name": "shell-spec-store"
+          },
+          "id": "op75",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288461,
+          "detail": {
+            "name": "shell-spec-store"
+          },
+          "id": "op76",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288462,
+          "detail": {
+            "name": "shell-spec-store",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0063"
+          },
+          "id": "op77",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288474,
+          "detail": {
+            "name": "signature-repair-code"
+          },
+          "id": "op78",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288475,
+          "detail": {
+            "name": "signature-repair-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0083"
+          },
+          "id": "op79",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288488,
+          "detail": {
+            "name": "signature-repair"
+          },
+          "id": "op80",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288488,
+          "detail": {
+            "name": "signature-repair",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0081"
+          },
+          "id": "op81",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288493,
+          "detail": {
+            "name": "signature-verify-and-resign",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0082"
+          },
+          "id": "op82",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288504,
+          "detail": {
+            "name": "stateful-schedule-escalation"
+          },
+          "id": "op83",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288505,
+          "detail": {
+            "dst": "req-scheduled-run-tracking",
+            "src": "stateful-schedule-escalation",
+            "type": "validated-by"
+          },
+          "id": "op84",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288505,
+          "detail": {
+            "name": "stateful-schedule-escalation",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0006"
+          },
+          "id": "op85",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288524,
+          "detail": {
+            "name": "terminal-environment-parity"
+          },
+          "id": "op86",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288524,
+          "detail": {
+            "name": "terminal-environment-parity",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0059"
+          },
+          "id": "op87",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288539,
+          "detail": {
+            "name": "tool-catalog"
+          },
+          "id": "op88",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288539,
+          "detail": {
+            "dst": "req-per-tool-method-dispatch",
+            "src": "tool-catalog",
+            "type": "validated-by"
+          },
+          "id": "op89",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288539,
+          "detail": {
+            "dst": "req-prefer-homebrew",
+            "src": "tool-catalog",
+            "type": "validated-by"
+          },
+          "id": "op90",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288540,
+          "detail": {
+            "dst": "req-no-cross-tool-side-installs",
+            "src": "tool-catalog",
+            "type": "validated-by"
+          },
+          "id": "op91",
+          "op": "add-edge",
+          "step": null
+        },
+        {
+          "at": 1792288540,
+          "detail": {
+            "name": "tool-catalog",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0016"
+          },
+          "id": "op92",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288550,
+          "detail": {
+            "name": "toolchain-helpers-code"
+          },
+          "id": "op93",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288550,
+          "detail": {
+            "name": "toolchain-helpers-code",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0032"
+          },
+          "id": "op94",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288560,
+          "detail": {
+            "name": "toolchain-prereqs-and-order"
+          },
+          "id": "op95",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288560,
+          "detail": {
+            "name": "toolchain-prereqs-and-order",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0003"
+          },
+          "id": "op96",
+          "op": "update-reviewed",
+          "step": null
+        },
+        {
+          "at": 1792288571,
+          "detail": {
+            "name": "update-equals-reinstall-idempotency"
+          },
+          "id": "op97",
+          "op": "revise-prose",
+          "step": null
+        },
+        {
+          "at": 1792288572,
+          "detail": {
+            "name": "update-equals-reinstall-idempotency",
+            "now": "0.15.0",
+            "prev": null,
+            "uid": "n0004"
+          },
+          "id": "op98",
+          "op": "update-reviewed",
+          "step": null
+        }
+      ],
+      "mode": null
     }
   },
   "uid_seq": 85

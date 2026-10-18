@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789594075,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "catalog-loader-code",
@@ -21,6 +29,7 @@
   "is_bead": true,
   "name": "fb-lib-catalog",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0038",
@@ -28,4 +37,4 @@
 }
 -->
 
-lib/catalog.sh — loads share/manifest.tsv, resolves all/named tool selections, exposes row fields. Bead.
+The lib/catalog.sh file boundary: the sourced library that queries share/manifest.tsv (path from MACACFS_MANIFEST), resolves all or named tool selections case-insensitively by abbr or cli, and exposes positional row-field accessors and the catalog count. It [[catalog-loader-code|serves|This file holds the catalog loader code unit.]] and is [[fb-lib-catalog-impl|accomplished-by|The lib/catalog.sh shell code parses share/manifest.tsv and resolves all or named tool selections.]]. Its accessors [[fb-manifest-tsv|couples-with|row_abbr..row_args read fixed awk columns 1-6, so this file and the manifest's tab-separated column order must change together.]].

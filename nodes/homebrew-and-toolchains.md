@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789593935,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "prereq-autoinstaller",
@@ -26,6 +34,7 @@
   "is_bead": false,
   "name": "homebrew-and-toolchains",
   "node_type": "unclassified",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0025",
@@ -33,4 +42,4 @@
 }
 -->
 
-Helpers that ensure/install Homebrew (root prerequisite) then the language toolchains (rustup/cargo, go, uv, node) via brew, each a no-op if present. Underpins [[prereq-autoinstaller|flow]] and the brew branch of [[install-method-functions|flow]]. Accomplished by [[toolchain-helpers-code|accomplished-by]].
+The prerequisite subsystem: helpers that ensure Homebrew (the root prerequisite, via its official non-interactive installer) and git, then the toolchains the selected methods imply, Rust via rustup and go, uv, node, minisign and flock via brew, each a no-op when already present, dry-run-aware, reporting what it installed and warning (without aborting) about what it could not provide. It [[prereq-autoinstaller|serves|The prereq gate capability is implemented by these Homebrew and toolchain ensure helpers.]] and [[method-dispatch|serves|The brew branch of method dispatch and the cargo/go/installer-sh branches all rely on the toolchains these helpers provide.]], it [[install-method-functions|precedes|run_tools calls prereq_ensure for the selected methods before any install method function runs, so toolchains are in place first.]], and it is [[toolchain-helpers-code|accomplished-by|The toolchain helper code in lib/prereq.sh realizes this subsystem.]].

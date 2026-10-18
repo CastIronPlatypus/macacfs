@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789593934,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "tool-catalog",
@@ -21,6 +29,7 @@
   "is_bead": false,
   "name": "manifest-store",
   "node_type": "unclassified",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "subsystems",
   "uid": "n0023",
@@ -28,4 +37,4 @@
 }
 -->
 
-A plain-text manifest (one tab-separated row per tool: abbr, repo, cli, method, extra) shipped in the repo, plus a loader that reads it and lets callers select all rows or a named subset. Feeds [[tool-catalog|flow]]. Accomplished by [[catalog-loader-code|accomplished-by]].
+The manifest-store subsystem: a plain-text manifest shipped in the repo at share/manifest.tsv (one tab-separated row per tool: abbr, repo, cli, method, ref, args, with comment lines ignored), plus a loader that queries it on demand and lets callers select all rows or a named subset by abbr or cli name, case-insensitively, and read each row's fields. It [[tool-catalog|serves|The tool-catalog capability is backed by this on-disk manifest and its loader.]] and is [[catalog-loader-code|accomplished-by|The catalog loader code in lib/catalog.sh, reading the manifest data, realizes this subsystem.]].

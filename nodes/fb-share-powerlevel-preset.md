@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789599829,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "fb-share-powerlevel-preset-impl",
@@ -16,6 +24,7 @@
   "is_bead": true,
   "name": "fb-share-powerlevel-preset",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0075",
@@ -23,4 +32,4 @@
 }
 -->
 
-share/p10k.zsh — a pre-baked Powerlevel10k configuration so first login skips the wizard. Copied to ~/.p10k.zsh. Realizes [[shell-assets-code|serves]]. Bead.
+The share/p10k.zsh file boundary: a pre-baked Lean-style Powerlevel10k configuration that shell_p10k copies to ~/.p10k.zsh so the first login skips the configuration wizard. Bead. It [[shell-assets-code|serves|This preset is one of the shell asset files the shell-assets code unit installs.]] and is [[fb-share-powerlevel-preset-impl|accomplished-by|share/p10k.zsh is the pre-baked Powerlevel10k config copied to ~/.p10k.zsh.]]. It [[fb-share-zshrc-mac|couples-with|The managed zshrc is what sources ~/.p10k.zsh and selects the powerlevel10k theme, so this preset depends on that file's load path.]].

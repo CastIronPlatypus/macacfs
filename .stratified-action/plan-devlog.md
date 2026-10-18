@@ -393,3 +393,209 @@
 - [1792287088] **absorb** — signature-repair-code absorbed the parent revision (unchanged)
 - [1792287089] **absorb** — fb-lib-prereq absorbed the parent revision (unchanged)
 - [1792287089] **absorb** — fb-lib-prereq-impl absorbed the parent revision (unchanged)
+- [1792287129] **begin** — update
+- [1792287178] **begin** — update
+- [1792287204] **revise-prose** — argv-and-usage
+- [1792287209] **update-reviewed** — argv-and-usage: reviewed-at None -> v0.15.0
+- [1792287226] **revise-prose** — argv-code
+- [1792287235] **revise-prose** — argv-code
+- [1792287235] **update-reviewed** — argv-code: reviewed-at None -> v0.15.0
+- [1792287267] **revise-prose** — bootstrap-and-self-update
+- [1792287267] **update-reviewed** — bootstrap-and-self-update: reviewed-at None -> v0.15.0
+- [1792287282] **revise-prose** — catalog-loader-code
+- [1792287282] **update-reviewed** — catalog-loader-code: reviewed-at None -> v0.15.0
+- [1792287291] **revise-prose** — cli-arg-dispatch
+- [1792287292] **update-reviewed** — cli-arg-dispatch: reviewed-at None -> v0.15.0
+- [1792287303] **revise-prose** — darwin-truth-per-tool
+- [1792287303] **update-reviewed** — darwin-truth-per-tool: reviewed-at None -> v0.15.0
+- [1792287314] **revise-prose** — dry-run-without-sideeffects
+- [1792287314] **update-reviewed** — dry-run-without-sideeffects: reviewed-at None -> v0.15.0
+- [1792287322] **revise-prose** — fail-loud-aggregation
+- [1792287322] **update-reviewed** — fail-loud-aggregation: reviewed-at None -> v0.15.0
+- [1792287335] **revise-prose** — fb-bin-macacfs-impl
+- [1792287339] **update-reviewed** — fb-bin-macacfs-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287352] **revise-prose** — fb-bin-macacfs
+- [1792287352] **update-reviewed** — fb-bin-macacfs: reviewed-at None -> v0.15.0
+- [1792287361] **revise-prose** — fb-install-sh-impl
+- [1792287361] **update-reviewed** — fb-install-sh-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287373] **revise-prose** — fb-install-sh
+- [1792287397] **update-reviewed** — fb-install-sh: reviewed-at None -> v0.15.0
+- [1792287406] **revise-prose** — fb-lib-catalog-impl
+- [1792287406] **update-reviewed** — fb-lib-catalog-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287416] **revise-prose** — fb-lib-catalog
+- [1792287416] **update-reviewed** — fb-lib-catalog: reviewed-at None -> v0.15.0
+- [1792287428] **revise-prose** — fb-lib-codesign
+- [1792287428] **update-reviewed** — fb-lib-codesign: reviewed-at None -> v0.15.0
+- [1792287440] **revise-prose** — fb-lib-methods-impl
+- [1792287440] **update-reviewed** — fb-lib-methods-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287451] **revise-prose** — fb-lib-methods
+- [1792287470] **update-reviewed** — fb-lib-methods: reviewed-at None -> v0.15.0
+- [1792287480] **revise-prose** — fb-lib-prereq-impl
+- [1792287481] **update-reviewed** — fb-lib-prereq-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287493] **revise-prose** — fb-lib-prereq
+- [1792287494] **update-reviewed** — fb-lib-prereq: reviewed-at None -> v0.15.0
+- [1792287505] **revise-prose** — fb-lib-report-impl
+- [1792287505] **update-reviewed** — fb-lib-report-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287513] **revise-prose** — fb-lib-report
+- [1792287514] **update-reviewed** — fb-lib-report: reviewed-at None -> v0.15.0
+- [1792287526] **revise-prose** — fb-lib-schedule-impl
+- [1792287526] **update-reviewed** — fb-lib-schedule-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287537] **revise-prose** — fb-lib-schedule
+- [1792287537] **update-reviewed** — fb-lib-schedule: reviewed-at None -> v0.15.0
+- [1792287547] **revise-prose** — fb-lib-selfupdate-impl
+- [1792287548] **update-reviewed** — fb-lib-selfupdate-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287557] **revise-prose** — fb-lib-selfupdate
+- [1792287558] **update-reviewed** — fb-lib-selfupdate: reviewed-at None -> v0.15.0
+- [1792287574] **revise-prose** — fb-lib-shell-impl
+- [1792287574] **update-reviewed** — fb-lib-shell-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287585] **revise-prose** — fb-lib-shell
+- [1792287586] **update-reviewed** — fb-lib-shell: reviewed-at None -> v0.15.0
+- [1792287597] **revise-prose** — fb-manifest-tsv-impl
+- [1792287598] **update-reviewed** — fb-manifest-tsv-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287615] **revise-prose** — fb-manifest-tsv
+- [1792287615] **update-reviewed** — fb-manifest-tsv: reviewed-at None -> v0.15.0
+- [1792287625] **revise-prose** — fb-plist-template-impl
+- [1792287625] **update-reviewed** — fb-plist-template-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287636] **revise-prose** — fb-plist-template
+- [1792287636] **update-reviewed** — fb-plist-template: reviewed-at None -> v0.15.0
+- [1792287655] **revise-prose** — fb-readme-impl
+- [1792287655] **update-reviewed** — fb-readme-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287663] **revise-prose** — fb-readme
+- [1792287664] **update-reviewed** — fb-readme: reviewed-at None -> v0.15.0
+- [1792287676] **revise-prose** — fb-share-atuin-guard-impl
+- [1792287676] **update-reviewed** — fb-share-atuin-guard-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287690] **revise-prose** — fb-share-atuin-guard
+- [1792287690] **update-reviewed** — fb-share-atuin-guard: reviewed-at None -> v0.15.0
+- [1792287707] **revise-prose** — fb-share-powerlevel-preset-impl
+- [1792287707] **update-reviewed** — fb-share-powerlevel-preset-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287716] **revise-prose** — fb-share-powerlevel-preset
+- [1792287716] **update-reviewed** — fb-share-powerlevel-preset: reviewed-at None -> v0.15.0
+- [1792287729] **revise-prose** — fb-share-shell-bundle-impl
+- [1792287729] **update-reviewed** — fb-share-shell-bundle-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287739] **revise-prose** — fb-share-shell-bundle
+- [1792287740] **update-reviewed** — fb-share-shell-bundle: reviewed-at None -> v0.15.0
+- [1792287756] **revise-prose** — fb-share-tmux-conf-impl
+- [1792287756] **update-reviewed** — fb-share-tmux-conf-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287769] **revise-prose** — fb-share-tmux-conf
+- [1792287770] **update-reviewed** — fb-share-tmux-conf: reviewed-at None -> v0.15.0
+- [1792287782] **revise-prose** — fb-share-zshrc-mac-impl
+- [1792287782] **update-reviewed** — fb-share-zshrc-mac-impl: reviewed-at 0.14.0 -> v0.15.0
+- [1792287795] **revise-prose** — fb-share-zshrc-mac
+- [1792287795] **update-reviewed** — fb-share-zshrc-mac: reviewed-at None -> v0.15.0
+- [1792287811] **revise-prose** — heterogeneous-install-methods
+- [1792287812] **update-reviewed** — heterogeneous-install-methods: reviewed-at None -> v0.15.0
+- [1792287823] **revise-prose** — homebrew-and-toolchains
+- [1792287824] **update-reviewed** — homebrew-and-toolchains: reviewed-at None -> v0.15.0
+- [1792287842] **revise-prose** — install-experience
+- [1792287842] **update-reviewed** — install-experience: reviewed-at None -> v0.15.0
+- [1792287852] **revise-prose** — install-method-functions
+- [1792287853] **update-reviewed** — install-method-functions: reviewed-at None -> v0.15.0
+- [1792287862] **revise-prose** — invalid-upstream-signatures
+- [1792287862] **update-reviewed** — invalid-upstream-signatures: reviewed-at None -> v0.15.0
+- [1792287872] **revise-prose** — isolated-runner-reporter
+- [1792287872] **update-reviewed** — isolated-runner-reporter: reviewed-at None -> v0.15.0
+- [1792287885] **link-requirement** — launchd-scheduler-state -> req-scheduled-run-tracking
+- [1792287885] **link-requirement** — launchd-scheduler-state -> req-weekly-update-launchagent
+- [1792287885] **revise-prose** — launchd-scheduler-state
+- [1792287886] **update-reviewed** — launchd-scheduler-state: reviewed-at None -> v0.15.0
+- [1792287900] **link-requirement** — macacfs-command-surface -> req-manual-cli-update
+- [1792287901] **revise-prose** — macacfs-command-surface
+- [1792287901] **update-reviewed** — macacfs-command-surface: reviewed-at None -> v0.15.0
+- [1792287910] **revise-prose** — manifest-store
+- [1792287911] **update-reviewed** — manifest-store: reviewed-at None -> v0.15.0
+- [1792287922] **revise-prose** — method-dispatch
+- [1792287923] **update-reviewed** — method-dispatch: reviewed-at None -> v0.15.0
+- [1792287962] **revise-prose** — method-fns-code
+- [1792287962] **update-reviewed** — method-fns-code: reviewed-at None -> v0.15.0
+- [1792288032] **begin** — update
+- [1792288080] **revise-prose** — never-start-services
+- [1792288083] **update-reviewed** — never-start-services: reviewed-at None -> v0.15.0
+- [1792288104] **revise-prose** — prereq-autoinstaller
+- [1792288104] **update-reviewed** — prereq-autoinstaller: reviewed-at None -> v0.15.0
+- [1792288116] **revise-prose** — repo-fetch-replace
+- [1792288116] **update-reviewed** — repo-fetch-replace: reviewed-at None -> v0.15.0
+- [1792288127] **revise-prose** — reporter-code
+- [1792288127] **update-reviewed** — reporter-code: reviewed-at None -> v0.15.0
+- [1792288133] **update-reviewed** — req-dry-run-no-side-effects: reviewed-at None -> v0.15.0
+- [1792288139] **update-reviewed** — req-fail-loud: reviewed-at None -> v0.15.0
+- [1792288159] **edit-requirement** — req-failure-retry-escalation: {'text': 'If a scheduled run fails, retry the next night nightly until success; after 3 consecutive nightly failures switch to daily 2pm attempts until success, then return to weekly.', 'kind': 'functional', 'accept': 'Simulated failure states drive the schedule: fail->nightly; 3 fails->2pm daily; success->back to weekly.'} -> {'text': 'If a scheduled run fails, retry nightly (03:00) until success; once 3 consecutive scheduled runs have failed, switch to daily 2pm attempts until success, then return to weekly.', 'kind': 'functional', 'accept': 'Simulated failure states drive the schedule: fail->nightly; 3 fails->2pm daily; success->back to weekly.'}
+- [1792288159] **update-reviewed** — req-failure-retry-escalation: reviewed-at None -> v0.15.0
+- [1792288166] **update-reviewed** — req-install-whole-suite: reviewed-at None -> v0.15.0
+- [1792288167] **update-reviewed** — req-macos-only: reviewed-at None -> v0.15.0
+- [1792288167] **update-reviewed** — req-manual-cli-update: reviewed-at None -> v0.15.0
+- [1792288167] **update-reviewed** — req-minimal-scope: reviewed-at None -> v0.15.0
+- [1792288175] **edit-requirement** — req-minimal-scope: {'text': 'Minimal scope: install tools, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).', 'kind': 'constraint', 'accept': 'Feature set maps only to those items; none of the ACFS VPS machinery is present.'} -> {'text': 'Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).', 'kind': 'constraint', 'accept': 'Feature set maps only to those items; none of the ACFS VPS machinery is present.'}
+- [1792288182] **update-reviewed** — req-never-start-servers: reviewed-at None -> v0.15.0
+- [1792288182] **update-reviewed** — req-no-cross-tool-side-installs: reviewed-at None -> v0.15.0
+- [1792288189] **edit-requirement** — req-per-tool-method-dispatch: {'text': 'Per-tool install/update dispatch across ~5 methods: own install.sh (curl|bash), Homebrew tap, cargo install --git, go install/Makefile, npm/bash.', 'kind': 'functional', 'accept': 'Manifest row per tool names its method; installing a sample of each method type succeeds on the Mac.'} -> {'text': "Per-tool install/update dispatch across 4 methods: brew (Homebrew tap formula, install-or-upgrade), installer-sh (the repo's own installer via curl|bash, with optional flags), cargo-git (cargo install --git --force), and go (go install <module>@latest).", 'kind': 'functional', 'accept': 'Each manifest row names exactly one of brew, installer-sh, cargo-git, go; the dispatcher handles those four and fails loud on any other method; installing a sample of each method the catalog uses (brew, installer-sh, cargo-git) succeeds on the Mac.'}
+- [1792288190] **update-reviewed** — req-per-tool-method-dispatch: reviewed-at None -> v0.15.0
+- [1792288198] **edit-requirement** — req-prefer-homebrew: {'text': 'Prefer Homebrew where a tool publishes a tap/formula (e.g. MS, SRPS).', 'kind': 'constraint', 'accept': 'MS and SRPS rows use the brew method; install/update go through brew for them.'} -> {'text': 'Prefer Homebrew wherever dicklesworthstone/tap publishes a formula for a tool; tools with no tap formula (e.g. MS via cargo-git, SRPS via its installer-sh) use their own method.', 'kind': 'constraint', 'accept': 'The 15 tap-formula tools (NTM, MAIL, UBS, BV, CASS, CM, SLB, DCG, BR, CAAM, RU, RCH, XF, TRU, EE) use the brew method with a dicklesworthstone/tap/<formula> ref and install/update through brew; no tool with a tap formula uses a non-brew method.'}
+- [1792288198] **update-reviewed** — req-prefer-homebrew: reviewed-at None -> v0.15.0
+- [1792288207] **edit-requirement** — req-prerequisite-autoinstall: {'text': 'Prerequisite gate checks for required toolchains (git, curl, Homebrew, rust/cargo, go, uv, node/bun) and INSTALLS any that are missing, not just reports them.', 'kind': 'functional', 'accept': 'On a Mac missing e.g. go, running macacfs installs go before the tools that need it; gate reports what it installed.'} -> {'text': 'Prerequisite gate checks for the toolchains the selected tools need (Homebrew, git, rust/cargo, go, uv, node, plus minisign and flock for installers that verify or serialize with them; curl is assumed from macOS) and INSTALLS any that are missing, not just reports them.', 'kind': 'functional', 'accept': 'On a Mac missing e.g. go, running macacfs installs go before the tools that need it; gate reports what it installed.'}
+- [1792288208] **update-reviewed** — req-prerequisite-autoinstall: reviewed-at None -> v0.15.0
+- [1792288208] **update-reviewed** — req-public-github-repo: reviewed-at None -> v0.15.0
+- [1792288208] **update-reviewed** — req-runnable-signatures: reviewed-at None -> v0.15.0
+- [1792288209] **update-reviewed** — req-scheduled-run-tracking: reviewed-at None -> v0.15.0
+- [1792288209] **update-reviewed** — req-self-update: reviewed-at None -> v0.15.0
+- [1792288223] **edit-requirement** — req-terminal-environment-parity: {'text': "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), exposed via a 'macacfs shell' subcommand; 'macacfs update' also refreshes the Homebrew bundle.", 'kind': 'functional', 'accept': "Running 'macacfs shell' installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; --dry-run performs no installs; 'macacfs update' brew-upgrades the bundle."} -> {'text': "Set up the macOS terminal environment to ACFS parity: Oh My Zsh + Powerlevel10k + zsh plugins + a mac-adapted managed zshrc (backing up any existing one) + a Nerd Font, a modern-CLI Homebrew bundle, a tmux config (installed to ~/.tmux.conf, backing up any existing one), and standalone tools (atuin with an agent-safe shim, zoxide, lazygit, ast-grep), performed as part of a full 'macacfs install' (no tool selectors); a full 'macacfs update' also refreshes the Homebrew bundle and the brew-installed standalone tools without rewriting shell config.", 'kind': 'functional', 'accept': "Running a full 'macacfs install' (no TOOL args) installs omz/p10k/plugins/font, the brew CLI bundle, the tmux config (~/.tmux.conf, prior file backed up), and atuin(+shim)/zoxide/lazygit/ast-grep; ~/.zshrc becomes a managed loader with the prior file backed up; 'macacfs install TOOL...' skips shell setup; --dry-run performs no installs; a full 'macacfs update' brew-upgrades the bundle, font, zoxide, lazygit, ast-grep and atuin."}
+- [1792288223] **update-reviewed** — req-terminal-environment-parity: reviewed-at None -> v0.15.0
+- [1792288223] **update-reviewed** — req-weekly-update-launchagent: reviewed-at None -> v0.15.0
+- [1792288233] **revise-prose** — result-capture-and-summary
+- [1792288233] **update-reviewed** — result-capture-and-summary: reviewed-at None -> v0.15.0
+- [1792288245] **revise-prose** — run-report-surface
+- [1792288246] **update-reviewed** — run-report-surface: reviewed-at None -> v0.15.0
+- [1792288264] **revise-prose** — schedule-state-and-plist
+- [1792288265] **link-requirement** — schedule-state-and-plist -> req-failure-retry-escalation
+- [1792288265] **update-reviewed** — schedule-state-and-plist: reviewed-at None -> v0.15.0
+- [1792288275] **revise-prose** — scheduled-update-behavior
+- [1792288276] **update-reviewed** — scheduled-update-behavior: reviewed-at None -> v0.15.0
+- [1792288290] **revise-prose** — scheduler-code
+- [1792288290] **link-requirement** — scheduler-code -> req-failure-retry-escalation
+- [1792288291] **link-requirement** — scheduler-code -> req-weekly-update-launchagent
+- [1792288291] **update-reviewed** — scheduler-code: reviewed-at None -> v0.15.0
+- [1792288304] **revise-prose** — scope-containment
+- [1792288305] **update-reviewed** — scope-containment: reviewed-at None -> v0.15.0
+- [1792288323] **revise-prose** — self-update-bootstrap
+- [1792288324] **update-reviewed** — self-update-bootstrap: reviewed-at None -> v0.15.0
+- [1792288334] **revise-prose** — self-update-capability
+- [1792288334] **update-reviewed** — self-update-capability: reviewed-at None -> v0.15.0
+- [1792288352] **revise-prose** — selfupdate-code
+- [1792288352] **update-reviewed** — selfupdate-code: reviewed-at None -> v0.15.0
+- [1792288374] **revise-prose** — shell-assets-code
+- [1792288374] **update-reviewed** — shell-assets-code: reviewed-at None -> v0.15.0
+- [1792288387] **revise-prose** — shell-environment-catalog
+- [1792288387] **update-reviewed** — shell-environment-catalog: reviewed-at None -> v0.15.0
+- [1792288399] **revise-prose** — shell-fns-code
+- [1792288400] **link-requirement** — shell-fns-code -> req-never-start-servers
+- [1792288400] **update-reviewed** — shell-fns-code: reviewed-at None -> v0.15.0
+- [1792288412] **revise-prose** — shell-setup-dispatch
+- [1792288412] **update-reviewed** — shell-setup-dispatch: reviewed-at None -> v0.15.0
+- [1792288429] **revise-prose** — shell-setup-experience
+- [1792288430] **update-reviewed** — shell-setup-experience: reviewed-at None -> v0.15.0
+- [1792288441] **revise-prose** — shell-setup-functions
+- [1792288441] **update-reviewed** — shell-setup-functions: reviewed-at None -> v0.15.0
+- [1792288452] **revise-prose** — shell-spec-store
+- [1792288461] **revise-prose** — shell-spec-store
+- [1792288462] **update-reviewed** — shell-spec-store: reviewed-at None -> v0.15.0
+- [1792288474] **revise-prose** — signature-repair-code
+- [1792288475] **update-reviewed** — signature-repair-code: reviewed-at None -> v0.15.0
+- [1792288488] **revise-prose** — signature-repair
+- [1792288488] **update-reviewed** — signature-repair: reviewed-at None -> v0.15.0
+- [1792288493] **update-reviewed** — signature-verify-and-resign: reviewed-at None -> v0.15.0
+- [1792288504] **revise-prose** — stateful-schedule-escalation
+- [1792288505] **link-requirement** — stateful-schedule-escalation -> req-scheduled-run-tracking
+- [1792288505] **update-reviewed** — stateful-schedule-escalation: reviewed-at None -> v0.15.0
+- [1792288524] **revise-prose** — terminal-environment-parity
+- [1792288524] **update-reviewed** — terminal-environment-parity: reviewed-at None -> v0.15.0
+- [1792288539] **revise-prose** — tool-catalog
+- [1792288539] **link-requirement** — tool-catalog -> req-per-tool-method-dispatch
+- [1792288539] **link-requirement** — tool-catalog -> req-prefer-homebrew
+- [1792288540] **link-requirement** — tool-catalog -> req-no-cross-tool-side-installs
+- [1792288540] **update-reviewed** — tool-catalog: reviewed-at None -> v0.15.0
+- [1792288550] **revise-prose** — toolchain-helpers-code
+- [1792288550] **update-reviewed** — toolchain-helpers-code: reviewed-at None -> v0.15.0
+- [1792288560] **revise-prose** — toolchain-prereqs-and-order
+- [1792288560] **update-reviewed** — toolchain-prereqs-and-order: reviewed-at None -> v0.15.0
+- [1792288571] **revise-prose** — update-equals-reinstall-idempotency
+- [1792288572] **update-reviewed** — update-equals-reinstall-idempotency: reviewed-at None -> v0.15.0
+- [1792288579] **update-certify** — certified up-to-spec at v0.15.0

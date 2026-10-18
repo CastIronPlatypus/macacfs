@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789593836,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "heterogeneous-install-methods",
@@ -71,6 +79,7 @@
   "is_bead": false,
   "name": "install-experience",
   "node_type": "surface",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "surface",
   "succeeds": "install-experience@v1",
@@ -79,4 +88,4 @@
 }
 -->
 
-What the user sees on 'macacfs install': it verifies/auto-installs missing toolchains first, then installs all 39 tools (or the named subset), preferring Homebrew where a tap exists, using each tool's correct method, and NEVER starting any tool's server/daemon. After each tool installs, every binary it produced is checked for a valid code signature and any invalid one is re-signed ad-hoc, so a tool is only reported ok once it can actually launch. Output streams per-tool progress and ends in a summary. Serves [[invalid-upstream-signatures|serves|install is where upstream binaries with broken signatures are caught and repaired]]. Accomplished by [[tool-catalog|accomplished-by]], [[method-dispatch|accomplished-by]], [[prereq-autoinstaller|accomplished-by]], and [[signature-repair|accomplished-by|each tool install is followed by signature verification and repair]].
+What the user sees on 'macacfs install [--dry-run] [TOOL...]': on macOS only, it resolves the selection (all 39 tools, or the named abbrs/clis, failing loud on an unknown one), checks and best-effort auto-installs missing toolchains first, then installs each tool by its catalogued method (Homebrew wherever dicklesworthstone/tap publishes a formula), never starting any tool's server or daemon. After each tool installs, every Mach-O binary it produced is checked with a non-strict codesign verification and any invalid one is re-signed ad-hoc, so a tool is only reported ok once its binaries carry a signature the kernel accepts. Output streams per-tool progress and ends in a ✅/❌ summary with a non-zero exit on any failure. It [[heterogeneous-install-methods|serves|One command installing each tool by its own method is the observable answer to the heterogeneous-install-paths problem.]], [[darwin-truth-per-tool|serves|Installing correctly on the Mac depends on the verified per-tool macOS truth encoded in the catalog.]], [[toolchain-prereqs-and-order|serves|The install flow triggers the prereq gate to provide missing toolchains before any tool builds.]], [[never-start-services|serves|The install experience installs binaries only and is the surface where the no-servers constraint is observable.]], and [[invalid-upstream-signatures|serves|Install is where upstream binaries with broken signatures are caught and repaired.]]. It is [[tool-catalog|accomplished-by|The catalog tells the install what to install and how.]], [[method-dispatch|accomplished-by|Each tool is installed by dispatching its catalogued method.]], [[prereq-autoinstaller|accomplished-by|Missing toolchains are auto-installed before tools build.]], and [[signature-repair|accomplished-by|Each tool install is followed by signature verification and repair.]]. On a full no-selector install it [[shell-setup-experience|precedes|bin/macacfs runs shell_run install right after the tool installs, so the terminal-environment setup follows in the same command.]].

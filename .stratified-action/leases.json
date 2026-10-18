@@ -14,6 +14,16 @@
       "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-sg-shebang-1792274040.fifo",
       "inbox": [],
       "registered_at": 1792274105
+    },
+    "jeff-sg-walk1-1792287151": {
+      "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-sg-walk1-1792287151.fifo",
+      "inbox": [],
+      "registered_at": 1792287204
+    },
+    "jeff-sg-walk2-1792287151": {
+      "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-sg-walk2-1792287151.fifo",
+      "inbox": [],
+      "registered_at": 1792288079
     }
   },
   "leases": [],

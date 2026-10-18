@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789593837,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "fail-loud-aggregation",
@@ -36,6 +44,7 @@
   "is_bead": false,
   "name": "run-report-surface",
   "node_type": "surface",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "surface",
   "succeeds": "run-report-surface@v1",
@@ -44,4 +53,4 @@
 }
 -->
 
-Every install/update run ends with a per-tool ✅/❌ table showing what succeeded and the captured error for what failed; the process exits non-zero if any tool failed (no silent swallowing). A ✅ row also carries any note its step recorded — e.g. 're-signed <path>' for each binary whose invalid code signature was repaired — so a repair is visible, never silent. Under --dry-run nothing is installed and the same table shows only the intended action per tool. Accomplished by [[isolated-runner-reporter|accomplished-by]].
+Every install/update run ends with a per-tool ✅/❌ summary table (with ok/failed/total counts) showing what succeeded and the captured error for what failed; the process exits non-zero if any tool failed (no silent swallowing). A full no-selector install or update prints a second table of the same shape for the terminal-environment steps. A ✅ row also carries any note its step recorded — e.g. 're-signed <path>' for each binary whose invalid code signature was repaired — so a repair is visible, never silent. Under --dry-run nothing is installed: each intended command is printed as a [dry-run] line and every table row reads '(dry-run)'. This surface [[fail-loud-aggregation|serves|The ✅/❌ summary and non-zero exit are how fail-loud aggregation surfaces to the observer.]] and [[dry-run-without-sideeffects|serves|Dry-run is observed through the same report, showing intended rather than executed actions.]]. It is [[isolated-runner-reporter|accomplished-by|The report is produced by the isolated runner/reporter.]]. It [[signature-repair|couples-with|The 're-signed <path>' notes on ✅ rows are written from a distance by signature repair into the shared run note, so the report's content depends on that capability's note format.]]

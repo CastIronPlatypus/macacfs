@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1789599716,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "fb-lib-shell-impl",
@@ -26,6 +34,7 @@
   "is_bead": true,
   "name": "fb-lib-shell",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0067",
@@ -33,4 +42,4 @@
 }
 -->
 
-lib/shell.sh — one function per provisioning action (shell_brew_bundle, shell_font, shell_omz, shell_p10k, shell_plugins, shell_zshrc, shell_atuin, shell_zoxide, shell_lazygit, shell_astgrep) plus a shell_run dispatcher; each is idempotent, dry-run-aware, and never starts a daemon. Realizes [[shell-fns-code|serves]]. Bead.
+The lib/shell.sh file boundary: one function per terminal-environment provisioning action (shell_brew_bundle, shell_font, shell_omz, shell_plugins, shell_p10k, shell_zshrc, shell_tmux, shell_zoxide, shell_lazygit, shell_astgrep, shell_atuin) plus the shell_run <install|refresh> dispatcher, invoked by a full 'macacfs install' (install) and a full 'macacfs update' (refresh); each action is idempotent, dry-run-aware, and never starts a daemon. It [[shell-fns-code|serves|This file holds the shell provisioning functions code unit.]] and is [[fb-lib-shell-impl|accomplished-by|lib/shell.sh contains the per-action provisioning functions plus shell_run.]]. It installs the share/ assets, and [[fb-share-atuin-guard|couples-with|shell_atuin substitutes the shim's __REAL_ATUIN__ placeholder and recognizes an installed shim by its marker comment, so this file and share/atuin-guard.sh must agree on both strings.]].

@@ -1,6 +1,14 @@
 <!--stratified-action
 {
   "created": 1792285758,
+  "disc_stamp": {
+    "disc-callout-distal": "1.0.0",
+    "disc-inline-link-prose": "1.0.0",
+    "disc-obligation-audit": "1.0.0",
+    "disc-precise-typed-edge": "1.0.0",
+    "disc-prose-fidelity": "1.0.0",
+    "disc-real-edge-reason": "1.0.0"
+  },
   "edges": [
     {
       "dst": "req-runnable-signatures",
@@ -11,6 +19,7 @@
   "is_bead": false,
   "name": "signature-verify-and-resign",
   "node_type": "unclassified",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "subsystems",
   "succeeds": "signature-verify-and-resign@v1",
