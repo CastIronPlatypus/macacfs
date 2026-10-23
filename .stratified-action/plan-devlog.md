@@ -799,3 +799,125 @@
 - [1792790100] **add-edge** — fb-readme -serves-> newproj-experience
 - [1792790100] **add-edge** — newproj-experience -relates-to-> fb-readme
 - [1792790100] **change-done** — s8
+- [1792790376] **begin** — change
+- [1792790392] **change-amend** — 8 frozen + 2 re-authored
+- [1792790409] **add-requirement** — req-newproj-follows-ru-layout [functional] newproj's default project directory follows ru's current configuration, obtained by asking ru (ru config, which prints its resolved PROJECTS_DIR and LAYOUT): flat -> PROJECTS_DIR/NAME, owner-repo -> PROJECTS_DIR/OWNER/NAME, full -> PROJECTS_DIR/github.com/OWNER/NAME. MACACFS_PROJECTS_DIR / ACFS_PROJECTS_DIR / the newproj.projects_dir setting override only the base directory. When ru is absent, its layout cannot be read, or the layout needs an owner that cannot be determined, newproj falls back to the plain resolver (base/NAME). An explicit directory argument always wins. All three newproj modes behave identically.
+- [1792790409] **retire** — projects-dir-resolution@v1 -> v2; reason: user decision: follow ru's configured layout instead of hard-coding owner nesting; perturbed: ['newproj-experience']
+- [1792790410] **comprehend** — modify=['fb-lib-methods', 'fb-lib-methods-impl']; attach=['fb-lib-catalog', 'fb-lib-methods', 'fb-lib-prereq-impl', 'fb-lib-shell']; impact=31 node(s)
+- [1792790410] **link-requirement** — projects-dir-resolution -> req-newproj-follows-ru-layout
+- [1792790410] **change** — comprehend -> plan
+- [1792790410] **retire** — newproj-experience@v1 -> v2; reason: default directory now follows ru's layout; perturbed: ['newproj-dispatch', 'project-scaffold', 'interactive-wizard', 'reviewed-bootstrap', 'github-publish', 'ru-register']
+- [1792790410] **link-requirement** — newproj-experience -> req-newproj-follows-ru-layout
+- [1792790411] **add-node** — ru-layout-paths
+- [1792790411] **add-edge** — projects-dir-resolution -accomplished-by-> ru-layout-paths
+- [1792790411] **add-edge** — remote-integration -serves-> ru-layout-paths
+- [1792790412] **add-edge** — ru-layout-paths -accomplished-by-> remote-integration
+- [1792790412] **link-requirement** — remote-integration -> req-newproj-follows-ru-layout
+- [1792790412] **change-done** — s8b
+- [1792790641] **set-changeplan** — 3 step(s)
+- [1792790641] **change** — plan -> walk
+- [1792790646] **add-node** — fn-row-abbr
+- [1792790656] **ledger-rewind** — ['op1']
+- [1792790656] **change-done** — s1 — no change needed: fb nodes serve components and are accomplished-by implementation nodes; inline forward links are accepted, so function-map nodes serve their flow and file boundary and are accomplished-by the file's implementation node; logical-flow nodes serve their file boundary and are accomplished-by their functions
+- [1792790672] **add-node** — fn-resolve-dir
+- [1792790673] **add-node** — fn-require-darwin
+- [1792790673] **add-node** — fn-usage
+- [1792790674] **add-node** — fn-run-tools
+- [1792790674] **add-node** — fn-parse-dry-run
+- [1792790674] **add-node** — fn-main
+- [1792790675] **add-node** — fn-catalog-rows
+- [1792790675] **add-node** — fn-catalog-all-abbrs
+- [1792790676] **add-node** — fn-catalog-row
+- [1792790676] **add-node** — fn-row-abbr
+- [1792790677] **add-node** — fn-row-repo
+- [1792790677] **add-node** — fn-row-cli
+- [1792790677] **add-node** — fn-row-method
+- [1792790678] **add-node** — fn-row-ref
+- [1792790678] **add-node** — fn-row-args
+- [1792790679] **add-node** — fn-catalog-select
+- [1792790679] **add-node** — fn-catalog-count
+- [1792790680] **add-node** — fn-sig-scan-dirs
+- [1792790680] **add-node** — fn-sig-candidates
+- [1792790680] **add-node** — fn-sig-repair-row
+- [1792790681] **add-node** — fn-install-and-verify-row
+- [1792790681] **add-node** — fn-pre-install-mdwb
+- [1792790682] **add-node** — fn-m-run
+- [1792790682] **add-node** — fn-do-brew
+- [1792790683] **add-node** — fn-do-installer-sh
+- [1792790683] **add-node** — fn-do-cargo-git
+- [1792790683] **add-node** — fn-do-go
+- [1792790684] **add-node** — fn-do-skip
+- [1792790684] **add-node** — fn-dispatch-row
+- [1792790685] **add-node** — fn-have
+- [1792790685] **add-node** — fn-run
+- [1792790686] **add-node** — fn-ensure-homebrew
+- [1792790686] **add-node** — fn-ensure-brew-pkg
+- [1792790687] **add-node** — fn-ensure-rust
+- [1792790687] **add-node** — fn-ensure-go
+- [1792790688] **add-node** — fn-ensure-uv
+- [1792790688] **add-node** — fn-ensure-node
+- [1792790688] **add-node** — fn-ensure-git
+- [1792790689] **add-node** — fn-ensure-minisign
+- [1792790689] **add-node** — fn-ensure-flock
+- [1792790690] **add-node** — fn-prereq-ensure
+- [1792790690] **add-node** — fn-report-init
+- [1792790691] **add-node** — fn-report-add
+- [1792790691] **add-node** — fn-run-isolated
+- [1792790692] **add-node** — fn-report-render
+- [1792790692] **add-node** — fn-sched-ensure-dirs
+- [1792790693] **add-node** — fn-state-load
+- [1792790693] **add-node** — fn-state-save
+- [1792790694] **add-node** — fn-cadence-calendar
+- [1792790694] **add-node** — fn-schedule-write-plist
+- [1792790694] **add-node** — fn-schedule-path
+- [1792790695] **add-node** — fn-schedule-reload
+- [1792790695] **add-node** — fn-schedule-install
+- [1792790696] **add-node** — fn-schedule-uninstall
+- [1792790696] **add-node** — fn-schedule-status
+- [1792790697] **add-node** — fn-schedule-tick
+- [1792790697] **add-node** — fn-selfupdate-run
+- [1792790698] **add-node** — fn-sh-dry
+- [1792790698] **add-node** — fn-sh-brew-prefix
+- [1792790699] **add-node** — fn-brew-pkg
+- [1792790699] **add-node** — fn-sh-git-get
+- [1792790700] **add-node** — fn-shell-brew-bundle
+- [1792790700] **add-node** — fn-shell-font
+- [1792790701] **add-node** — fn-shell-omz
+- [1792790701] **add-node** — fn-shell-plugins
+- [1792790702] **add-node** — fn-shell-zshrc
+- [1792790702] **add-node** — fn-shell-tmux
+- [1792790703] **add-node** — fn-shell-zoxide
+- [1792790703] **add-node** — fn-shell-lazygit
+- [1792790704] **add-node** — fn-shell-astgrep
+- [1792790704] **add-node** — fn-shell-atuin
+- [1792790705] **add-node** — fn-shell-run
+- [1792790705] **add-node** — fn-in-agent
+- [1792790715] **change-amend** — 1 frozen + 2 re-authored
+- [1792790716] **add-node** — fn-shell-powerlevel
+- [1792790724] **retire** — fn-shell-run@v1 -> v2; reason: fix link to the powerlevel step node, renamed because the name gate rejected digits; perturbed: ['fb-lib-shell-impl']
+- [1792790739] **change-done** — s2
+- [1792790753] **add-node** — lf-cli-dispatch
+- [1792790753] **add-node** — lf-dry-run-propagation
+- [1792790754] **add-node** — lf-tool-run-engine
+- [1792790754] **add-node** — lf-catalog-selection
+- [1792790755] **add-node** — lf-prereq-ensure
+- [1792790755] **add-node** — lf-method-dispatch
+- [1792790756] **add-node** — lf-install-brew
+- [1792790756] **add-node** — lf-install-installer-sh
+- [1792790757] **add-node** — lf-install-cargo-git
+- [1792790757] **add-node** — lf-install-go
+- [1792790758] **add-node** — lf-install-skip
+- [1792790758] **add-node** — lf-pre-install-hook
+- [1792790759] **add-node** — lf-codesign-verify-repair
+- [1792790759] **add-node** — lf-isolated-run-report
+- [1792790760] **add-node** — lf-shell-setup
+- [1792790760] **add-node** — lf-atuin-shim-guard
+- [1792790761] **add-node** — lf-self-update
+- [1792790761] **add-node** — lf-bootstrap
+- [1792790762] **add-node** — lf-schedule-install
+- [1792790762] **add-node** — lf-schedule-status-uninstall
+- [1792790763] **add-node** — lf-schedule-tick
+- [1792790763] **add-node** — lf-plist-render
+- [1792790763] **change-done** — s3
+- [1792790771] **absorb** — fb-lib-shell-impl absorbed the parent revision (unchanged)
+- [1792790771] **change** — walk -> settle
