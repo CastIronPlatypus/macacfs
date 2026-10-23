@@ -789,12 +789,12 @@
   "node_type": "impl",
   "proof": {
     "agent": "jeff-sg-shebang-1792274040",
-    "at": 1792290244,
+    "at": 1792794858,
     "cmd": "grep -Eq '^[0-9]+\\.[0-9]+\\.[0-9]+$' VERSION",
     "cwd": "/data/projects/CastIronPlatypus/macacfs",
     "exit": 0,
     "files": {
-      "VERSION": "d5d1d767be9218f02ebda081a83a2b2fede85055e910e5a94a09329966486fcc"
+      "VERSION": "ad5adcac95aff5c3ad7deea82369f78901765729dbc12933056cad1483e27f39"
     },
     "kind": "cmd"
   },

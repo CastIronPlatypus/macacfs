@@ -4,13 +4,15 @@
   "edges": [
     {
       "dst": "req-newproj-github-optional",
-      "reason": "remote file",
+      "reason": "newproj_remote.sh calls gh only when NEWPROJ_GITHUB is private or public, so a default run makes no gh call (test_remote.bats checks an empty gh log).",
       "type": "validated-by"
     }
   ],
+  "in_progress": false,
   "is_bead": true,
   "name": "fb-lib-newproj-remote",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0118",

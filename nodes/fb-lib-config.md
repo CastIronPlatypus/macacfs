@@ -4,13 +4,15 @@
   "edges": [
     {
       "dst": "req-persistent-settings",
-      "reason": "config file",
+      "reason": "lib/config.sh is the only file that reads or writes the settings file; if it is missing, 'macacfs config' and every newproj default fail.",
       "type": "validated-by"
     }
   ],
+  "in_progress": false,
   "is_bead": true,
   "name": "fb-lib-config",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0119",

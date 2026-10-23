@@ -4,7 +4,7 @@
   "edges": [
     {
       "dst": "req-persistent-settings",
-      "reason": "settings file I/O",
+      "reason": "The store reads and rewrites ${XDG_CONFIG_HOME:-~/.config}/macacfs/config atomically with mode 600, so a set value survives to the next newproj run.",
       "type": "validated-by"
     },
     {
@@ -28,4 +28,4 @@
 }
 -->
 
-The config-store subsystem: lib/config.sh's registry of known keys (newproj.github, newproj.ru, newproj.projects_dir) with validators, file read/write with atomic replace, env overrides, and the config verb's get/set/unset/list handlers. It [[settings-store|serves|The config store is the storage layer of the settings capability.]].
+The config-store subsystem: lib/config.sh's registry of known keys (newproj.github, newproj.ru, newproj.projects_dir) with validators, file read/write with atomic replace, env overrides, and the config verb's get/set/unset/list handlers. It [[settings-store|serves|The config store is the storage layer of the settings capability.]]. It serves [[newproj-dispatch|serves|newproj reads its defaults through the config store.]]. It is accomplished by [[config-code|accomplished-by|This code realizes the config store.]].

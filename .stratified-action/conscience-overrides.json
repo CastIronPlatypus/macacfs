@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "agent": "jeff-np-1",
+      "at": 1792794999,
+      "node": "macacfs-command-surface",
+      "reason": "no-net-anemia on macacfs-command-surface (66.5 -> 61.4): this run added the newproj and config verbs, whose links are now reciprocated relates-to edges with concrete reasons. The rest of the drop comes from the large newproj-experience neighborhood the score folds in, not from a thin edge on this node. The follow-up run jeff-takeover-1 supersedes this node for the 42-tool catalog."
+    }
+  ]
+}

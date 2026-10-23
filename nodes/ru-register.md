@@ -23,4 +23,4 @@
 }
 -->
 
-The capability to preflight ru (installed, and a GitHub remote will exist) then run 'ru add --from-cwd' (with --private for private repos) from the project root and confirm the repo is listed, reporting but never undoing anything on failure. It [[newproj-experience|serves|Registering with ru is an optional part of the newproj experience.]].
+The capability to preflight ru (installed, and a GitHub remote will exist) then run 'ru add --from-cwd' (with --private for private repos) from the project root and confirm the repo is listed, reporting but never undoing anything on failure. It [[newproj-experience|serves|Registering with ru is an optional part of the newproj experience.]]. It is accomplished by [[remote-integration|accomplished-by|The remote integration subsystem realizes ru registration.]].

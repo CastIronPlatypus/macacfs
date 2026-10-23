@@ -925,3 +925,58 @@
 - [1792790926] **comprehend** — modify=['config-store', 'newproj-dispatch', 'newproj-experience', 'remote-integration', 'req-newproj-acfs-parity', 'req-newproj-ru-optional']; attach=['argv-and-usage', 'fb-bin-macacfs-impl', 'fn-prereq-ensure', 'lf-cli-dispatch', 'lf-prereq-ensure']; impact=170 node(s)
 - [1792790926] **change** — comprehend -> plan
 - [1792793964] **retire** — fb-version-file@v3 -> v4; reason: VERSION 0.3.6 -> 0.3.7 -> ... for the newproj port commits (one bump per commit, ending at 0.4.0).; perturbed: []
+- [1792794552] **add-node** — fb-lib-config-impl
+- [1792794586] **add-node** — fb-lib-newproj-remote-impl
+- [1792794587] **add-node** — fb-lib-newproj-core-impl
+- [1792794587] **add-node** — fb-lib-newproj-screens-impl
+- [1792794588] **add-node** — fb-share-completions-impl
+- [1792794588] **add-node** — fb-tests-newproj-impl
+- [1792794589] **add-impl** — fb-lib-config-impl -> lib/config.sh (in place)
+- [1792794589] **add-impl** — fb-lib-newproj-remote-impl -> lib/newproj/newproj_remote.sh (in place)
+- [1792794589] **add-impl** — fb-lib-newproj-core-impl -> lib/newproj/newproj.sh (in place)
+- [1792794590] **add-impl** — fb-lib-newproj-screens-impl -> lib/newproj/newproj_screens.sh (in place)
+- [1792794590] **add-impl** — fb-share-completions-impl -> share/completions/_macacfs (in place)
+- [1792794590] **add-impl** — fb-tests-newproj-impl -> tests/run.sh (in place)
+- [1792794599] **prove** — fb-lib-config-impl: cmd exit 0
+- [1792794611] **prove** — fb-lib-newproj-remote-impl: cmd exit 0
+- [1792794618] **prove** — fb-lib-newproj-core-impl: cmd exit 0
+- [1792794633] **prove** — fb-lib-newproj-screens-impl: cmd exit 0
+- [1792794633] **prove** — fb-share-completions-impl: cmd exit 0
+- [1792794738] **prove** — fb-tests-newproj-impl: cmd exit 0
+- [1792794745] **retire** — fb-bin-macacfs-impl@v6 -> v7; reason: bin/macacfs gains the newproj|new dispatch (exec $BASH lib/newproj/newproj.sh, after prereq_warn_newproj), the config verb (lib/config.sh), and usage lines; the catalog is now 42 tools.; perturbed: []
+- [1792794746] **retire** — fb-readme-impl@v5 -> v6; reason: README documents newproj (three modes, GitHub/ru, ru-layout directory), macacfs config, completions, gum/glow/jq, newproj prereq notes, the 42-tool catalog and the revised minimal scope.; perturbed: []
+- [1792794765] **change-done** — s9
+- [1792794770] **change** — walk -> settle
+- [1792794826] **link-requirement** — fb-lib-newproj-remote-impl -> req-newproj-follows-ru-layout
+- [1792794827] **link-requirement** — fb-lib-newproj-remote-impl -> req-newproj-never-deletes
+- [1792794827] **link-requirement** — fb-lib-newproj-remote-impl -> req-newproj-ru-optional
+- [1792794827] **link-requirement** — fb-lib-newproj-core-impl -> req-newproj-follows-ru-layout
+- [1792794838] **absorb** — argv-and-usage absorbed the parent revision (unchanged)
+- [1792794839] **absorb** — argv-code absorbed the parent revision (unchanged)
+- [1792794839] **absorb** — cli-arg-dispatch absorbed the parent revision (unchanged)
+- [1792794839] **absorb** — fb-bin-macacfs absorbed the parent revision (unchanged)
+- [1792794839] **absorb** — fb-bin-macacfs-impl absorbed the parent revision (unchanged)
+- [1792794840] **absorb** — fb-readme-impl absorbed the parent revision (unchanged)
+- [1792794840] **absorb** — github-publish absorbed the parent revision (unchanged)
+- [1792794840] **absorb** — interactive-wizard absorbed the parent revision (unchanged)
+- [1792794840] **absorb** — macacfs-command-surface absorbed the parent revision (unchanged)
+- [1792794840] **absorb** — method-dispatch absorbed the parent revision (unchanged)
+- [1792794841] **absorb** — newproj-dispatch absorbed the parent revision (unchanged)
+- [1792794841] **absorb** — newproj-experience absorbed the parent revision (unchanged)
+- [1792794841] **absorb** — project-scaffold absorbed the parent revision (unchanged)
+- [1792794841] **absorb** — reviewed-bootstrap absorbed the parent revision (unchanged)
+- [1792794841] **absorb** — ru-register absorbed the parent revision (unchanged)
+- [1792794842] **absorb** — shell-setup-dispatch absorbed the parent revision (unchanged)
+- [1792794853] **realized** — bootstrap-py-code: realized-at None -> v0.15.0
+- [1792794854] **realized** — config-code: realized-at None -> v0.15.0
+- [1792794854] **realized** — fb-lib-config: realized-at None -> v0.15.0
+- [1792794855] **realized** — fb-lib-newproj-core: realized-at None -> v0.15.0
+- [1792794855] **realized** — fb-lib-newproj-remote: realized-at None -> v0.15.0
+- [1792794856] **realized** — fb-lib-newproj-screens: realized-at None -> v0.15.0
+- [1792794856] **realized** — fb-share-completions: realized-at None -> v0.15.0
+- [1792794856] **realized** — fb-tests-newproj: realized-at None -> v0.15.0
+- [1792794857] **realized** — newproj-cli-code: realized-at None -> v0.15.0
+- [1792794858] **realized** — remote-code: realized-at None -> v0.15.0
+- [1792794858] **realized** — wizard-screens-code: realized-at None -> v0.15.0
+- [1792794999] **override** — jeff-np-1: no-net-anemia on macacfs-command-surface (66.5 -> 61.4): this run added the newproj and config verbs, whose links are now reciprocated relates-to edges with concrete reasons. The rest of the drop comes from the large newproj-experience neighborhood the score folds in, not from a thin edge on this node. The follow-up run jeff-takeover-1 supersedes this node for the 42-tool catalog. (node macacfs-command-surface)
+- [1792795072] **change** — settle -> idle (finalized)

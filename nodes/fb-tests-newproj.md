@@ -13,9 +13,11 @@
       "type": "validated-by"
     }
   ],
+  "in_progress": false,
   "is_bead": true,
   "name": "fb-tests-newproj",
   "node_type": "impl",
+  "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
   "uid": "n0121",

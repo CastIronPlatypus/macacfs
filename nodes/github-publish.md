@@ -28,4 +28,4 @@
 }
 -->
 
-The capability to preflight gh (installed, authenticated, owner resolved, OWNER/NAME free, git identity present) before any local write, then after the local project exists run 'gh repo create OWNER/NAME --private|--public --source=. --remote=origin --push', scanning files bound for a public repo for personal data first, and on failure keep everything and print the manual commands. It [[newproj-experience|serves|Publishing to GitHub is an optional part of the newproj experience.]].
+The capability to preflight gh (installed, authenticated, owner resolved, OWNER/NAME free, git identity present) before any local write, then after the local project exists run 'gh repo create OWNER/NAME --private|--public --source=. --remote=origin --push', scanning files bound for a public repo for personal data first, and on failure keep everything and print the manual commands. It [[newproj-experience|serves|Publishing to GitHub is an optional part of the newproj experience.]]. It is accomplished by [[remote-integration|accomplished-by|The remote integration subsystem realizes GitHub publishing.]].
