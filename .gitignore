@@ -2,3 +2,5 @@
 *.bak.*
 .stratified-action/state.lock
 .stratified-action/node-vectors-cache.json
+tests/**/logs/
+tests/logs/

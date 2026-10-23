@@ -29,6 +29,10 @@ declare -ga FEATURE_OPTIONS=(
     "claude:Claude Code settings:Project-specific Claude Code configuration"
     "agents:AGENTS.md template:Instructions for AI coding assistants"
     "ubsignore:UBS ignore patterns:Configure Ultimate Bug Scanner exclusions"
+    # macacfs: optional remote steps (defaults from 'macacfs config').
+    "github:GitHub repo (gh):Create OWNER/<name> on GitHub, set origin and push the initial commit"
+    "github_public:Make the GitHub repo public:Otherwise the repo is private"
+    "ru:Register with ru:Add the GitHub repo to ru's list (needs the GitHub repo)"
 )
 
 # Get feature state key

@@ -723,7 +723,7 @@ show_error_with_recovery() {
             ;;
         git_not_installed)
             newproj_tty_printf "%s\n" "How to fix:"
-            newproj_tty_printf "%s\n" "  1. Install git: sudo apt install git"
+            newproj_tty_printf "%s\n" "  1. Install git: xcode-select --install  (or: brew install git)"
             newproj_tty_printf "%s\n" "  2. Run wizard again"
             ;;
         git_init)
@@ -742,7 +742,7 @@ show_error_with_recovery() {
     esac
 
     newproj_tty_printf "%b\n" ""
-    newproj_tty_printf "%s\n" "Need help? Run: acfs newproj --help"
+    newproj_tty_printf "%s\n" "Need help? Run: macacfs newproj --help"
 
     # Show log location if available
     if [[ -n "${ACFS_SESSION_LOG:-}" && -f "${ACFS_SESSION_LOG:-}" ]]; then

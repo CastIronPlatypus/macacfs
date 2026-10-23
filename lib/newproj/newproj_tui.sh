@@ -180,6 +180,9 @@ declare -gA WIZARD_STATE=(
     [enable_claude]="true"
     [enable_agents]="true"
     [enable_ubsignore]="true"
+    [enable_github]="false"
+    [enable_github_public]="false"
+    [enable_ru]="false"
 )
 
 # Set a state value
@@ -219,6 +222,9 @@ state_reset() {
         [enable_claude]="true"
         [enable_agents]="true"
         [enable_ubsignore]="true"
+        [enable_github]="false"
+        [enable_github_public]="false"
+        [enable_ru]="false"
     )
     log_info "State reset to defaults"
 }

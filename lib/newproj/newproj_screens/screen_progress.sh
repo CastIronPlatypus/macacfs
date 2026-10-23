@@ -33,10 +33,22 @@ CREATION_PROJECT_DIR=""
 creation_request() {
     local key value
     for key in project_dir project_name tech_stack agents_md_custom \
-        enable_agents enable_br enable_claude enable_ubsignore; do
+        enable_agents enable_br enable_claude enable_ubsignore \
+        enable_github enable_github_public enable_ru; do
         value=$(state_get "$key") || return 1
         printf '%q=%q\n' "$key" "$value"
     done
+}
+
+# macacfs: map the wizard's checkboxes onto newproj_remote.sh's selection.
+NEWPROJ_REMOTE_ERR="${TMPDIR:-/tmp}/macacfs-newproj-remote.$$"
+newproj_wizard_remote_selection() {
+    if [[ "$(state_get "enable_github")" == "true" ]]; then
+        if [[ "$(state_get "enable_github_public")" == "true" ]]; then NEWPROJ_GITHUB=public; else NEWPROJ_GITHUB=private; fi
+    else
+        NEWPROJ_GITHUB=off
+    fi
+    if [[ "$(state_get "enable_ru")" == "true" ]]; then NEWPROJ_RU=on; else NEWPROJ_RU=off; fi
 }
 
 # Initialize steps based on features
@@ -78,6 +90,17 @@ init_creation_steps() {
         STEP_STATUS["create_ubsignore"]="pending"
     fi
 
+    # macacfs: optional GitHub publish + ru registration.
+    if [[ "$(state_get "enable_github")" == "true" ]]; then
+        STEP_ORDER+=("publish_github")
+        STEP_STATUS["publish_github"]="pending"
+    fi
+
+    if [[ "$(state_get "enable_ru")" == "true" ]]; then
+        STEP_ORDER+=("register_ru")
+        STEP_STATUS["register_ru"]="pending"
+    fi
+
     # Final step
     STEP_ORDER+=("finalize")
     STEP_STATUS["finalize"]="pending"
@@ -95,6 +118,8 @@ get_step_name() {
         init_br) echo "Initializing Beads tracking" ;;
         create_claude) echo "Creating Claude Code settings" ;;
         create_ubsignore) echo "Creating .ubsignore" ;;
+        publish_github) echo "Creating GitHub repo and pushing" ;;
+        register_ru) echo "Registering with ru" ;;
         finalize) echo "Finalizing project" ;;
         *) echo "$step" ;;
     esac
@@ -222,6 +247,10 @@ execute_step() {
 
     case "$step" in
         create_dir)
+            # macacfs: create missing ru-layout folders (<base>/<owner>) first.
+            if declare -f newproj_ensure_layout_parent >/dev/null 2>&1; then
+                newproj_ensure_layout_parent "$project_dir" || true
+            fi
             if try_create_directory "$project_dir"; then
                 update_step "$step" "success"
                 return 0
@@ -412,6 +441,29 @@ __pycache__/
             fi
             ;;
 
+        publish_github)
+            # macacfs: the only wizard step that commits (gh --push needs HEAD).
+            newproj_wizard_remote_selection
+            if newproj_remote_publish "$project_dir" "$project_name" >/dev/null 2>"$NEWPROJ_REMOTE_ERR"; then
+                update_step "$step" "success"
+                return 0
+            fi
+            newproj_tty_printf '%s\n' "$(cat "$NEWPROJ_REMOTE_ERR" 2>/dev/null)"
+            update_step "$step" "error"
+            return 1
+            ;;
+
+        register_ru)
+            newproj_wizard_remote_selection
+            if newproj_remote_ru "$project_dir" "$project_name" >/dev/null 2>"$NEWPROJ_REMOTE_ERR"; then
+                update_step "$step" "success"
+                return 0
+            fi
+            newproj_tty_printf '%s\n' "$(cat "$NEWPROJ_REMOTE_ERR" 2>/dev/null)"
+            update_step "$step" "error"
+            return 1
+            ;;
+
         finalize)
             # Users may have added work while repairing a failed step. Never
             # stage or commit that work implicitly, and never hide git errors
@@ -440,6 +492,15 @@ run_creation() {
             return 1
         fi
     else
+        # macacfs: GitHub/ru preconditions are checked before anything is created.
+        if [[ "$(state_get "enable_github")" == "true" || "$(state_get "enable_ru")" == "true" ]]; then
+            newproj_wizard_remote_selection
+            local preflight_out=""
+            if ! preflight_out=$(newproj_remote_preflight "$(state_get "project_name")" 2>&1); then
+                newproj_tty_printf '%s\n' "$preflight_out" 'Go back to Features to change the GitHub/ru selection.'
+                return 1
+            fi
+        fi
         init_creation_steps || return 1
         CREATION_PROJECT_DIR="$project_dir"
         CREATION_REQUEST="$request"

@@ -25,6 +25,17 @@ readonly ACFS_LOG_ERROR=3
 # Current log level (can be overridden via env var or --verbose flag)
 export ACFS_LOG_LEVEL="${ACFS_LOG_LEVEL:-$ACFS_LOG_INFO}"
 
+# macacfs: BSD date has no %N (it prints a literal "3N"); use bash's
+# EPOCHREALTIME for milliseconds, falling back to whole seconds.
+_newproj_log_ts() {
+    if [[ -n "${EPOCHREALTIME:-}" ]]; then
+        local frac="${EPOCHREALTIME#*[.,]}"
+        printf '%(%H:%M:%S)T.%s\n' -1 "${frac:0:3}"
+    else
+        date +"%H:%M:%S"
+    fi
+}
+
 newproj_logging_sanitize_abs_nonroot_path() {
     local path_value="${1:-}"
 
@@ -132,7 +143,7 @@ init_logging() {
         echo "========================================"
         echo "ACFS newproj TUI Wizard Session Log"
         echo "========================================"
-        echo "Started: $(date -Iseconds)"
+        echo "Started: $(date +%Y-%m-%dT%H:%M:%S%z)"
         echo "PID: $$"
         echo "User: $(whoami)"
         echo "Home: ${HOME:-<unset>}"
@@ -188,7 +199,7 @@ _log() {
 
     # Get timestamp with milliseconds
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     # Get caller information (function:line)
     local caller="${FUNCNAME[2]:-main}"
@@ -253,7 +264,7 @@ log_state() {
     fi
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     printf '[%s] [STATE] %s: \047%s\047 -> \047%s\047\n' "$timestamp" "$key" "$old_value" "$new_value" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }
@@ -267,7 +278,7 @@ log_screen() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     printf '[%s] [SCRN ] %s: %s\n' "$timestamp" "$action" "$screen" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }
@@ -302,7 +313,7 @@ log_input() {
     sanitized=$(echo "$sanitized" | sed -E "s/(sk[-_]|api[-_]?key|token|password|secret)[^[:space:]]*/\1***/${sed_flags}")
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     printf '[%s] [INPUT] %s: \047%s\047\n' "$timestamp" "$field" "$sanitized" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }
@@ -315,7 +326,7 @@ log_key() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     printf '[%s] [KEY  ] %s\n' "$timestamp" "$key" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }
@@ -331,7 +342,7 @@ log_validation() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     local msg="$field='$value' -> $result"
     [[ -n "$error_msg" ]] && msg="$msg: $error_msg"
@@ -352,7 +363,7 @@ log_file_op() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     printf '[%s] [FILE ] %s: %s (%s)\n' "$timestamp" "$operation" "$path" "$status" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }
@@ -366,7 +377,7 @@ log_cmd() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     local status="OK"
     [[ "$exit_code" -ne 0 ]] && status="FAIL(exit=$exit_code)"
@@ -387,7 +398,7 @@ log_json() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     {
         echo "[$timestamp] [JSON ] $label:"
@@ -407,7 +418,7 @@ log_tech_detect() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     echo "[$timestamp] [TECH ] Detected: $tech (via: $detected_via, confidence: $confidence)" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }
@@ -422,7 +433,7 @@ log_nav() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     local msg="$action"
     [[ -n "$from" ]] && msg="$msg from=$from"
@@ -445,7 +456,7 @@ finalize_logging() {
     {
         echo ""
         echo "========================================"
-        echo "Session completed: $(date -Iseconds)"
+        echo "Session completed: $(date +%Y-%m-%dT%H:%M:%S%z)"
         echo "Exit code: $exit_code"
         echo "Duration: $((SECONDS / 60))m $((SECONDS % 60))s"
         echo "========================================"
@@ -495,7 +506,9 @@ list_recent_logs() {
     local count="${1:-10}"
 
     if [[ -d "$ACFS_LOG_DIR" ]]; then
-        find "$ACFS_LOG_DIR" -name "newproj_*.log" -type f -printf '%T@ %p\n' 2>/dev/null \
+        # macacfs: BSD find has no -printf; stat -f prints mtime + path.
+        find "$ACFS_LOG_DIR" -name "newproj_*.log" -type f -print0 2>/dev/null \
+            | xargs -0 stat -f '%m %N' 2>/dev/null \
             | sort -rn \
             | head -"$count" \
             | cut -d' ' -f2-
@@ -515,7 +528,7 @@ log_dump_state() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     {
         echo "[$timestamp] [DUMP ] Current wizard state:"
@@ -535,7 +548,7 @@ log_env_snapshot() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     {
         echo "[$timestamp] [ENV  ] Environment snapshot:"
@@ -557,7 +570,7 @@ log_checkpoint() {
     [[ -z "$ACFS_SESSION_LOG" ]] && return 0
 
     local timestamp
-    timestamp=$(date +"%H:%M:%S.%3N" 2>/dev/null || date +"%H:%M:%S")
+    timestamp=$(_newproj_log_ts)
 
     echo "[$timestamp] [TIME ] Checkpoint: $label (elapsed: ${SECONDS}s)" >> "$ACFS_SESSION_LOG" 2>/dev/null || true
 }

@@ -25,6 +25,11 @@ SCREEN_DIRECTORY_PREV="project_name"
 
 # Get the default projects directory
 get_default_projects_dir() {
+    # macacfs: shared resolver (env > setting > ru's PROJECTS_DIR > /data/projects > ~/Projects).
+    if declare -f newproj_projects_dir >/dev/null 2>&1; then
+        newproj_projects_dir
+        return 0
+    fi
     # Configurable default: ACFS_PROJECTS_DIR env var, then check common locations
     # Priority: env var > /data/projects > ~/projects > ~/Projects > $HOME
     if [[ -n "${ACFS_PROJECTS_DIR:-}" ]] && [[ -d "$ACFS_PROJECTS_DIR" ]]; then
@@ -49,6 +54,12 @@ get_default_directory() {
 
     if [[ -z "$project_name" ]]; then
         project_name="my-project"
+    fi
+
+    # macacfs: follow ru's configured layout (flat / owner-repo / full).
+    if declare -f newproj_default_project_dir >/dev/null 2>&1; then
+        newproj_default_project_dir "$project_name"
+        return 0
     fi
 
     local base_dir

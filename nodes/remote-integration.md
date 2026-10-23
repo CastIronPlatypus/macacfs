@@ -21,6 +21,16 @@
       "dst": "remote-code",
       "reason": "This code realizes the remote-integration subsystem.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "ru-layout-paths",
+      "reason": "newproj_remote.sh computes the ru-layout default paths",
+      "type": "serves"
+    },
+    {
+      "dst": "req-newproj-follows-ru-layout",
+      "reason": "implements the layout resolver",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,

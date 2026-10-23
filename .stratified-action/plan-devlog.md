@@ -921,3 +921,6 @@
 - [1792790763] **change-done** — s3
 - [1792790771] **absorb** — fb-lib-shell-impl absorbed the parent revision (unchanged)
 - [1792790771] **change** — walk -> settle
+- [1792790912] **begin** — change
+- [1792790926] **comprehend** — modify=['config-store', 'newproj-dispatch', 'newproj-experience', 'remote-integration', 'req-newproj-acfs-parity', 'req-newproj-ru-optional']; attach=['argv-and-usage', 'fb-bin-macacfs-impl', 'fn-prereq-ensure', 'lf-cli-dispatch', 'lf-prereq-ensure']; impact=170 node(s)
+- [1792790926] **change** — comprehend -> plan

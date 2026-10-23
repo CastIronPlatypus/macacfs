@@ -7,17 +7,47 @@
 # Supports both CLI mode and interactive TUI wizard mode
 # ============================================================
 
+# macacfs: the acfs scripts need bash >= 4.3 (associative arrays, namerefs,
+# {fd} redirections). macOS /bin/bash is 3.2; bin/macacfs runs us under the
+# pinned Homebrew bash.
+if [ -z "${BASH_VERSINFO:-}" ] || [ "${BASH_VERSINFO[0]}" -lt 4 ] || { [ "${BASH_VERSINFO[0]}" -eq 4 ] && [ "${BASH_VERSINFO[1]}" -lt 3 ]; }; then
+    printf 'Error: newproj needs bash >= 4.3 (this is bash %s). Run it as "macacfs newproj", or install Homebrew bash (brew install bash).\n' "${BASH_VERSION:-unknown}" >&2
+    # shellcheck disable=SC2317
+    return 1 2>/dev/null || exit 1
+fi
+
+# macacfs: GitHub/ru selection, settings and projects-dir resolution.
+NEWPROJ_SCRIPT_DIR="${NEWPROJ_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
+# shellcheck source=newproj_remote.sh
+source "$NEWPROJ_SCRIPT_DIR/newproj_remote.sh"
+
+# macacfs: prefer Homebrew python3, require >= 3.9 (Path.is_relative_to).
+newproj_python() {
+    local py
+    for py in /opt/homebrew/bin/python3 /usr/local/bin/python3 "$(command -v python3 2>/dev/null)"; do
+        [[ -n "$py" && -x "$py" ]] || continue
+        if "$py" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' 2>/dev/null; then
+            printf '%s\n' "$py"; return 0
+        fi
+    done
+    return 1
+}
+
 # Reviewed bootstrap is self-contained: no TUI initialization or configuration
 # writes occur while planning. Python's standard library supplies JSON and
 # no-follow, exclusive filesystem operations for the apply boundary.
 newproj_reviewed_main() {
-    if ! command -v python3 >/dev/null 2>&1; then
-        printf '%s\n' 'Error: reviewed project bootstrap requires python3.' >&2
+    local py
+    if ! py="$(newproj_python)"; then
+        printf '%s\n' 'Error: reviewed project bootstrap requires python3 >= 3.9 (brew install python, or xcode-select --install).' >&2
         return 1
     fi
-    # Python reads its program from stdin; preserve the caller's terminal for
-    # the explicit guided workflow instead of accepting a pipe as consent.
-    python3 -I - "$@" 3<&0 <<'ACFS_BOOTSTRAP_PY'
+    # macacfs: hand the bash-resolved defaults to the Python side.
+    NEWPROJ_DEFAULT_PROJECTS_DIR="$(newproj_projects_dir)" \
+    MACACFS_NEWPROJ_GITHUB_DEFAULT="$(config_effective newproj.github)" \
+    MACACFS_NEWPROJ_RU_DEFAULT="$(config_effective newproj.ru)" \
+    NEWPROJ_RU_LAYOUT="$(newproj_ru_layout)" \
+    "$py" -I - "$@" 3<&0 <<'ACFS_BOOTSTRAP_PY'
 import argparse
 import hashlib
 import json
@@ -33,6 +63,116 @@ SCHEMA = "acfs.project-bootstrap.v1"
 FEATURES = ("git", "beads", "readme", "gitignore", "agents", "starter", "ci", "prompt", "agent-mail")
 PRESET = ("git", "readme", "gitignore", "agents", "starter", "ci", "prompt")
 DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+GITHUB_VISIBILITY = ("private", "public")
+
+
+# macacfs: projects-dir resolution and GitHub/ru (see lib/newproj/newproj_remote.sh).
+def default_projects_dir():
+    # bash resolves MACACFS_PROJECTS_DIR > ACFS_PROJECTS_DIR > setting > ru > /data/projects > ~/Projects
+    return os.environ.get("NEWPROJ_DEFAULT_PROJECTS_DIR") or os.environ.get("ACFS_PROJECTS_DIR") or (
+        "/data/projects" if os.path.isdir("/data/projects") else str(Path.home() / "Projects"))
+
+
+def default_project_dir(name, owner=None):
+    """Where ru would put OWNER/NAME under its layout (bash asks ru: NEWPROJ_RU_LAYOUT)."""
+    base = Path(default_projects_dir())
+    layout = os.environ.get("NEWPROJ_RU_LAYOUT", "")
+    if layout in ("owner-repo", "full"):
+        owner = owner or gh_owner(os.environ.get("NEWPROJ_GITHUB_OWNER") or None)
+        if owner:
+            return str((base / "github.com" / owner if layout == "full" else base / owner) / name)
+    return str(base / name)
+
+
+def require_parent(raw):
+    """Planning writes nothing, so a missing ru-layout folder is reported, not created."""
+    if not raw.parent.is_dir():
+        raise ValueError("parent directory does not exist: " + str(raw.parent) + " — create it (mkdir -p) or pass an explicit directory")
+
+
+def user_env():
+    """The caller's environment for gh/ru/push (credential helpers live in global git config)."""
+    return {k: v for k, v in os.environ.items() if not k.startswith(("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX"))}
+
+
+def quiet(argv, timeout=30):
+    try:
+        return subprocess.run(argv, stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=timeout, env=user_env())
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
+def gh_owner(explicit=None):
+    if explicit:
+        return explicit
+    if not shutil.which("gh"):
+        return None
+    result = quiet(["gh", "api", "user", "-q", ".login"])
+    login = result.stdout.strip() if result is not None and result.returncode == 0 else ""
+    return login or None
+
+
+def git_identity():
+    values = []
+    for key in ("user.name", "user.email"):
+        result = quiet(["git", "config", key])
+        value = result.stdout.strip() if result is not None and result.returncode == 0 else ""
+        if not value or any(ord(c) < 32 for c in value):
+            return None
+        values.append(value)
+    return {"name": values[0], "email": values[1]}
+
+
+def remote_selection(github, ru, owner):
+    """Validate a GitHub/ru selection into the canonical plan form (or None)."""
+    if github in (None, "off"):
+        github = None
+    if github is not None and github not in GITHUB_VISIBILITY:
+        raise ValueError("--github must be private or public")
+    if ru and github is None:
+        raise ValueError("--ru needs a GitHub remote: add --github, or use --no-ru")
+    if github is None:
+        return None
+    if owner is None:
+        raise ValueError("could not determine the GitHub account (is gh installed and authenticated?); pass --github-owner=OWNER")
+    identity = git_identity()
+    if identity is None:
+        raise ValueError("git user.name/user.email are not set; the initial commit pushed to GitHub needs them")
+    return {"github": github, "owner": owner, "ru": bool(ru), "identity": identity}
+
+
+def remote_preflight(remote, name):
+    """Checks that must pass before anything local is created."""
+    if remote is None:
+        return
+    if not shutil.which("gh"):
+        raise ValueError("gh (GitHub CLI) is not installed — run: brew install gh")
+    status = quiet(["gh", "auth", "status"])
+    if status is None or status.returncode != 0:
+        raise ValueError("gh is not authenticated — run: gh auth login")
+    if remote["ru"] and not shutil.which("ru"):
+        raise ValueError("ru is not installed — run: macacfs install ru")
+    probe = quiet(["gh", "api", "repos/" + remote["owner"] + "/" + name])
+    if probe is None:
+        raise ValueError("could not check GitHub for an existing repository")
+    if probe.returncode == 0:
+        raise ValueError("GitHub repo " + remote["owner"] + "/" + name + " already exists; choose another name or --github-owner")
+    if "404" not in (probe.stderr + probe.stdout):
+        raise ValueError("could not check whether " + remote["owner"] + "/" + name + " exists on GitHub")
+
+
+SECRET_PATTERNS = (r"gh[pousr]_[A-Za-z0-9]{20,}", r"github_pat_[A-Za-z0-9_]{20,}", r"sk-[A-Za-z0-9_-]{20,}",
+                   r"AKIA[0-9A-Z]{16}", r"BEGIN [A-Z ]*PRIVATE KEY")
+
+
+def scan_public(files, directory):
+    """Refuse to push personal paths or secrets to a public repository."""
+    home = str(Path.home())
+    needles = [home + "/"] + ([directory] if directory.startswith(home + "/") else [])
+    for entry in files:
+        content = entry["content"]
+        if any(n in content for n in needles) or any(re.search(p, content) for p in SECRET_PATTERNS):
+            raise ValueError("refusing a public GitHub repo: " + entry["path"] + " contains a personal path or secret")
 
 
 def canonical(value):
@@ -258,7 +398,7 @@ def mail_client_files(settings, clients, has_policy):
     return files, connection_files, "".join(instructions)
 
 
-def make_plan(name, directory, stack, features, target, agent_mail=None, agent_mail_clients=None):
+def make_plan(name, directory, stack, features, target, agent_mail=None, agent_mail_clients=None, remote=None):
     if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{0,63}", name):
         raise ValueError("project name must start with a letter and contain at most 64 letters, digits, _ or -")
     if stack not in ("python", "typescript"):
@@ -270,6 +410,15 @@ def make_plan(name, directory, stack, features, target, agent_mail=None, agent_m
     features = [f for f in FEATURES if f in features]
     if "beads" in features and "git" not in features:
         raise ValueError("beads requires explicitly selecting git too")
+    if remote is not None:
+        if (type(remote) is not dict or set(remote) != {"github", "owner", "ru", "identity"}
+                or remote["github"] not in GITHUB_VISIBILITY or type(remote["ru"]) is not bool
+                or type(remote["owner"]) is not str or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]{0,38}", remote["owner"])
+                or type(remote["identity"]) is not dict or set(remote["identity"]) != {"name", "email"}
+                or any(type(v) is not str or not v or any(ord(c) < 32 for c in v) for v in remote["identity"].values())):
+            raise ValueError("invalid GitHub/ru selection")
+        if "git" not in features:
+            raise ValueError("GitHub publishing requires the git feature")
     if "ci" in features and "starter" not in features:
         raise ValueError("ci requires explicitly selecting starter too")
     if ("agent-mail" in features) != (agent_mail is not None):
@@ -355,6 +504,24 @@ def make_plan(name, directory, stack, features, target, agent_mail=None, agent_m
                                  "writes": ["Agent Mail project namespace on the reviewed service"]})
     if agent_mail_clients is not None:
         plan["agent_mail_clients"] = agent_mail_clients
+    if remote is not None:
+        if remote["github"] == "public":
+            scan_public(plan["files"], directory)
+        identity = remote["identity"]
+        plan["remote"] = remote
+        plan["effects"].update({"network": True, "commit": True, "push": True})
+        plan["commands"] += [
+            {"id": "git-add", "argv": ["git", "add", "-A", "--", ".", ":(exclude).acfs"], "writes": [".git/"]},
+            {"id": "git-commit", "argv": ["git", "-c", "user.name=" + identity["name"], "-c", "user.email=" + identity["email"],
+                                          "-c", "commit.gpgsign=false", "commit", "-q", "-m", "Initial commit"], "writes": [".git/"]},
+            {"id": "gh-create", "argv": ["gh", "repo", "create", remote["owner"] + "/" + name, "--" + remote["github"],
+                                         "--source=.", "--remote=origin", "--push"],
+             "writes": ["GitHub repository " + remote["owner"] + "/" + name + " (" + remote["github"] + ")", ".git/config"]},
+        ]
+        if remote["ru"]:
+            plan["commands"].append({"id": "ru-add", "argv": ["ru", "add", "--from-cwd", "--non-interactive"]
+                                     + (["--private"] if remote["github"] == "private" else []),
+                                     "writes": ["ru repository list (~/.config/ru/repos.d)"]})
     plan["plan_id"] = digest(canonical(plan))
     return plan
 
@@ -413,7 +580,7 @@ def read_plan(path):
     if type(value) is not dict or type(value.get("project")) is not dict:
         raise ValueError("invalid bootstrap plan")
     project = value["project"]
-    expected = make_plan(project.get("name"), project.get("directory"), project.get("stack"), value.get("features"), value.get("target"), value.get("agent_mail"), value.get("agent_mail_clients"))
+    expected = make_plan(project.get("name"), project.get("directory"), project.get("stack"), value.get("features"), value.get("target"), value.get("agent_mail"), value.get("agent_mail_clients"), value.get("remote"))
     if value != expected:
         raise ValueError("plan differs from this ACFS version's templates; regenerate and review it")
     return value
@@ -503,14 +670,14 @@ def save_state(state_dir, state):
     os.fsync(state_dir)
 
 
-def run_tool(executable, arguments, env):
+def run_tool(executable, arguments, env, timeout=30):
     import signal
     # All argv are fixed by regenerated templates, never evaluated as shell.
     process = subprocess.Popen([executable, *arguments], env=env, stdin=subprocess.DEVNULL,
                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                                start_new_session=True)
     try:
-        code = process.wait(timeout=30)
+        code = process.wait(timeout=timeout)
     except BaseException:
         try:
             os.killpg(process.pid, signal.SIGKILL)
@@ -534,6 +701,8 @@ def apply(plan, resume=False):
         if identity(os.fstat(parent)) != plan["target"]["parent"]:
             raise ValueError("parent directory changed after review; regenerate the plan")
         name = Path(directory).name
+        if not resume and plan.get("remote") is not None:
+            remote_preflight(plan["remote"], plan["project"]["name"])
         if plan["target"]["directory"] is None and not resume:
             # Preflight before any mutation, including creation of the root.
             for command in plan["commands"]:
@@ -619,6 +788,31 @@ def apply(plan, resume=False):
                 save_state(state_dir, state)
                 continue
             executable = executables[command["id"]]
+            if command["id"] in ("git-add", "git-commit"):
+                if command["id"] == "git-commit" and subprocess.run(
+                        [executable, "rev-parse", "--verify", "-q", "HEAD"], env=env, stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL).returncode == 0:
+                    pass  # committed before an interruption
+                else:
+                    run_tool(executable, command["argv"][1:], env)
+                state["completed_commands"].append(command["id"])
+                save_state(state_dir, state)
+                continue
+            if command["id"] in ("gh-create", "ru-add"):
+                if command["id"] == "gh-create" and subprocess.run(
+                        ["git", "remote", "get-url", "origin"], env=env, stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL).returncode == 0:
+                    # Created before an interruption: only the push may be missing.
+                    run_tool(shutil.which("git") or "git", ["push", "-q", "-u", "origin", "HEAD"], user_env(), timeout=180)
+                else:
+                    try:
+                        run_tool(executable, command["argv"][1:], user_env(), timeout=180)
+                    except ValueError:
+                        raise ValueError(Path(executable).name + " step '" + command["id"] + "' failed; the local project is intact. "
+                                         "Fix the cause (gh auth / network / ru), then rerun with --resume") from None
+                state["completed_commands"].append(command["id"])
+                save_state(state_dir, state)
+                continue
             # br init may have succeeded just before a crash prevented the
             # checkpoint write. A successful local ready probe verifies that
             # database rather than blindly initializing it a second time.
@@ -699,11 +893,21 @@ def guided():
         name = ask("Project name")
         if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{0,63}", name):
             raise ValueError("project name must start with a letter and contain at most 64 letters, digits, _ or -")
-        default_directory = str(Path(os.environ.get("ACFS_PROJECTS_DIR", "/data/projects")) / name)
+        default_github = os.environ.get("MACACFS_NEWPROJ_GITHUB_DEFAULT", "off")
+        default_github = default_github if default_github in ("off",) + GITHUB_VISIBILITY else "off"
+        github = ask("Create a GitHub repo and push? off / private / public", default_github, ("off",) + GITHUB_VISIBILITY)
+        ru = False
+        if github != "off":
+            default_ru = "yes" if os.environ.get("MACACFS_NEWPROJ_RU_DEFAULT") == "on" else "no"
+            ru = ask("Register the repo with ru? yes/no", default_ru, ("yes", "no")) == "yes"
+        remote = remote_selection(github, ru, gh_owner() if github != "off" else None)
+        default_directory = default_project_dir(name, remote["owner"] if remote else None)
         # Escape displayed defaults as well as answers: environment paths are
         # not permission to render terminal control sequences.
         show("Suggested destination: " + display(default_directory))
-        raw = Path(ask("Project directory (Enter uses the suggestion)") or default_directory).expanduser()
+        answer = ask("Project directory (Enter uses the suggestion)")
+        raw = Path(answer or default_directory).expanduser()
+        require_parent(raw)
         directory = str(raw.parent.resolve(strict=True) / raw.name)
         if any(ord(c) < 32 or ord(c) == 127 for c in directory):
             raise ValueError("project directory cannot contain control characters")
@@ -720,7 +924,7 @@ def guided():
             settings = mail_settings({"url": url, "token_env": None if token_env == "none" else token_env})
             clients = mail_clients(ask("Clients: comma-separated claude,codex,gemini", "claude,codex").split(","))
             features.append("agent-mail")
-        plan = make_plan(name, directory, stack, features, target_snapshot(directory), settings, clients)
+        plan = make_plan(name, directory, stack, features, target_snapshot(directory), settings, clients, remote)
         suggested_plan = str(Path(directory).parent / ("." + name + "-acfs-plan.json"))
         show("Suggested recovery plan: " + display(suggested_plan))
         raw_plan = Path(ask("Plan file (Enter uses the suggestion)") or suggested_plan).expanduser()
@@ -749,7 +953,7 @@ def guided():
                 show("  " + display(command))
             show("Private checkpoint: " + display(plan["state_file"]))
             show("Private recovery plan (0600): " + display(plan_path))
-            show("Network access: " + ("YES — the reviewed Agent Mail operation" if settings else "no"))
+            show("Network access: " + ("YES — " + " and ".join(x for x in (("the reviewed Agent Mail operation" if settings else ""), ("GitHub " + remote["github"] + " repo + push" + (" + ru registration" if remote["ru"] else "") if remote else "")) if x) if settings or remote else "no"))
             show("Verification commands (not run by create): " + display(plan["verification_commands"]))
             show("Type details to inspect the exact file contents and full JSON plan.")
             while True:
@@ -775,6 +979,7 @@ def guided():
                         mail_token(plan["agent_mail"])
                     elif not shutil.which(command["argv"][0]):
                         raise ValueError("required executable is missing: " + command["argv"][0])
+                remote_preflight(plan.get("remote"), name)
             # Exclusive creation: a concurrent file, symlink or existing plan
             # is never replaced. A failed save prevents project creation.
             write_new(plan_parent, leaf, json.dumps(plan, indent=2, ensure_ascii=True) + "\n", 0o600)
@@ -782,7 +987,7 @@ def guided():
         finally:
             os.close(plan_parent)
         show("\nSaved recovery plan: " + display(plan_path))
-        apply_command = "acfs newproj --apply " + shlex.quote(plan_path) + " --yes"
+        apply_command = "macacfs newproj --apply " + shlex.quote(plan_path) + " --yes"
         show("Apply later: " + apply_command)
         show("After an interrupted apply: " + apply_command + " --resume")
         if decision == "save":
@@ -793,12 +998,14 @@ def guided():
         show("\nProject created. Next, run the starter checks:")
         show("  cd " + shlex.quote(directory))
         show("  sh scripts/check.sh")
+        if remote:
+            show("GitHub: https://github.com/" + remote["owner"] + "/" + name)
         show("Then read FIRST_AGENT_PROMPT.md before starting your chosen agent.")
         return result
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="acfs newproj", description="Review a deterministic first-project plan, then explicitly apply it.")
+    parser = argparse.ArgumentParser(prog="macacfs newproj", description="Review a deterministic first-project plan, then explicitly apply it.")
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument("--plan", metavar="NAME")
     action.add_argument("--apply", metavar="PLAN_JSON")
@@ -814,14 +1021,24 @@ def main():
     parser.add_argument("--agent-mail", metavar="URL", help="also register the project on this Agent Mail service and configure project-local Claude MCP")
     parser.add_argument("--agent-mail-token-env", metavar="NAME", help="read authentication only from this environment variable at apply/client launch")
     parser.add_argument("--agent-mail-clients", metavar="claude,codex,gemini", help="explicit project-local client selection; omitted preserves the existing Claude-only plan")
+    remote_group = parser.add_mutually_exclusive_group()
+    remote_group.add_argument("--github", nargs="?", const="private", choices=("off",) + GITHUB_VISIBILITY, help="create the GitHub repo and push (default visibility: private)")
+    remote_group.add_argument("--gh-private", dest="github", action="store_const", const="private")
+    remote_group.add_argument("--gh-public", dest="github", action="store_const", const="public")
+    remote_group.add_argument("--no-github", dest="github", action="store_const", const="off")
+    parser.add_argument("--github-owner", metavar="OWNER", help="GitHub user/org for the new repo (default: the gh login)")
+    ru_group = parser.add_mutually_exclusive_group()
+    ru_group.add_argument("--ru", dest="ru", action="store_const", const=True, help="register the GitHub repo with ru")
+    ru_group.add_argument("--no-ru", dest="ru", action="store_const", const=False)
     args = parser.parse_args()
+    remote_flags = args.github is not None or args.github_owner is not None or args.ru is not None
     if args.guided:
-        if any((args.directory, args.stack, args.preset, args.features, args.yes, args.resume,
+        if remote_flags or any((args.directory, args.stack, args.preset, args.features, args.yes, args.resume,
                 args.beads, args.agent_mail, args.agent_mail_token_env, args.agent_mail_clients is not None)):
             parser.error("use --guided alone; select and approve its options in the terminal")
         result = guided()
     elif args.apply:
-        if not args.yes or any((args.directory, args.stack, args.preset, args.features, args.beads, args.agent_mail, args.agent_mail_token_env, args.agent_mail_clients is not None)):
+        if not args.yes or remote_flags or any((args.directory, args.stack, args.preset, args.features, args.beads, args.agent_mail, args.agent_mail_token_env, args.agent_mail_clients is not None)):
             parser.error("use --apply PLAN_JSON --yes without plan overrides")
         result = apply(read_plan(args.apply), args.resume)
     else:
@@ -835,14 +1052,26 @@ def main():
             parser.error("--agent-mail-token-env requires --agent-mail URL")
         # Resolve parents once for a portable reviewable absolute destination;
         # apply still walks the resulting path without following symlinks.
-        raw = Path(args.directory or str(Path(os.environ.get("ACFS_PROJECTS_DIR", "/data/projects")) / args.plan)).expanduser()
+        github = args.github if args.github is not None else os.environ.get("MACACFS_NEWPROJ_GITHUB_DEFAULT", "off")
+        ru = args.ru if args.ru is not None else os.environ.get("MACACFS_NEWPROJ_RU_DEFAULT") == "on"
+        if args.ru is None and github in (None, "off"):
+            ru = False  # a ru-on setting without a GitHub remote has nothing to register
+        if args.github_owner is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]{0,38}", args.github_owner):
+            parser.error("--github-owner must be a GitHub user or organization name")
+        remote = remote_selection(github, ru, gh_owner(args.github_owner) if github not in (None, "off") else None)
+        if args.directory:
+            raw = Path(args.directory).expanduser()
+        else:
+            raw = Path(default_project_dir(args.plan, remote["owner"] if remote else None))
+        require_parent(raw)
         directory = str(raw.parent.resolve(strict=True) / raw.name)
         features = (list(PRESET) if args.preset else args.features.split(",")) + (["beads"] if args.beads else [])
         if args.agent_mail and "agent-mail" not in features:
             features.append("agent-mail")
         result = make_plan(args.plan, directory, args.stack or "python", features, target_snapshot(directory),
                            {"url": args.agent_mail, "token_env": args.agent_mail_token_env} if args.agent_mail else None,
-                           args.agent_mail_clients.split(",") if args.agent_mail_clients is not None else None)
+                           args.agent_mail_clients.split(",") if args.agent_mail_clients is not None else None,
+                           remote)
     print(json.dumps(result, indent=2, ensure_ascii=True))
 
 
@@ -966,14 +1195,21 @@ check_tui_available() {
 }
 
 print_help() {
-    echo "Usage: acfs newproj [options] <project-name> [directory]"
-    echo "       acfs newproj --interactive"
+    echo "Usage: macacfs newproj [options] <project-name> [directory]"
+    echo "       macacfs newproj --interactive"
     echo ""
     echo "Create a new project with ACFS tooling (git, br, claude settings, AGENTS.md)"
     echo ""
     echo "Arguments:"
     echo "  project-name    Name of the project (required in CLI mode)"
-    echo "  directory       Directory path (default: /data/projects/<project-name>)"
+    echo "  directory       Directory path; an explicit path always wins. Default: where ru"
+    echo "                  would put the repo under its configured LAYOUT (asked via 'ru config'):"
+    echo "                    flat        <projects-dir>/<project-name>"
+    echo "                    owner-repo  <projects-dir>/<github-owner>/<project-name>"
+    echo "                    full        <projects-dir>/github.com/<github-owner>/<project-name>"
+    echo "                  without ru (or an unknown owner): <projects-dir>/<project-name>"
+    echo "                  projects-dir: \$MACACFS_PROJECTS_DIR, \$ACFS_PROJECTS_DIR, the"
+    echo "                  newproj.projects_dir setting, ru's PROJECTS_DIR, /data/projects, ~/Projects"
     echo ""
     echo "Interactive mode:"
     echo "  -i, --interactive   Launch TUI wizard for guided project setup"
@@ -993,6 +1229,13 @@ print_help() {
     echo "  --agent-mail-token-env NAME  Read authentication from this variable, never store it"
     echo "  --agent-mail-clients claude,codex,gemini  Configure only the selected clients"
     echo ""
+    echo "GitHub / ru (all modes; defaults from 'macacfs config' newproj.github / newproj.ru):"
+    echo "  --github[=private|public]  Create OWNER/<name> with gh, set origin, push (bare = private)"
+    echo "  --gh-private, --gh-public  Same as --github=private / --github=public"
+    echo "  --no-github                Do not create a GitHub repo (overrides the setting)"
+    echo "  --github-owner=OWNER       Create the repo under this user/org (default: your gh login)"
+    echo "  --ru / --no-ru             Register (or not) the GitHub repo with ru (needs --github)"
+    echo ""
     echo "CLI mode options:"
     echo "  --no-br         Skip beads (br) initialization"
     echo "  --no-claude     Skip Claude settings creation"
@@ -1000,11 +1243,12 @@ print_help() {
     echo "  -h, --help      Show this help message"
     echo ""
     echo "Examples:"
-    echo "  acfs newproj myapp                       # CLI mode"
-    echo "  acfs newproj myapp /home/user/projects/myapp  # CLI mode with explicit project dir"
-    echo "  acfs newproj --interactive               # TUI wizard"
-    echo "  acfs newproj -i                          # TUI wizard (short form)"
-    echo "  acfs newproj -i myapp                    # TUI with pre-filled name"
+    echo "  macacfs newproj myapp                       # CLI mode"
+    echo "  macacfs newproj myapp ~/Projects/myapp      # CLI mode with explicit project dir"
+    echo "  macacfs newproj myapp --github --ru         # + private GitHub repo + ru registration"
+    echo "  macacfs newproj --interactive               # TUI wizard"
+    echo "  macacfs newproj -i                          # TUI wizard (short form)"
+    echo "  macacfs newproj -i myapp                    # TUI with pre-filled name"
 }
 
 # Create AGENTS.md template with ACFS tooling instructions
@@ -1016,14 +1260,14 @@ create_agents_template() {
     template=$(cat << 'AGENTS_EOF'
 # AGENTS.md — PROJECT_NAME_PLACEHOLDER
 
-This file was generated by `acfs newproj` as a starting template.
+This file was generated by `macacfs newproj` as a starting template.
 
 If you used the interactive wizard, toolchain and Docker workflow sections
 may be included based on detected tech stack. In CLI mode, this template is
 generic - edit or add sections as needed.
 
 To regenerate with different options, move this file aside and re-run:
-  acfs newproj --interactive
+  macacfs newproj --interactive
 
 ---
 
@@ -1356,7 +1600,7 @@ run_interactive_mode() {
     if is_ci_environment; then
         echo -e "${RED}Error: Interactive mode cannot run in CI environment${NC}" >&2
         echo -e "${YELLOW}Detected CI environment variables or TERM=dumb${NC}" >&2
-        echo -e "${YELLOW}Use CLI mode instead: acfs newproj <project-name>${NC}" >&2
+        echo -e "${YELLOW}Use CLI mode instead: macacfs newproj <project-name>${NC}" >&2
         return 1
     fi
 
@@ -1364,14 +1608,14 @@ run_interactive_mode() {
     if ! is_stdin_tty; then
         echo -e "${RED}Error: Interactive mode requires a terminal (stdin is not a TTY)${NC}" >&2
         echo -e "${YELLOW}Cannot run in piped input mode${NC}" >&2
-        echo -e "${YELLOW}Use CLI mode instead: acfs newproj <project-name>${NC}" >&2
+        echo -e "${YELLOW}Use CLI mode instead: macacfs newproj <project-name>${NC}" >&2
         return 1
     fi
 
     if ! is_stdout_tty; then
         echo -e "${RED}Error: Interactive mode requires a terminal (stdout is not a TTY)${NC}" >&2
         echo -e "${YELLOW}Cannot run with redirected output${NC}" >&2
-        echo -e "${YELLOW}Use CLI mode instead: acfs newproj <project-name>${NC}" >&2
+        echo -e "${YELLOW}Use CLI mode instead: macacfs newproj <project-name>${NC}" >&2
         return 1
     fi
 
@@ -1401,6 +1645,13 @@ run_interactive_mode() {
     if [[ -z "${ACFS_SESSION_LOG:-}" ]]; then
         init_logging
     fi
+
+    # macacfs: GitHub/ru checkboxes start from flags/settings.
+    if [[ "$NEWPROJ_GITHUB" != off ]]; then
+        state_set "enable_github" "true"
+        [[ "$NEWPROJ_GITHUB" == public ]] && state_set "enable_github_public" "true"
+    fi
+    [[ "$NEWPROJ_RU" == on ]] && state_set "enable_ru" "true"
 
     # Pre-fill state if arguments provided
     if [[ -n "$prefill_name" ]]; then
@@ -1432,6 +1683,7 @@ main() {
     local skip_agents=false
     local interactive_mode=false
     local git_initialized=false
+    local used_default_dir=false
 
     # Parse arguments
     while [[ $# -gt 0 ]]; do
@@ -1456,7 +1708,20 @@ main() {
                 skip_agents=true
                 shift
                 ;;
+            --github-owner)
+                # macacfs: also accept the two-word form.
+                newproj_remote_parse_flag "--github-owner=${2:-}" || exit 1
+                shift 2
+                ;;
             -*)
+                local remote_rc=0
+                newproj_remote_parse_flag "$1" || remote_rc=$?
+                if [[ $remote_rc -eq 0 ]]; then
+                    shift
+                    continue
+                elif [[ $remote_rc -eq 2 ]]; then
+                    exit 1
+                fi
                 echo -e "${RED}Unknown option: $1${NC}" >&2
                 print_help
                 exit 1
@@ -1475,6 +1740,9 @@ main() {
                 ;;
         esac
     done
+
+    # macacfs: GitHub/ru selection = flags > env > settings > off.
+    newproj_remote_init_defaults
 
     # Handle interactive mode
     if [[ "$interactive_mode" == "true" ]]; then
@@ -1506,14 +1774,15 @@ main() {
     # SAFEGUARD: When running in test environment, ALWAYS use /tmp to prevent pollution
     if [[ -n "${BATS_TEST_NAME:-}" || -n "${ACFS_TEST_MODE:-}" ]]; then
         if [[ -z "$project_dir" ]]; then
-            project_dir="/tmp/acfs-test-$$/$project_name"
+            project_dir="${TMPDIR:-/tmp}/macacfs-test-$$/$project_name"
             echo -e "${YELLOW}Test mode detected: redirecting to $project_dir${NC}" >&2
         fi
     elif [[ -z "$project_dir" ]]; then
-        # Honor ACFS_PROJECTS_DIR so the non-interactive CLI matches the
-        # interactive wizard (screen_directory.sh::get_default_projects_dir),
-        # defaulting to the canonical /data/projects when it is unset.
-        project_dir="${ACFS_PROJECTS_DIR:-/data/projects}/$project_name"
+        # macacfs: one resolver shared with the wizard and the Python bootstrap
+        # (newproj_remote.sh::newproj_projects_dir), nesting under the GitHub
+        # owner when --github/--ru is in effect (ru's owner-repo layout).
+        project_dir="$(newproj_default_project_dir "$project_name")"
+        used_default_dir=true
     fi
 
     if declare -f normalize_path &>/dev/null; then
@@ -1522,6 +1791,16 @@ main() {
         if [[ -n "$resolved_project_dir" ]]; then
             project_dir="$resolved_project_dir"
         fi
+    fi
+
+    # macacfs: every GitHub/ru precondition is checked before anything is created.
+    if ! newproj_remote_preflight "$project_name"; then
+        exit 1
+    fi
+    if [[ "$used_default_dir" == "true" ]]; then
+        # The ru-layout folders of the default (<base>/<owner>, <base>/github.com/<owner>)
+        # may not exist yet; create them only beneath an existing projects base.
+        newproj_ensure_layout_parent "$project_dir"
     fi
 
     # Match the wizard flow: allow only a brand-new path or an existing empty directory.
@@ -1688,7 +1967,7 @@ EOF
             fi
         else
             echo -e "${YELLOW}Warning: br not found, skipping beads initialization${NC}"
-            echo -e "${YELLOW}Install with: curl -fsSL https://agent-flywheel.com/install | bash -s -- --yes --only stack.beads_rust${NC}"
+            echo -e "${YELLOW}Install with: macacfs install br${NC}"
         fi
     fi
 
@@ -1737,6 +2016,17 @@ EOF
         fi
     fi
 
+    # macacfs: optional GitHub publish + ru registration (preflighted above).
+    local remote_failed=false
+    if newproj_remote_active; then
+        if newproj_remote_finish "$project_dir" "$project_name"; then
+            [[ "$NEWPROJ_GITHUB" != off ]] && CREATED_ITEMS+=("GitHub repo ${NEWPROJ_GITHUB_URL:-} ($NEWPROJ_GITHUB)")
+            [[ "$NEWPROJ_RU" == on ]] && CREATED_ITEMS+=("ru registration")
+        else
+            remote_failed=true
+        fi
+    fi
+
     # Print summary of what was created
     echo ""
     if [[ ${#CREATED_ITEMS[@]} -gt 0 ]]; then
@@ -1759,7 +2049,10 @@ EOF
         echo "  br ready                    # Check for work"
         echo "  br create --title=\"...\"    # Create tasks"
     fi
-    echo "  cc                          # Start Claude Code"
+    echo "  claude                      # Start Claude Code"
+    if [[ "$remote_failed" == "true" ]]; then
+        exit 1
+    fi
 }
 
 # Only run main if script is executed directly, not sourced

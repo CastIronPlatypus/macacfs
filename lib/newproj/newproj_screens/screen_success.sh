@@ -218,14 +218,14 @@ newproj_validate_ntm_request() {
     fi
     for tool in ntm tmux jq; do
         if ! command -v "$tool" >/dev/null 2>&1; then
-            printf 'Missing %s. Run acfs doctor before starting a workspace.\n' "$tool" >&2
+            printf 'Missing %s. Install it with: macacfs install (or brew install) before starting a workspace.\n' "$tool" >&2
             return 1
         fi
     done
     if { ((cc > 0)) && ! command -v claude >/dev/null 2>&1; } ||
        { ((cod > 0)) && ! command -v codex >/dev/null 2>&1; } ||
        { ((agy > 0)) && ! command -v agy >/dev/null 2>&1; }; then
-        echo "A selected agent CLI is missing; adjust the mix or run acfs doctor." >&2
+        echo "A selected agent CLI is missing; adjust the mix or install it." >&2
         return 1
     fi
 }
@@ -301,7 +301,7 @@ newproj_start_ntm() {
         ((.error // "") == ""))
     ' >/dev/null 2>&1 <<< "$response"; then
         echo "NTM did not confirm the requested workspace. No automatic retry or cleanup was attempted." >&2
-        echo "Inspect ntm list and acfs doctor; a partial or existing session may need attention." >&2
+        echo "Inspect ntm list; a partial or existing session may need attention." >&2
         return 1
     fi
     if [[ "$work" == true ]]; then
@@ -332,7 +332,7 @@ open_in_ntm() {
     project_name=$(state_get "project_name") || return 1
     for answer in ntm tmux jq; do
         if ! command -v "$answer" >/dev/null 2>&1; then
-            printf 'Missing %s. Run acfs doctor before starting a workspace.\n' "$answer" >&2
+            printf 'Missing %s. Install it with: macacfs install (or brew install) before starting a workspace.\n' "$answer" >&2
             return 1
         fi
     done
@@ -373,7 +373,12 @@ open_in_ntm() {
         read -r -p "Antigravity agents, 0-4 [$agy]: " answer || return 1
         agy="${answer:-$agy}"
     fi
-    printf '\nSession: %s\nClaude: %s  Codex: %s  Antigravity: %s\n' "$session" "$cc" "$cod" "$agy"
+    # macacfs: Antigravity (agy) is shown only when installed.
+    if command -v agy >/dev/null 2>&1; then
+        printf '\nSession: %s\nClaude: %s  Codex: %s  Antigravity: %s\n' "$session" "$cc" "$cod" "$agy"
+    else
+        printf '\nSession: %s\nClaude: %s  Codex: %s\n' "$session" "$cc" "$cod"
+    fi
     newproj_validate_ntm_request "$project_dir" "$session" "$cc" "$cod" "$agy" || return 1
     if [[ "$work" == true ]]; then
         ready=$(newproj_ntm_ready_work "$project_dir") || return 1

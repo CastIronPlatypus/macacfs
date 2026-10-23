@@ -46,6 +46,8 @@ require_darwin() {
 . "$MACACFS_HOME/lib/schedule.sh"
 # shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/selfupdate.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/config.sh"
 
 usage() {
   cat <<EOF
@@ -62,6 +64,14 @@ Usage:
   macacfs self-update                     update macacfs itself from its repo
   macacfs schedule [--install|--uninstall|--status]
                                           manage the weekly auto-update LaunchAgent
+  macacfs newproj [options] NAME [DIR]    create a new project (git, beads, AGENTS.md,
+                                          Claude settings); -i for the wizard,
+                                          --plan/--apply/--guided for the reviewed
+                                          bootstrap, --github[=private|public] and
+                                          --ru to publish/register (alias: new;
+                                          see 'macacfs newproj --help')
+  macacfs config [list|get|set|unset]     persistent settings (newproj.github,
+                                          newproj.ru, newproj.projects_dir)
   macacfs list                            list the tool catalog
   macacfs version                         print version
   macacfs help                            this help
@@ -147,6 +157,15 @@ main() {
         --status)    schedule_status ;;
         *) printf 'macacfs: unknown schedule option %s\n' "$1" >&2; exit 2 ;;
       esac
+      ;;
+    newproj|new)
+      require_darwin
+      # The acfs-ported scripts need bash >= 4.3: run them under this same
+      # (pinned Homebrew) bash, never /bin/bash 3.2.
+      exec "$BASH" "$MACACFS_HOME/lib/newproj/newproj.sh" "$@"
+      ;;
+    config)
+      config_main "$@"; exit $?
       ;;
     _tick)               # internal: fired by the LaunchAgent
       require_darwin

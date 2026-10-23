@@ -76,6 +76,11 @@
       "dst": "fb-readme",
       "reason": "documented in README",
       "type": "relates-to"
+    },
+    {
+      "dst": "req-newproj-follows-ru-layout",
+      "reason": "the experience's default dir",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
@@ -83,9 +88,10 @@
   "node_type": "surface",
   "status": "drafting",
   "stratum": "surface",
+  "succeeds": "newproj-experience@v1",
   "uid": "n0095",
-  "version": 1
+  "version": 2
 }
 -->
 
-What a user sees when running 'macacfs newproj' (alias 'new'): the classic one-shot form 'macacfs newproj NAME [DIR] [--no-br] [--no-claude] [--no-agents]' that creates a git repo, README, .gitignore, .ubsignore, beads, Claude settings and an AGENTS.md template and commits; the interactive wizard '-i' with nine screens (welcome, name, directory, tech stack, features, AGENTS.md preview, confirmation, progress, success) whose success screen can open a shell, Claude Code or an NTM workspace; and the reviewed bootstrap '--plan/--apply/--guided' that prints a JSON plan, applies it exactly with checkpointed resume, and optionally wires Agent Mail. Across all modes '--github[=private|public]' publishes the project to GitHub and '--ru' registers it with ru, defaulting from the persistent settings; with either, the default directory nests under the GitHub owner. It [[macacfs-command-surface|serves|newproj is one of the verbs on the closed command surface.]].
+What a user sees when running 'macacfs newproj' (alias 'new'): the classic one-shot form 'macacfs newproj NAME [DIR] [--no-br] [--no-claude] [--no-agents]' that creates a git repo, README, .gitignore, .ubsignore, beads, Claude settings and an AGENTS.md template and commits; the interactive wizard '-i' with nine screens (welcome, name, directory, tech stack, features, AGENTS.md preview, confirmation, progress, success) whose success screen can open a shell, Claude Code or an NTM workspace; and the reviewed bootstrap '--plan/--apply/--guided' that prints a JSON plan, applies it exactly with checkpointed resume, and optionally wires Agent Mail. Across all modes '--github[=private|public]' publishes the project to GitHub and '--ru' registers it with ru, defaulting from the persistent settings; the default directory follows ru's configured PROJECTS_DIR and LAYOUT (flat, owner-repo or full) when ru is installed, and an explicit directory always wins. It [[macacfs-command-surface|serves|newproj is one of the verbs on the closed command surface.]].

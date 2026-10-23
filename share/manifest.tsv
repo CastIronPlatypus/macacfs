@@ -11,6 +11,8 @@
 #
 # repo is under https://github.com/Dicklesworthstone/<repo>. Installer URLs use raw main unless the ref says @latest-release/.
 # Brew-preferred where dicklesworthstone/tap publishes a formula (15 tools).
+# GUM/GLOW/JQ are third-party Homebrew formulae newproj's wizard uses (repo column
+# unused for brew rows; it names the upstream project).
 #
 # abbr	repo	cli	method	ref	args
 NTM	ntm	ntm	brew	dicklesworthstone/tap/ntm	-
@@ -52,3 +54,6 @@ PCR	post_compact_reminder	claude-post-compact-reminder	installer-sh	install-post
 FMD	franken_markdown	fmd	installer-sh	install.sh	-
 PI	pi_agent_rust	pi	installer-sh	install.sh	-
 PFR	power_failure_resumer	pfr	installer-sh	install.sh	-
+GUM	charmbracelet/gum	gum	brew	gum	-
+GLOW	charmbracelet/glow	glow	brew	glow	-
+JQ	jqlang/jq	jq	brew	jq	-
