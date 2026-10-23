@@ -47,9 +47,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "capabilities",
+  "succeeds": "tool-catalog@v1",
   "uid": "n0016",
-  "version": 1
+  "version": 2
 }
 -->
 
-The single source of truth for the suite: one row per tool — abbr, repo, cli name, install METHOD (brew, installer-sh, cargo-git or go), ref (tap formula, installer path, git URL or module) and optional args — for all 39 tools, encoding the verified macOS install path for each (15 via the dicklesworthstone tap, 4 via cargo-git, 20 via their own installers; none currently via go). It resolves selectors (abbr or cli, case-insensitive, failing loud on an unknown one) and backs 'macacfs list'. It [[install-experience|serves|Installing all or any tools requires the catalog as the list and the per-tool method source.]] and is [[manifest-store|accomplished-by|The catalog capability is backed by the manifest store.]]. It [[cli-arg-dispatch|couples-with|The TOOL selectors the CLI accepts are exactly the abbr and cli columns of this catalog, so renaming a row's abbr or cli changes what the CLI recognizes.]]
+The single source of truth for the suite: one row per tool — abbr, repo, cli name, install METHOD (brew, installer-sh, cargo-git or go), ref (tap formula, installer path, git URL or module) and optional args — for all 42 rows (the 39 suite tools plus the Homebrew-core helpers GUM, GLOW and JQ), encoding the verified macOS install path for each (15 via the dicklesworthstone tap, 3 via Homebrew core, 4 via cargo-git, 20 via their own installers; none currently via go). It resolves selectors (abbr or cli, case-insensitive, failing loud on an unknown one) and backs 'macacfs list'. It [[install-experience|serves|Installing all or any tools requires the catalog as the list and the per-tool method source.]] and is [[manifest-store|accomplished-by|The catalog capability is backed by the manifest store.]]. It [[cli-arg-dispatch|couples-with|The TOOL selectors the CLI accepts are exactly the abbr and cli columns of this catalog, so renaming a row's abbr or cli changes what the CLI recognizes.]] The helper rows exist because [[req-newproj-helper-tools|validated-by|Without the GUM, GLOW and JQ rows 'macacfs install' would not install the wizard's TUI, preview and JSON tools, and the requirement's list check would fail.]].

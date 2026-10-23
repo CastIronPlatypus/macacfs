@@ -980,3 +980,106 @@
 - [1792794858] **realized** — wizard-screens-code: realized-at None -> v0.15.0
 - [1792794999] **override** — jeff-np-1: no-net-anemia on macacfs-command-surface (66.5 -> 61.4): this run added the newproj and config verbs, whose links are now reciprocated relates-to edges with concrete reasons. The rest of the drop comes from the large newproj-experience neighborhood the score folds in, not from a thin edge on this node. The follow-up run jeff-takeover-1 supersedes this node for the 42-tool catalog. (node macacfs-command-surface)
 - [1792795072] **change** — settle -> idle (finalized)
+- [1792795201] **set-changeplan** — 5 step(s)
+- [1792795201] **change** — plan -> walk
+- [1792795212] **change-done** — t1 — jeff-np-1 (settled) carried newproj, config, github and ru from intent to implementation: newproj-engine -> newproj-cli-code/wizard-screens-code/bootstrap-py-code -> fb-lib-newproj-* -> fb-lib-newproj-*-impl; remote-integration -> remote-code -> fb-lib-newproj-remote(-impl); config-store -> config-code -> fb-lib-config(-impl). Missing: gum/glow/jq catalog nodes, prereq/zshrc impl for newproj notes and completions fpath, and the function-map/logical-flow strata for the new functions. This run adds only those; the shared nodes it supersedes (macacfs-command-surface, fn-main, lf-cli-dispatch) keep np-1's content.
+- [1792795224] **add-requirement** — req-newproj-helper-tools [functional] macacfs install also installs gum, glow and jq, the third-party command-line tools that the newproj wizard uses: gum draws the TUI, glow previews AGENTS.md and jq parses NTM's JSON. They are added as Homebrew-core brew rows in share/manifest.tsv, following the existing manifest conventions and methods, so a full install or update (and 'macacfs install gum glow jq') installs or upgrades them like any other row.
+- [1792795224] **retire** — tool-catalog@v1 -> v2; reason: The catalog grows from 39 to 42 rows: GUM, GLOW and JQ are added as Homebrew-core brew rows for the newproj wizard (req-newproj-helper-tools).; perturbed: ['manifest-store']
+- [1792795224] **retire** — install-experience@v2 -> v3; reason: The catalog grows from 39 to 42 rows: GUM, GLOW and JQ are added as Homebrew-core brew rows for the newproj wizard (req-newproj-helper-tools).; perturbed: ['tool-catalog', 'method-dispatch', 'prereq-autoinstaller', 'signature-repair']
+- [1792795225] **retire** — macacfs-command-surface@v4 -> v5; reason: The catalog grows from 39 to 42 rows: GUM, GLOW and JQ are added as Homebrew-core brew rows for the newproj wizard (req-newproj-helper-tools).; perturbed: ['cli-arg-dispatch', 'method-dispatch', 'shell-setup-dispatch']
+- [1792795225] **retire** — fb-manifest-tsv@v1 -> v2; reason: The catalog grows from 39 to 42 rows: GUM, GLOW and JQ are added as Homebrew-core brew rows for the newproj wizard (req-newproj-helper-tools).; perturbed: ['fb-manifest-tsv-impl']
+- [1792795226] **retire** — fb-manifest-tsv-impl@v5 -> v6; reason: The catalog grows from 39 to 42 rows: GUM, GLOW and JQ are added as Homebrew-core brew rows for the newproj wizard (req-newproj-helper-tools).; perturbed: []
+- [1792795226] **retire** — shell-environment-catalog@v1 -> v2; reason: The catalog grows from 39 to 42 rows: GUM, GLOW and JQ are added as Homebrew-core brew rows for the newproj wizard (req-newproj-helper-tools).; perturbed: ['shell-spec-store']
+- [1792795238] **change-done** — t2
+- [1792795250] **retire** — fb-lib-prereq-impl@v2 -> v3; reason: lib/prereq.sh gains prereq_warn_newproj, which names a missing gh, ru, br or python3>=3.9 before newproj runs and never installs or fails.; perturbed: []
+- [1792795251] **retire** — fb-share-zshrc-mac-impl@v1 -> v2; reason: share/zshrc.mac.zsh puts share/completions on fpath before Oh My Zsh runs compinit, so 'macacfs <TAB>' completes.; perturbed: []
+- [1792795251] **change-done** — t3
+- [1792795282] **add-node** — lf-config-verb
+- [1792795283] **add-node** — lf-newproj-dispatch
+- [1792795283] **add-node** — lf-newproj-remote-selection
+- [1792795284] **add-node** — lf-newproj-projects-dir
+- [1792795285] **add-node** — lf-newproj-remote-preflight
+- [1792795285] **add-node** — lf-newproj-remote-publish
+- [1792795286] **add-node** — lf-newproj-reviewed-remote
+- [1792795286] **add-node** — lf-newproj-classic-remote
+- [1792795287] **add-node** — lf-newproj-wizard-remote
+- [1792795298] **retire** — lf-cli-dispatch@v1 -> v2; reason: Command dispatch gains the newproj|new and config branches.; perturbed: ['fn-resolve-dir', 'fn-require-darwin', 'fn-usage', 'fn-parse-dry-run', 'fn-main']
+- [1792795299] **change-done** — t4
+- [1792795307] **add-node** — fn-config-file
+- [1792795308] **add-node** — fn-config-registry
+- [1792795309] **add-node** — fn-config-known-keys
+- [1792795309] **add-node** — fn-config-default
+- [1792795310] **add-node** — fn-config-is-known
+- [1792795310] **add-node** — fn-config-env-name
+- [1792795311] **add-node** — fn-config-validate
+- [1792795312] **add-node** — fn-config-get-raw
+- [1792795312] **add-node** — fn-config-effective
+- [1792795313] **add-node** — fn-config-set
+- [1792795313] **add-node** — fn-config-unset
+- [1792795314] **add-node** — fn-config-list
+- [1792795315] **add-node** — fn-config-usage
+- [1792795315] **add-node** — fn-config-main
+- [1792795316] **add-node** — fn-np-remote-parse-flag
+- [1792795317] **add-node** — fn-np-remote-init-defaults
+- [1792795317] **add-node** — fn-np-remote-active
+- [1792795318] **add-node** — fn-np-remote-owner
+- [1792795319] **add-node** — fn-np-ru-config
+- [1792795319] **add-node** — fn-np-ru-layout
+- [1792795320] **add-node** — fn-np-projects-dir
+- [1792795320] **add-node** — fn-np-default-project-dir
+- [1792795321] **add-node** — fn-np-layout-parent-creatable
+- [1792795322] **add-node** — fn-np-ensure-layout-parent
+- [1792795322] **add-node** — fn-np-git-identity-ok
+- [1792795323] **add-node** — fn-np-remote-preflight
+- [1792795324] **add-node** — fn-np-remote-scan-public
+- [1792795324] **add-node** — fn-np-remote-ensure-commit
+- [1792795325] **add-node** — fn-np-manual-hint
+- [1792795326] **add-node** — fn-np-remote-publish
+- [1792795326] **add-node** — fn-np-remote-ru
+- [1792795327] **add-node** — fn-np-remote-finish
+- [1792795328] **add-node** — fn-np-python
+- [1792795328] **add-node** — fn-np-py-default-projects-dir
+- [1792795329] **add-node** — fn-np-py-default-project-dir
+- [1792795330] **add-node** — fn-np-py-require-parent
+- [1792795330] **add-node** — fn-np-py-user-env
+- [1792795331] **add-node** — fn-np-py-quiet
+- [1792795332] **add-node** — fn-np-py-gh-owner
+- [1792795332] **add-node** — fn-np-py-git-identity
+- [1792795333] **add-node** — fn-np-py-remote-selection
+- [1792795334] **add-node** — fn-np-py-remote-preflight
+- [1792795334] **add-node** — fn-np-py-scan-public
+- [1792795335] **add-node** — fn-np-log-ts
+- [1792795336] **add-node** — fn-np-wizard-remote-selection
+- [1792795336] **add-node** — fn-prereq-warn-newproj
+- [1792795344] **retire** — fn-main@v1 -> v2; reason: main gains the newproj|new branch (prereq_warn_newproj, then exec $BASH lib/newproj/newproj.sh) and the config branch (config_main).; perturbed: ['fb-bin-macacfs-impl']
+- [1792795345] **change-done** — t5
+- [1792795360] **change** — walk -> settle
+- [1792795360] **absorb** — cli-arg-dispatch absorbed the parent revision (unchanged)
+- [1792795360] **absorb** — fb-bin-macacfs-impl absorbed the parent revision (unchanged)
+- [1792795360] **absorb** — fb-manifest-tsv-impl absorbed the parent revision (unchanged)
+- [1792795361] **absorb** — fn-main absorbed the parent revision (unchanged)
+- [1792795361] **absorb** — fn-parse-dry-run absorbed the parent revision (unchanged)
+- [1792795361] **absorb** — fn-require-darwin absorbed the parent revision (unchanged)
+- [1792795361] **absorb** — fn-resolve-dir absorbed the parent revision (unchanged)
+- [1792795361] **absorb** — fn-usage absorbed the parent revision (unchanged)
+- [1792795362] **absorb** — manifest-store absorbed the parent revision (unchanged)
+- [1792795362] **absorb** — method-dispatch absorbed the parent revision (unchanged)
+- [1792795362] **absorb** — prereq-autoinstaller absorbed the parent revision (unchanged)
+- [1792795362] **absorb** — shell-setup-dispatch absorbed the parent revision (unchanged)
+- [1792795362] **absorb** — shell-spec-store absorbed the parent revision (unchanged)
+- [1792795363] **absorb** — signature-repair absorbed the parent revision (unchanged)
+- [1792795363] **absorb** — tool-catalog absorbed the parent revision (unchanged)
+- [1792795383] **realized** — lf-cli-dispatch: realized-at None -> v0.15.0
+- [1792795384] **realized** — lf-config-verb: realized-at None -> v0.15.0
+- [1792795384] **realized** — lf-newproj-classic-remote: realized-at None -> v0.15.0
+- [1792795385] **realized** — lf-newproj-dispatch: realized-at None -> v0.15.0
+- [1792795386] **realized** — lf-newproj-projects-dir: realized-at None -> v0.15.0
+- [1792795386] **realized** — lf-newproj-remote-preflight: realized-at None -> v0.15.0
+- [1792795387] **realized** — lf-newproj-remote-publish: realized-at None -> v0.15.0
+- [1792795387] **realized** — lf-newproj-remote-selection: realized-at None -> v0.15.0
+- [1792795388] **realized** — lf-newproj-reviewed-remote: realized-at None -> v0.15.0
+- [1792795388] **realized** — lf-newproj-wizard-remote: realized-at None -> v0.15.0
+- [1792795389] **prove** — fb-lib-prereq-impl: cmd exit 0
+- [1792795390] **prove** — fb-share-zshrc-mac-impl: cmd exit 0
+- [1792795391] **prove** — fb-manifest-tsv-impl: cmd exit 0
+- [1792795437] **change** — settle -> idle (finalized)
