@@ -32,9 +32,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "subsystems",
+  "succeeds": "argv-and-usage@v1",
   "uid": "n0029",
-  "version": 1
+  "version": 2
 }
 -->
 
-The argument-parsing and usage/help subsystem of bin/macacfs: main() matches the first argv word against the closed verb set (install, update, self-update, schedule, list, version, help, plus the internal _tick fired by the LaunchAgent), parse_dry_run splits --dry-run from tool selectors, schedule accepts only --install/--uninstall/--status, and any unknown verb or schedule option prints a clear error (plus usage for verbs) and exits 2; usage() renders the help text with the live catalog count. It [[cli-arg-dispatch|serves|The argv dispatcher routes each verb using the closed verb+flag set this subsystem parses and validates.]] and is [[argv-code|accomplished-by|The main/usage/parse_dry_run functions in bin/macacfs realize this parser and help text.]].
+The argument-parsing and usage/help subsystem of bin/macacfs: main() matches the first argv word against the closed verb set (install, update, self-update, schedule, newproj/new, config, list, version, help, plus the internal _tick fired by the LaunchAgent), parse_dry_run splits --dry-run from tool selectors, schedule accepts only --install/--uninstall/--status, newproj and config pass their remaining argv to their own modules, and any unknown verb or schedule option prints a clear error (plus usage for verbs) and exits 2; usage() renders the help text with the live catalog count. It [[cli-arg-dispatch|serves|The argv dispatcher routes each verb using the closed verb+flag set this subsystem parses and validates.]] and is [[argv-code|accomplished-by|The main/usage/parse_dry_run functions in bin/macacfs realize this parser and help text.]].

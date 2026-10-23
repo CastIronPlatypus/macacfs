@@ -24,6 +24,11 @@
       "dst": "req-public-github-repo",
       "reason": "The README frames macacfs plainly as a mini-ACFS-for-Mac with only its few functions, which the public-repo requirement explicitly calls for.",
       "type": "validated-by"
+    },
+    {
+      "dst": "newproj-experience",
+      "reason": "README documents the newproj experience",
+      "type": "serves"
     }
   ],
   "is_bead": true,
@@ -32,9 +37,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-readme@v1",
   "uid": "n0047",
-  "version": 1
+  "version": 2
 }
 -->
 
-The README.md file boundary: the public repo's front page, framing macacfs plainly as a mini ACFS for Mac that does only its few things, and documenting the one-liner install, install/update/self-update/schedule usage, the terminal environment, per-method tool installs, prerequisites, the weekly schedule and failure escalation, and the file layout. Bead (docs). It [[selfupdate-code|serves|The README documents the public-repo distribution and one-liner bootstrap that self-update rests on.]] and is [[fb-readme-impl|accomplished-by|The actual README.md delivers this documentation bead.]].
+The README.md file boundary: the public repo's front page, framing macacfs plainly as a mini ACFS for Mac that does only its few things, and documenting the one-liner install, install/update/self-update/schedule usage, newproj (three modes, flags, GitHub/ru, settings, plan integrity check) and config, the terminal environment, per-method tool installs, prerequisites, the weekly schedule and failure escalation, and the file layout. Bead (docs). It [[selfupdate-code|serves|The README documents the public-repo distribution and one-liner bootstrap that self-update rests on.]] and is [[fb-readme-impl|accomplished-by|The actual README.md delivers this documentation bead.]].

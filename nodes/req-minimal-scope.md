@@ -1,6 +1,6 @@
 <!--stratified-action
 {
-  "accept": "Feature set maps only to those items; none of the ACFS VPS machinery is present.",
+  "accept": "Feature set maps only to those items (install/update/self-update/schedule/newproj/config); none of the ACFS VPS machinery is present.",
   "created": 1789593648,
   "disc_stamp": {
     "disc-inline-link-prose": "1.0.0",
@@ -18,9 +18,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "intent",
+  "succeeds": "req-minimal-scope@v1",
   "uid": "n0091",
-  "version": 1
+  "version": 2
 }
 -->
 
-Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).
+Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration) and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).

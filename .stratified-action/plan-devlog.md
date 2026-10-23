@@ -690,3 +690,112 @@
 - [1792290244] **change-done** — s2
 - [1792290244] **change** — walk -> settle
 - [1792290254] **change** — settle -> idle (finalized)
+- [1792789881] **begin** — change
+- [1792789899] **comprehend** — modify=['argv-and-usage', 'argv-code', 'fb-version-file', 'req-minimal-scope', 'scope-containment']; attach=['fb-bin-macacfs', 'fb-share-zshrc-mac', 'macacfs-command-surface', 'shell-setup-experience']; impact=47 node(s)
+- [1792789900] **change** — comprehend -> plan
+- [1792789917] **set-changeplan** — 9 step(s)
+- [1792789917] **change** — plan -> walk
+- [1792789924] **change-done** — s1 — req-minimal-scope forbids features beyond install/update/schedule/self-update; validated by cli-arg-dispatch and fb-bin-macacfs; supersede in s2 to admit newproj+config, existing step plan covers it
+- [1792789931] **retire** — req-minimal-scope@v1 -> v2; reason: User explicitly requested macacfs newproj (project bootstrap ported from acfs) plus persistent settings; scope widens to admit them; perturbed: []
+- [1792789942] **edit-requirement** — req-minimal-scope: {'text': 'Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).', 'kind': 'constraint', 'accept': 'Feature set maps only to those items; none of the ACFS VPS machinery is present.'} -> {'text': 'Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration) and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).', 'kind': 'constraint', 'accept': 'Feature set maps only to those items (install/update/self-update/schedule/newproj/config); none of the ACFS VPS machinery is present.'}
+- [1792789942] **add-requirement** — req-newproj-acfs-parity [functional] macacfs newproj (alias new) provides all three acfs newproj modes - classic CLI, interactive TUI wizard (-i), and the Python reviewed bootstrap (--plan/--apply/--guided) - with every acfs flag, adapted for macOS (Homebrew bash, BSD find/date, macOS project-dir defaults, mac hints).
+- [1792789943] **add-requirement** — req-newproj-github-optional [functional] newproj can optionally create a GitHub repo for the new project via the gh CLI under the authenticated account (--github[=private|public], bare means private; --no-github overrides), set origin, and push the initial commit; gh missing/unauthenticated/name-taken are detected before anything local is created.
+- [1792789943] **add-requirement** — req-newproj-ru-optional [functional] newproj can optionally register the project's GitHub repo with ru (ru add --from-cwd, --private for private repos) via --ru / --no-ru; ru missing or no GitHub remote is detected before creation.
+- [1792789943] **add-requirement** — req-persistent-settings [functional] macacfs keeps a persistent key=value settings file (XDG config dir) managed by 'macacfs config get|set|unset|list', with newproj.github, newproj.ru and newproj.projects_dir honored by all newproj modes; precedence flag > env > config > default.
+- [1792789944] **add-requirement** — req-newproj-never-deletes [invariant] newproj never deletes files, directories, or remote repos on failure; it reports what was left and how to resume.
+- [1792789944] **change-done** — s2
+- [1792789953] **retire** — macacfs-command-surface@v3 -> v4; reason: Command surface gains newproj (alias new) and config verbs; perturbed: ['cli-arg-dispatch', 'method-dispatch', 'shell-setup-dispatch']
+- [1792789968] **link-requirement** — macacfs-command-surface -> req-persistent-settings
+- [1792789969] **add-node** — newproj-experience
+- [1792789969] **link-requirement** — newproj-experience -> req-newproj-github-optional
+- [1792789969] **link-requirement** — newproj-experience -> req-newproj-ru-optional
+- [1792789969] **link-requirement** — newproj-experience -> req-newproj-never-deletes
+- [1792789970] **add-node** — config-surface
+- [1792789970] **change-done** — s3
+- [1792790001] **retire** — scope-containment@v1 -> v2; reason: Scope now admits newproj and config by explicit user request; perturbed: ['macacfs-command-surface']
+- [1792790001] **add-node** — remote-preflight-before-mutation
+- [1792790002] **link-requirement** — remote-preflight-before-mutation -> req-newproj-ru-optional
+- [1792790002] **link-requirement** — remote-preflight-before-mutation -> req-newproj-never-deletes
+- [1792790002] **add-node** — bash4-on-macos
+- [1792790003] **add-node** — projects-dir-resolution
+- [1792790003] **link-requirement** — projects-dir-resolution -> req-persistent-settings
+- [1792790003] **add-node** — plan-review-covers-remote-effects
+- [1792790004] **link-requirement** — plan-review-covers-remote-effects -> req-newproj-ru-optional
+- [1792790004] **change-done** — s4
+- [1792790009] **add-edge** — newproj-experience -serves-> remote-preflight-before-mutation
+- [1792790010] **add-edge** — newproj-experience -serves-> bash4-on-macos
+- [1792790010] **add-edge** — newproj-experience -serves-> projects-dir-resolution
+- [1792790010] **add-edge** — newproj-experience -serves-> plan-review-covers-remote-effects
+- [1792790010] **add-edge** — config-surface -relates-to-> newproj-experience
+- [1792790031] **retire** — cli-arg-dispatch@v1 -> v2; reason: verb set gains newproj/new and config; perturbed: ['argv-and-usage']
+- [1792790032] **add-node** — newproj-dispatch
+- [1792790032] **add-edge** — newproj-experience -accomplished-by-> newproj-dispatch
+- [1792790032] **add-node** — project-scaffold
+- [1792790033] **add-edge** — newproj-experience -accomplished-by-> project-scaffold
+- [1792790033] **add-node** — interactive-wizard
+- [1792790033] **add-edge** — newproj-experience -accomplished-by-> interactive-wizard
+- [1792790034] **add-node** — reviewed-bootstrap
+- [1792790034] **add-edge** — newproj-experience -accomplished-by-> reviewed-bootstrap
+- [1792790034] **add-node** — github-publish
+- [1792790034] **add-edge** — newproj-experience -accomplished-by-> github-publish
+- [1792790035] **add-node** — ru-register
+- [1792790035] **add-edge** — newproj-experience -accomplished-by-> ru-register
+- [1792790035] **add-node** — settings-store
+- [1792790036] **add-edge** — config-surface -accomplished-by-> settings-store
+- [1792790036] **add-edge** — cli-arg-dispatch -accomplished-by-> newproj-dispatch
+- [1792790037] **link-requirement** — github-publish -> req-newproj-never-deletes
+- [1792790037] **link-requirement** — newproj-dispatch -> req-persistent-settings
+- [1792790037] **change-done** — s5
+- [1792790050] **retire** — argv-and-usage@v1 -> v2; reason: verb set gains newproj/new and config; perturbed: ['argv-code']
+- [1792790051] **add-node** — newproj-engine
+- [1792790051] **add-edge** — newproj-dispatch -accomplished-by-> newproj-engine
+- [1792790051] **add-edge** — newproj-engine -serves-> project-scaffold
+- [1792790051] **add-edge** — project-scaffold -accomplished-by-> newproj-engine
+- [1792790052] **add-edge** — newproj-engine -serves-> interactive-wizard
+- [1792790052] **add-edge** — interactive-wizard -accomplished-by-> newproj-engine
+- [1792790052] **add-edge** — newproj-engine -serves-> reviewed-bootstrap
+- [1792790052] **add-edge** — reviewed-bootstrap -accomplished-by-> newproj-engine
+- [1792790053] **add-node** — remote-integration
+- [1792790053] **add-edge** — github-publish -accomplished-by-> remote-integration
+- [1792790053] **add-edge** — remote-integration -serves-> ru-register
+- [1792790054] **add-edge** — ru-register -accomplished-by-> remote-integration
+- [1792790054] **link-requirement** — remote-integration -> req-newproj-ru-optional
+- [1792790054] **add-node** — config-store
+- [1792790055] **add-edge** — settings-store -accomplished-by-> config-store
+- [1792790055] **add-edge** — config-store -serves-> newproj-dispatch
+- [1792790055] **add-edge** — newproj-dispatch -accomplished-by-> config-store
+- [1792790055] **change-done** — s6
+- [1792790072] **retire** — argv-code@v1 -> v2; reason: main() gains newproj/new and config branches; perturbed: ['fb-bin-macacfs']
+- [1792790073] **add-node** — newproj-cli-code
+- [1792790073] **add-edge** — newproj-engine -accomplished-by-> newproj-cli-code
+- [1792790074] **add-node** — wizard-screens-code
+- [1792790074] **add-edge** — newproj-engine -accomplished-by-> wizard-screens-code
+- [1792790074] **add-node** — bootstrap-py-code
+- [1792790075] **add-edge** — newproj-engine -accomplished-by-> bootstrap-py-code
+- [1792790075] **link-requirement** — bootstrap-py-code -> req-newproj-github-optional
+- [1792790075] **add-node** — remote-code
+- [1792790075] **add-edge** — remote-integration -accomplished-by-> remote-code
+- [1792790076] **add-node** — config-code
+- [1792790076] **add-edge** — config-store -accomplished-by-> config-code
+- [1792790076] **change-done** — s7
+- [1792790094] **retire** — fb-bin-macacfs@v1 -> v2; reason: entrypoint dispatches newproj/new and config, sources lib/config.sh; perturbed: ['fb-bin-macacfs-impl']
+- [1792790094] **add-node** — fb-lib-newproj-core
+- [1792790095] **add-edge** — newproj-cli-code -accomplished-by-> fb-lib-newproj-core
+- [1792790095] **add-edge** — fb-lib-newproj-core -serves-> bootstrap-py-code
+- [1792790095] **add-edge** — bootstrap-py-code -accomplished-by-> fb-lib-newproj-core
+- [1792790096] **add-node** — fb-lib-newproj-screens
+- [1792790096] **add-edge** — wizard-screens-code -accomplished-by-> fb-lib-newproj-screens
+- [1792790096] **add-edge** — fb-lib-newproj-screens -relates-to-> fb-lib-newproj-core
+- [1792790097] **add-node** — fb-lib-newproj-remote
+- [1792790097] **add-edge** — remote-code -accomplished-by-> fb-lib-newproj-remote
+- [1792790097] **add-node** — fb-lib-config
+- [1792790097] **add-edge** — config-code -accomplished-by-> fb-lib-config
+- [1792790098] **add-node** — fb-share-completions
+- [1792790098] **add-edge** — argv-code -accomplished-by-> fb-share-completions
+- [1792790099] **add-node** — fb-tests-newproj
+- [1792790099] **add-edge** — newproj-engine -accomplished-by-> fb-tests-newproj
+- [1792790099] **link-requirement** — fb-tests-newproj -> req-newproj-github-optional
+- [1792790099] **retire** — fb-readme@v1 -> v2; reason: README documents newproj and config; perturbed: ['fb-readme-impl']
+- [1792790100] **add-edge** — fb-readme -serves-> newproj-experience
+- [1792790100] **add-edge** — newproj-experience -relates-to-> fb-readme
+- [1792790100] **change-done** — s8

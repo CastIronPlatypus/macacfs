@@ -24,6 +24,11 @@
       "dst": "req-minimal-scope",
       "reason": "The argv parser code hard-codes the small verb set and errors on unknown input, enforcing in code that macacfs exposes only install, update, self-update, and schedule.",
       "type": "validated-by"
+    },
+    {
+      "dst": "fb-share-completions",
+      "reason": "Completions mirror the verbs and flags the argv code accepts.",
+      "type": "accomplished-by"
     }
   ],
   "is_bead": false,
@@ -32,9 +37,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "components",
+  "succeeds": "argv-code@v1",
   "uid": "n0036",
-  "version": 1
+  "version": 2
 }
 -->
 
-Code unit in bin/macacfs that parses argv and dispatches: main() case-matches the verb (install, update, self-update, schedule, list, version, help, internal _tick), calls require_darwin for the mutating verbs, uses parse_dry_run to separate --dry-run from TOOL selectors, routes to run_tools / shell_run / selfupdate_run / schedule_* / catalog_rows, and rejects unknown verbs or schedule options on stderr with exit 2; usage() prints the help text. It [[argv-and-usage|serves|This code realizes the argv/usage subsystem's closed verb+flag parsing and help text.]] and is [[fb-bin-macacfs|accomplished-by|The main, usage and parse_dry_run functions live in the bin/macacfs file.]]. The internal _tick verb [[fb-plist-template|couples-with|The plist template hard-codes _tick as the second ProgramArguments string, so renaming the verb here silently breaks every scheduled run.]].
+Code unit in bin/macacfs that parses argv and dispatches: main() case-matches the verb (install, update, self-update, schedule, newproj/new, config, list, version, help, internal _tick), calls require_darwin for the mutating verbs, uses parse_dry_run to separate --dry-run from TOOL selectors, routes to run_tools / shell_run / selfupdate_run / schedule_* / catalog_rows, execs lib/newproj/newproj.sh under the running Homebrew bash for newproj, calls config_main for config, and rejects unknown verbs or schedule options on stderr with exit 2; usage() prints the help text. It [[argv-and-usage|serves|This code realizes the argv/usage subsystem's closed verb+flag parsing and help text.]] and is [[fb-bin-macacfs|accomplished-by|The main, usage and parse_dry_run functions live in the bin/macacfs file.]]. The internal _tick verb [[fb-plist-template|couples-with|The plist template hard-codes _tick as the second ProgramArguments string, so renaming the verb here silently breaks every scheduled run.]].

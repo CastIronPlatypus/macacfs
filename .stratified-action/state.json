@@ -1,10 +1,1460 @@
 {
-  "dirty": [],
+  "dirty": [
+    "argv-and-usage",
+    "argv-code",
+    "cli-arg-dispatch",
+    "fb-bin-macacfs",
+    "fb-bin-macacfs-impl",
+    "fb-readme-impl",
+    "macacfs-command-surface",
+    "method-dispatch",
+    "shell-setup-dispatch"
+  ],
   "grants": [],
   "processed": [
     "scope-containment"
   ],
   "runs": {
+    "jeff-np-1": {
+      "change": {
+        "comprehend": {
+          "anchors": [
+            "argv-and-usage",
+            "argv-code",
+            "fb-version-file",
+            "req-minimal-scope",
+            "scope-containment"
+          ],
+          "attach_points": [
+            "fb-bin-macacfs",
+            "fb-share-zshrc-mac",
+            "macacfs-command-surface",
+            "shell-setup-experience"
+          ],
+          "candidates": [
+            "fb-share-zshrc-mac-impl",
+            "terminal-environment-parity",
+            "fb-share-zshrc-mac"
+          ],
+          "desc": "Add a newproj verb (port of acfs newproj: classic CLI, interactive wizard, Python reviewed bootstrap) plus a config verb with persistent settings, and optional GitHub repo creation via gh and ru registration; amend minimal-scope requirement and command surface",
+          "done": true,
+          "impact": [
+            "argv-and-usage",
+            "argv-code",
+            "cli-arg-dispatch",
+            "fb-bin-macacfs",
+            "fb-bin-macacfs-impl",
+            "fb-lib-hooks",
+            "fb-lib-methods",
+            "fb-lib-methods-impl",
+            "fb-lib-prereq",
+            "fb-lib-prereq-impl",
+            "fb-lib-report",
+            "fb-lib-report-impl",
+            "fb-lib-shell",
+            "fb-lib-shell-impl",
+            "fb-share-atuin-guard",
+            "fb-share-atuin-guard-impl",
+            "fb-share-powerlevel-preset",
+            "fb-share-powerlevel-preset-impl",
+            "fb-share-shell-bundle",
+            "fb-share-shell-bundle-impl",
+            "fb-share-tmux-conf",
+            "fb-share-tmux-conf-impl",
+            "fb-share-zshrc-mac",
+            "fb-share-zshrc-mac-impl",
+            "fb-version-file",
+            "homebrew-and-toolchains",
+            "install-method-functions",
+            "isolated-runner-reporter",
+            "macacfs-command-surface",
+            "method-dispatch",
+            "method-fns-code",
+            "prereq-autoinstaller",
+            "reporter-code",
+            "req-minimal-scope",
+            "result-capture-and-summary",
+            "scope-containment",
+            "shell-assets-code",
+            "shell-environment-catalog",
+            "shell-fns-code",
+            "shell-setup-dispatch",
+            "shell-setup-experience",
+            "shell-setup-functions",
+            "shell-spec-store",
+            "terminal-environment-parity",
+            "tool-install-hooks",
+            "toolchain-helpers-code",
+            "update-equals-reinstall-idempotency"
+          ],
+          "round": 4,
+          "stage": "attach"
+        },
+        "current": "s9",
+        "cursor": 8,
+        "done": [
+          "s1",
+          "s2",
+          "s3",
+          "s4",
+          "s5",
+          "s6",
+          "s7",
+          "s8"
+        ],
+        "graph_fp": {
+          "argv-and-usage": "a725607bf522193e959e5a621a628f0648424bcf",
+          "argv-code": "f8a38da564e3e79edd7f1e4a0b1465f490c3783b",
+          "bootstrap-and-self-update": "ae692454aaeab2a624cb8ab9b88d12a0d139478f",
+          "catalog-loader-code": "bafbe14f0837ff83cbddd8fa31e9a17768e1555c",
+          "cli-arg-dispatch": "d0525693974cb1adeb32e1d2a8e3294bb98a6cf3",
+          "darwin-truth-per-tool": "06ca34d761f9ba33d4ddc0414a4cc08d5101968c",
+          "dry-run-without-sideeffects": "e8484bfaba0f41c1d436ffb478424c0ebeed1880",
+          "fail-loud-aggregation": "4bdd0c591df17d7e73e4ebe4f65132fa4c13d594",
+          "fb-bin-macacfs": "f959eb5c70929785b336a9ac54445d48dd549865",
+          "fb-bin-macacfs-impl": "2ccafec491abfa1de578f19b36e092d76d71003c",
+          "fb-install-sh": "d4448b7308f4eda4145f4779f10a35aa288e7b5c",
+          "fb-install-sh-impl": "13f7f4e3116aff1a8021d62272a164e9e2f09833",
+          "fb-lib-catalog": "27ff1b55a85e5cd2cb4c5ba06cd04bee6a6e41ad",
+          "fb-lib-catalog-impl": "d6a8055f20cc73af835a1215776fa131da966526",
+          "fb-lib-codesign": "ff724fed848fa5fe7c3c34a79fb165df216c1161",
+          "fb-lib-hooks": "dd25892dcbca6397f46fa9c1f81ac8fd3971a502",
+          "fb-lib-methods": "e0a7791bdac5318069be0199fa1e9371b0e71ebf",
+          "fb-lib-methods-impl": "ed43b0a75c5ff840fdd90d5a908fe11b6139a1e8",
+          "fb-lib-prereq": "bf19e0a534291c38ed058ed3dbfe4092c821d523",
+          "fb-lib-prereq-impl": "c2fb7e6db50894bffd80f1bd51fa8946702b1590",
+          "fb-lib-report": "d290cca6fe8d33818d24672ed7c6997459145400",
+          "fb-lib-report-impl": "72b78fd558123eaf71160197ef0be53b1c4788cd",
+          "fb-lib-schedule": "04ad42e1b2d158ebce2ab38157639c46b110b7df",
+          "fb-lib-schedule-impl": "1ce8a2224b90a6cbdc5ad342a7ef02f10428531a",
+          "fb-lib-selfupdate": "3655ec3055969787c497a1e83ed9758902b7c4a6",
+          "fb-lib-selfupdate-impl": "66de0b8dbf289a5ab66d3abbc153c13812e96bb4",
+          "fb-lib-shell": "259de2a6c3646ba6cefe7bba1ba0a00b88266023",
+          "fb-lib-shell-impl": "d605e2d76f1e9ed7afcb1a6a98dd573aea260225",
+          "fb-manifest-tsv": "96772df42c607d114281bac7b4acab8449a2d01d",
+          "fb-manifest-tsv-impl": "3e8729bd1cedbf809a24ed8afc9063d4575fde4f",
+          "fb-plist-template": "98651527ebde5054336ad0bc8881032d8387abac",
+          "fb-plist-template-impl": "2b3fe4a4c6206c15330017b39b9f8c55536357ad",
+          "fb-readme": "41387b6c77370137c71cb85793f3af0ef44c22c4",
+          "fb-readme-impl": "2c06af99a87ba2ad34a650e3d10d0fa996e64e6a",
+          "fb-share-atuin-guard": "c0a5b7ac7c20cf2e5cc1ab48aef61f826d30cafd",
+          "fb-share-atuin-guard-impl": "17fce238ce0954b69819f31f25a90ffaeb6ca9c8",
+          "fb-share-powerlevel-preset": "92d893dbda2a25ffdd60346acb7646203f0450a4",
+          "fb-share-powerlevel-preset-impl": "bed8f6d8b97c70ac4bc3605b8e902bf57adbe8b9",
+          "fb-share-shell-bundle": "c9ea5c406a69c1d51cfa71ad5d005f44e01bad70",
+          "fb-share-shell-bundle-impl": "1788710399bb2fe5bef15bf8f320f865ae56e1ac",
+          "fb-share-tmux-conf": "bb65ee4b1936d6aa9838c60db9563949aaf7cd36",
+          "fb-share-tmux-conf-impl": "de030ce65fd5f3765e2731908a336d58a06768f6",
+          "fb-share-zshrc-mac": "cae2abe400bb00e75d972cd0575a30bc0730dfc1",
+          "fb-share-zshrc-mac-impl": "9b99f8b764a5f2fdbd3ff74805949c3c8f8cee2a",
+          "fb-version-file": "fbc0b87cb1fb3a75c37333cdb1c8dcb0a867d3bc",
+          "heterogeneous-install-methods": "99d10f7ccf80505e79c391e2550de5ee60a835e5",
+          "homebrew-and-toolchains": "a039c19e4974d6a4d36c485c4ce8d903b89d061f",
+          "install-experience": "2da2185ae17038ba015e2b3c2644f1385914d5e1",
+          "install-method-functions": "04e313dafbc0732d5e6fb7964332cfe6a1e7bd83",
+          "invalid-upstream-signatures": "94ddbc6e31ca3f8239d61f4c19099ec272cc3112",
+          "isolated-runner-reporter": "972e2d974d5e454a1e43cf9f3b86513e7f7df318",
+          "launchd-scheduler-state": "b2da06eea7e49e3887447847dbbf862ffafca260",
+          "macacfs-command-surface": "01263e68220006fac81bff1b7295b3c2fb45ae00",
+          "manifest-store": "a3facd91634b803d1d8157ef031bb267cbf1b814",
+          "method-dispatch": "b230c38041afe6c93ff03cd160b39e8d925e5385",
+          "method-fns-code": "f93ae606766ace17ad51fef05a43225aedb5fef0",
+          "never-start-services": "dc0ac1836ae3d5919fd66c24c0a8faf7f1384262",
+          "prereq-autoinstaller": "1a5875ffe57e16179d9dfe41b1ca2441d2cd5dce",
+          "repo-fetch-replace": "3196fd19279a50e4c83b4f9fb07200600bec0f1d",
+          "reporter-code": "055e7ccfb89e3a846e0d6ba5bac8a39f91da8ec0",
+          "req-dry-run-no-side-effects": "8f247f737ec4414315f190cd32ff890be256235a",
+          "req-fail-loud": "748b26edae775ccf956943f52ce82dc88cd7f1ea",
+          "req-failure-retry-escalation": "aa5d7957761954f8254409a89239f7df1f93154c",
+          "req-install-whole-suite": "f477ebbcc66f7ba9778581256e71ba2113c3af00",
+          "req-macos-only": "dbf6376784842ab4d790dfc43efad3ee8e920c87",
+          "req-manual-cli-update": "575dcd3b6ac338f5b48de968db61af83e2cccd0e",
+          "req-minimal-scope": "87023b30717604a682e666c2a0b819ea29c32767",
+          "req-never-start-servers": "4f8db8abb6245ef89c6d14d53db658bd6c07e3d9",
+          "req-no-cross-tool-side-installs": "f1911f73be2c3e0ba8f30a14e5066fed0a39eb55",
+          "req-per-tool-method-dispatch": "063f402875da105e5690979c961313fd36903fee",
+          "req-prefer-homebrew": "89b7b30f369a7fbece103ce2a4147c9e5408ed38",
+          "req-prerequisite-autoinstall": "79cc527e05c97a363bf7e36622175a93c02ca9b7",
+          "req-public-github-repo": "bc498c3e98a9d1ec049a4ffcb12f24440d6f1098",
+          "req-runnable-signatures": "5452272bd3a5faf0f1a6fff74f739f264e681a33",
+          "req-scheduled-run-tracking": "f5e3e29ab16e59af9c40f53b7f84321262e3b28c",
+          "req-self-update": "d5c69172f3499bae0b273352ecd39b8029849b09",
+          "req-terminal-environment-parity": "1073aa5d3977afb5efa81d308144b3d751ae84b5",
+          "req-version-bump-per-commit": "6ef65e750af85197163b65ad443088a3be806750",
+          "req-weekly-update-launchagent": "c164ce0491c17679dd7139a6cb9975b28addeddd",
+          "result-capture-and-summary": "46dce0f9e494c37d534970d4f2180c34c3a974e9",
+          "run-report-surface": "aded9d224b10dd5462fb79d92ae056f8d257959d",
+          "schedule-state-and-plist": "155187dc9545a9b970ec86a02ef300172fb79ee5",
+          "scheduled-update-behavior": "208aaa645b4c8597825fb5f26d00beb72c8fae93",
+          "scheduler-code": "a4a487be4673d2eaad3d434aa163c6c29603f616",
+          "scope-containment": "c6ead960b53b9bb20fdfb6b3ddf20c0d3ec35b1b",
+          "self-update-bootstrap": "9ba1938004b36a2169075a22cf1e9f27e3a4e55a",
+          "self-update-capability": "67a8cfdc808d0ba7e3f8330713c99fab461d7898",
+          "selfupdate-code": "bbcdd2be88978f5350cd83afd4b61cabda821470",
+          "shell-assets-code": "a7cc4b25b8075d9fc42dd2316eb263c615ed02cc",
+          "shell-environment-catalog": "41c5eb64939827be322df8a6e34a5c06f9c2d8d1",
+          "shell-fns-code": "2138cf94bd5ed3673d8e86b2cf9ac52e7b9ab540",
+          "shell-setup-dispatch": "5ced7c5df1f6da782b3c00cdd4042cfd664a706c",
+          "shell-setup-experience": "ce0239c3c220a9b03a8b5c450d1ddad41ba12ce9",
+          "shell-setup-functions": "b7a6c7873fb09d341d219d76ddf353fa73f077fa",
+          "shell-spec-store": "8a10d203a6fdefc9a7bd23ae7c2edeb52b94ee0d",
+          "signature-repair": "2a63c548fad05bfa80e9677ba52ea6d5a0ddced0",
+          "signature-repair-code": "ab0c2ccebd5eb8b6fa6d63b334d66c7378526f98",
+          "signature-verify-and-resign": "f163a968c3aec25e3f6c4732e6c9fec898ceaffa",
+          "stateful-schedule-escalation": "d33322dd9c6f53c0208648f3f21ee13621647faa",
+          "terminal-environment-parity": "d360b811517ab9e7966a6f18a0cb0232913a2bb0",
+          "tool-catalog": "014e1bf8321affb810beb5a3b74d59fca779c9be",
+          "tool-install-hooks": "665807a9f5495917e7ab8287a70686c37246df96",
+          "toolchain-helpers-code": "5a9b59deaa034e755cfa014f4542510734b190bc",
+          "toolchain-prereqs-and-order": "b751c5a23d576f46666baf9a462dad875acb2114",
+          "update-equals-reinstall-idempotency": "55c0ff5c110726d6d0292afe39c8f655ab648dc2"
+        },
+        "impact_set": [
+          "argv-and-usage",
+          "argv-code",
+          "cli-arg-dispatch",
+          "fb-bin-macacfs",
+          "fb-bin-macacfs-impl",
+          "fb-lib-hooks",
+          "fb-lib-methods",
+          "fb-lib-methods-impl",
+          "fb-lib-prereq",
+          "fb-lib-prereq-impl",
+          "fb-lib-report",
+          "fb-lib-report-impl",
+          "fb-lib-shell",
+          "fb-lib-shell-impl",
+          "fb-share-atuin-guard",
+          "fb-share-atuin-guard-impl",
+          "fb-share-powerlevel-preset",
+          "fb-share-powerlevel-preset-impl",
+          "fb-share-shell-bundle",
+          "fb-share-shell-bundle-impl",
+          "fb-share-tmux-conf",
+          "fb-share-tmux-conf-impl",
+          "fb-share-zshrc-mac",
+          "fb-share-zshrc-mac-impl",
+          "fb-version-file",
+          "homebrew-and-toolchains",
+          "install-method-functions",
+          "isolated-runner-reporter",
+          "macacfs-command-surface",
+          "method-dispatch",
+          "method-fns-code",
+          "prereq-autoinstaller",
+          "reporter-code",
+          "req-minimal-scope",
+          "result-capture-and-summary",
+          "scope-containment",
+          "shell-assets-code",
+          "shell-environment-catalog",
+          "shell-fns-code",
+          "shell-setup-dispatch",
+          "shell-setup-experience",
+          "shell-setup-functions",
+          "shell-spec-store",
+          "terminal-environment-parity",
+          "tool-install-hooks",
+          "toolchain-helpers-code",
+          "update-equals-reinstall-idempotency"
+        ],
+        "notes": {
+          "s1": "req-minimal-scope forbids features beyond install/update/schedule/self-update; validated by cli-arg-dispatch and fb-bin-macacfs; supersede in s2 to admit newproj+config, existing step plan covers it"
+        },
+        "phase": 2,
+        "plan": {
+          "steps": [
+            {
+              "aim": "confirm what the scope requirement forbids and who validates against it",
+              "id": "s1",
+              "kind": "investigate",
+              "target": "req-minimal-scope"
+            },
+            {
+              "aim": "intent: amend scope and add newproj/config/gh/ru requirements",
+              "expect": [
+                "req-minimal-scope@v2",
+                "req-newproj-acfs-parity",
+                "req-newproj-github-optional",
+                "req-newproj-ru-optional",
+                "req-persistent-settings",
+                "req-newproj-never-deletes"
+              ],
+              "id": "s2",
+              "kind": "develop"
+            },
+            {
+              "aim": "surface: newproj and config experiences; widen command surface",
+              "expect": [
+                "newproj-experience",
+                "config-surface",
+                "macacfs-command-surface@v4"
+              ],
+              "id": "s3",
+              "kind": "develop"
+            },
+            {
+              "aim": "problem: the hard problems of the port",
+              "expect": [
+                "scope-containment@v2",
+                "remote-preflight-before-mutation",
+                "bash4-on-macos",
+                "projects-dir-resolution",
+                "plan-review-covers-remote-effects"
+              ],
+              "id": "s4",
+              "kind": "develop"
+            },
+            {
+              "aim": "capabilities",
+              "expect": [
+                "cli-arg-dispatch@v2",
+                "newproj-dispatch",
+                "project-scaffold",
+                "interactive-wizard",
+                "reviewed-bootstrap",
+                "github-publish",
+                "ru-register",
+                "settings-store"
+              ],
+              "id": "s5",
+              "kind": "develop"
+            },
+            {
+              "aim": "subsystems",
+              "expect": [
+                "argv-and-usage@v2",
+                "newproj-engine",
+                "remote-integration",
+                "config-store"
+              ],
+              "id": "s6",
+              "kind": "develop"
+            },
+            {
+              "aim": "components",
+              "expect": [
+                "argv-code@v2",
+                "newproj-cli-code",
+                "wizard-screens-code",
+                "bootstrap-py-code",
+                "remote-code",
+                "config-code"
+              ],
+              "id": "s7",
+              "kind": "develop"
+            },
+            {
+              "aim": "file-boundaries",
+              "expect": [
+                "fb-bin-macacfs@v2",
+                "fb-lib-newproj-core",
+                "fb-lib-newproj-screens",
+                "fb-lib-newproj-remote",
+                "fb-lib-config",
+                "fb-share-completions",
+                "fb-tests-newproj",
+                "fb-readme@v2"
+              ],
+              "id": "s8",
+              "kind": "develop"
+            },
+            {
+              "aim": "implementation: build the code and bind impl nodes",
+              "expect": [
+                "fb-bin-macacfs-impl@v7",
+                "fb-lib-newproj-core-impl",
+                "fb-lib-newproj-screens-impl",
+                "fb-lib-newproj-remote-impl",
+                "fb-lib-config-impl",
+                "fb-share-completions-impl",
+                "fb-tests-newproj-impl",
+                "fb-readme-impl@v6",
+                "fb-version-file@v4"
+              ],
+              "id": "s9",
+              "kind": "develop"
+            }
+          ]
+        }
+      },
+      "ledger": [
+        {
+          "at": 1792789931,
+          "detail": {
+            "dependents": [],
+            "name": "req-minimal-scope",
+            "prev_status": "drafting",
+            "uid": "n0091",
+            "ver": 1
+          },
+          "id": "op1",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1792789942,
+          "detail": {
+            "id": "req-minimal-scope",
+            "now": {
+              "accept": "Feature set maps only to those items (install/update/self-update/schedule/newproj/config); none of the ACFS VPS machinery is present.",
+              "kind": "constraint",
+              "text": "Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration) and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+            },
+            "prev": {
+              "accept": "Feature set maps only to those items; none of the ACFS VPS machinery is present.",
+              "kind": "constraint",
+              "text": "Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, and self-update. Not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+            },
+            "uid": "n0091"
+          },
+          "id": "op2",
+          "op": "edit-requirement",
+          "step": "s2"
+        },
+        {
+          "at": 1792789942,
+          "detail": {
+            "name": "req-newproj-acfs-parity",
+            "uid": "n0090"
+          },
+          "id": "op3",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792789943,
+          "detail": {
+            "name": "req-newproj-github-optional",
+            "uid": "n0091"
+          },
+          "id": "op4",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792789943,
+          "detail": {
+            "name": "req-newproj-ru-optional",
+            "uid": "n0092"
+          },
+          "id": "op5",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792789943,
+          "detail": {
+            "name": "req-persistent-settings",
+            "uid": "n0093"
+          },
+          "id": "op6",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792789944,
+          "detail": {
+            "name": "req-newproj-never-deletes",
+            "uid": "n0094"
+          },
+          "id": "op7",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792789953,
+          "detail": {
+            "dependents": [
+              "scope-containment",
+              "update-equals-reinstall-idempotency"
+            ],
+            "name": "macacfs-command-surface",
+            "prev_status": "drafting",
+            "uid": "n0011",
+            "ver": 3
+          },
+          "id": "op8",
+          "op": "retire-succeed",
+          "step": "s3"
+        },
+        {
+          "at": 1792789968,
+          "detail": {
+            "dst": "req-persistent-settings",
+            "src": "macacfs-command-surface",
+            "type": "validated-by"
+          },
+          "id": "op9",
+          "op": "add-edge",
+          "step": "s3"
+        },
+        {
+          "at": 1792789969,
+          "detail": {
+            "name": "newproj-experience",
+            "uid": "n0095"
+          },
+          "id": "op10",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792789969,
+          "detail": {
+            "dst": "req-newproj-github-optional",
+            "src": "newproj-experience",
+            "type": "validated-by"
+          },
+          "id": "op11",
+          "op": "add-edge",
+          "step": "s3"
+        },
+        {
+          "at": 1792789969,
+          "detail": {
+            "dst": "req-newproj-ru-optional",
+            "src": "newproj-experience",
+            "type": "validated-by"
+          },
+          "id": "op12",
+          "op": "add-edge",
+          "step": "s3"
+        },
+        {
+          "at": 1792789969,
+          "detail": {
+            "dst": "req-newproj-never-deletes",
+            "src": "newproj-experience",
+            "type": "validated-by"
+          },
+          "id": "op13",
+          "op": "add-edge",
+          "step": "s3"
+        },
+        {
+          "at": 1792789970,
+          "detail": {
+            "name": "config-surface",
+            "uid": "n0096"
+          },
+          "id": "op14",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792790001,
+          "detail": {
+            "dependents": [],
+            "name": "scope-containment",
+            "prev_status": "drafting",
+            "uid": "n0010",
+            "ver": 1
+          },
+          "id": "op15",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792790001,
+          "detail": {
+            "name": "remote-preflight-before-mutation",
+            "uid": "n0097"
+          },
+          "id": "op16",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1792790002,
+          "detail": {
+            "dst": "req-newproj-ru-optional",
+            "src": "remote-preflight-before-mutation",
+            "type": "validated-by"
+          },
+          "id": "op17",
+          "op": "add-edge",
+          "step": "s4"
+        },
+        {
+          "at": 1792790002,
+          "detail": {
+            "dst": "req-newproj-never-deletes",
+            "src": "remote-preflight-before-mutation",
+            "type": "validated-by"
+          },
+          "id": "op18",
+          "op": "add-edge",
+          "step": "s4"
+        },
+        {
+          "at": 1792790002,
+          "detail": {
+            "name": "bash4-on-macos",
+            "uid": "n0098"
+          },
+          "id": "op19",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1792790003,
+          "detail": {
+            "name": "projects-dir-resolution",
+            "uid": "n0099"
+          },
+          "id": "op20",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1792790003,
+          "detail": {
+            "dst": "req-persistent-settings",
+            "src": "projects-dir-resolution",
+            "type": "validated-by"
+          },
+          "id": "op21",
+          "op": "add-edge",
+          "step": "s4"
+        },
+        {
+          "at": 1792790003,
+          "detail": {
+            "name": "plan-review-covers-remote-effects",
+            "uid": "n0100"
+          },
+          "id": "op22",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1792790004,
+          "detail": {
+            "dst": "req-newproj-ru-optional",
+            "src": "plan-review-covers-remote-effects",
+            "type": "validated-by"
+          },
+          "id": "op23",
+          "op": "add-edge",
+          "step": "s4"
+        },
+        {
+          "at": 1792790009,
+          "detail": {
+            "dst": "remote-preflight-before-mutation",
+            "src": "newproj-experience",
+            "type": "serves"
+          },
+          "id": "op24",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790010,
+          "detail": {
+            "dst": "bash4-on-macos",
+            "src": "newproj-experience",
+            "type": "serves"
+          },
+          "id": "op25",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790010,
+          "detail": {
+            "dst": "projects-dir-resolution",
+            "src": "newproj-experience",
+            "type": "serves"
+          },
+          "id": "op26",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790010,
+          "detail": {
+            "dst": "plan-review-covers-remote-effects",
+            "src": "newproj-experience",
+            "type": "serves"
+          },
+          "id": "op27",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790010,
+          "detail": {
+            "dst": "newproj-experience",
+            "src": "config-surface",
+            "type": "relates-to"
+          },
+          "id": "op28",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790031,
+          "detail": {
+            "dependents": [
+              "macacfs-command-surface"
+            ],
+            "name": "cli-arg-dispatch",
+            "prev_status": "drafting",
+            "uid": "n0022",
+            "ver": 1
+          },
+          "id": "op29",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1792790032,
+          "detail": {
+            "name": "newproj-dispatch",
+            "uid": "n0101"
+          },
+          "id": "op30",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790032,
+          "detail": {
+            "dst": "newproj-dispatch",
+            "src": "newproj-experience",
+            "type": "accomplished-by"
+          },
+          "id": "op31",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790032,
+          "detail": {
+            "name": "project-scaffold",
+            "uid": "n0102"
+          },
+          "id": "op32",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790033,
+          "detail": {
+            "dst": "project-scaffold",
+            "src": "newproj-experience",
+            "type": "accomplished-by"
+          },
+          "id": "op33",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790033,
+          "detail": {
+            "name": "interactive-wizard",
+            "uid": "n0103"
+          },
+          "id": "op34",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790033,
+          "detail": {
+            "dst": "interactive-wizard",
+            "src": "newproj-experience",
+            "type": "accomplished-by"
+          },
+          "id": "op35",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790034,
+          "detail": {
+            "name": "reviewed-bootstrap",
+            "uid": "n0104"
+          },
+          "id": "op36",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790034,
+          "detail": {
+            "dst": "reviewed-bootstrap",
+            "src": "newproj-experience",
+            "type": "accomplished-by"
+          },
+          "id": "op37",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790034,
+          "detail": {
+            "name": "github-publish",
+            "uid": "n0105"
+          },
+          "id": "op38",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790034,
+          "detail": {
+            "dst": "github-publish",
+            "src": "newproj-experience",
+            "type": "accomplished-by"
+          },
+          "id": "op39",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790035,
+          "detail": {
+            "name": "ru-register",
+            "uid": "n0106"
+          },
+          "id": "op40",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790035,
+          "detail": {
+            "dst": "ru-register",
+            "src": "newproj-experience",
+            "type": "accomplished-by"
+          },
+          "id": "op41",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790035,
+          "detail": {
+            "name": "settings-store",
+            "uid": "n0107"
+          },
+          "id": "op42",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792790036,
+          "detail": {
+            "dst": "settings-store",
+            "src": "config-surface",
+            "type": "accomplished-by"
+          },
+          "id": "op43",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790036,
+          "detail": {
+            "dst": "newproj-dispatch",
+            "src": "cli-arg-dispatch",
+            "type": "accomplished-by"
+          },
+          "id": "op44",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790036,
+          "detail": {
+            "dst": "cli-arg-dispatch",
+            "src": "newproj-dispatch",
+            "type": "serves"
+          },
+          "id": "op45",
+          "op": "edge-reason",
+          "step": "s5"
+        },
+        {
+          "at": 1792790037,
+          "detail": {
+            "dst": "req-newproj-never-deletes",
+            "src": "github-publish",
+            "type": "validated-by"
+          },
+          "id": "op46",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790037,
+          "detail": {
+            "dst": "req-persistent-settings",
+            "src": "newproj-dispatch",
+            "type": "validated-by"
+          },
+          "id": "op47",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792790050,
+          "detail": {
+            "dependents": [
+              "cli-arg-dispatch"
+            ],
+            "name": "argv-and-usage",
+            "prev_status": "drafting",
+            "uid": "n0029",
+            "ver": 1
+          },
+          "id": "op48",
+          "op": "retire-succeed",
+          "step": "s6"
+        },
+        {
+          "at": 1792790051,
+          "detail": {
+            "name": "newproj-engine",
+            "uid": "n0108"
+          },
+          "id": "op49",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1792790051,
+          "detail": {
+            "dst": "newproj-engine",
+            "src": "newproj-dispatch",
+            "type": "accomplished-by"
+          },
+          "id": "op50",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790051,
+          "detail": {
+            "dst": "project-scaffold",
+            "src": "newproj-engine",
+            "type": "serves"
+          },
+          "id": "op51",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790051,
+          "detail": {
+            "dst": "newproj-engine",
+            "src": "project-scaffold",
+            "type": "accomplished-by"
+          },
+          "id": "op52",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790052,
+          "detail": {
+            "dst": "interactive-wizard",
+            "src": "newproj-engine",
+            "type": "serves"
+          },
+          "id": "op53",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790052,
+          "detail": {
+            "dst": "newproj-engine",
+            "src": "interactive-wizard",
+            "type": "accomplished-by"
+          },
+          "id": "op54",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790052,
+          "detail": {
+            "dst": "reviewed-bootstrap",
+            "src": "newproj-engine",
+            "type": "serves"
+          },
+          "id": "op55",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790052,
+          "detail": {
+            "dst": "newproj-engine",
+            "src": "reviewed-bootstrap",
+            "type": "accomplished-by"
+          },
+          "id": "op56",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790053,
+          "detail": {
+            "name": "remote-integration",
+            "uid": "n0109"
+          },
+          "id": "op57",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1792790053,
+          "detail": {
+            "dst": "remote-integration",
+            "src": "github-publish",
+            "type": "accomplished-by"
+          },
+          "id": "op58",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790053,
+          "detail": {
+            "dst": "ru-register",
+            "src": "remote-integration",
+            "type": "serves"
+          },
+          "id": "op59",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790054,
+          "detail": {
+            "dst": "remote-integration",
+            "src": "ru-register",
+            "type": "accomplished-by"
+          },
+          "id": "op60",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790054,
+          "detail": {
+            "dst": "req-newproj-ru-optional",
+            "src": "remote-integration",
+            "type": "validated-by"
+          },
+          "id": "op61",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790054,
+          "detail": {
+            "name": "config-store",
+            "uid": "n0110"
+          },
+          "id": "op62",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1792790055,
+          "detail": {
+            "dst": "config-store",
+            "src": "settings-store",
+            "type": "accomplished-by"
+          },
+          "id": "op63",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790055,
+          "detail": {
+            "dst": "newproj-dispatch",
+            "src": "config-store",
+            "type": "serves"
+          },
+          "id": "op64",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790055,
+          "detail": {
+            "dst": "config-store",
+            "src": "newproj-dispatch",
+            "type": "accomplished-by"
+          },
+          "id": "op65",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1792790072,
+          "detail": {
+            "dependents": [
+              "argv-and-usage"
+            ],
+            "name": "argv-code",
+            "prev_status": "drafting",
+            "uid": "n0036",
+            "ver": 1
+          },
+          "id": "op66",
+          "op": "retire-succeed",
+          "step": "s7"
+        },
+        {
+          "at": 1792790073,
+          "detail": {
+            "name": "newproj-cli-code",
+            "uid": "n0111"
+          },
+          "id": "op67",
+          "op": "add-node",
+          "step": "s7"
+        },
+        {
+          "at": 1792790073,
+          "detail": {
+            "dst": "newproj-cli-code",
+            "src": "newproj-engine",
+            "type": "accomplished-by"
+          },
+          "id": "op68",
+          "op": "add-edge",
+          "step": "s7"
+        },
+        {
+          "at": 1792790074,
+          "detail": {
+            "name": "wizard-screens-code",
+            "uid": "n0112"
+          },
+          "id": "op69",
+          "op": "add-node",
+          "step": "s7"
+        },
+        {
+          "at": 1792790074,
+          "detail": {
+            "dst": "wizard-screens-code",
+            "src": "newproj-engine",
+            "type": "accomplished-by"
+          },
+          "id": "op70",
+          "op": "add-edge",
+          "step": "s7"
+        },
+        {
+          "at": 1792790074,
+          "detail": {
+            "name": "bootstrap-py-code",
+            "uid": "n0113"
+          },
+          "id": "op71",
+          "op": "add-node",
+          "step": "s7"
+        },
+        {
+          "at": 1792790075,
+          "detail": {
+            "dst": "bootstrap-py-code",
+            "src": "newproj-engine",
+            "type": "accomplished-by"
+          },
+          "id": "op72",
+          "op": "add-edge",
+          "step": "s7"
+        },
+        {
+          "at": 1792790075,
+          "detail": {
+            "dst": "req-newproj-github-optional",
+            "src": "bootstrap-py-code",
+            "type": "validated-by"
+          },
+          "id": "op73",
+          "op": "add-edge",
+          "step": "s7"
+        },
+        {
+          "at": 1792790075,
+          "detail": {
+            "name": "remote-code",
+            "uid": "n0114"
+          },
+          "id": "op74",
+          "op": "add-node",
+          "step": "s7"
+        },
+        {
+          "at": 1792790075,
+          "detail": {
+            "dst": "remote-code",
+            "src": "remote-integration",
+            "type": "accomplished-by"
+          },
+          "id": "op75",
+          "op": "add-edge",
+          "step": "s7"
+        },
+        {
+          "at": 1792790076,
+          "detail": {
+            "name": "config-code",
+            "uid": "n0115"
+          },
+          "id": "op76",
+          "op": "add-node",
+          "step": "s7"
+        },
+        {
+          "at": 1792790076,
+          "detail": {
+            "dst": "config-code",
+            "src": "config-store",
+            "type": "accomplished-by"
+          },
+          "id": "op77",
+          "op": "add-edge",
+          "step": "s7"
+        },
+        {
+          "at": 1792790094,
+          "detail": {
+            "dependents": [
+              "argv-code"
+            ],
+            "name": "fb-bin-macacfs",
+            "prev_status": "drafting",
+            "uid": "n0037",
+            "ver": 1
+          },
+          "id": "op78",
+          "op": "retire-succeed",
+          "step": "s8"
+        },
+        {
+          "at": 1792790094,
+          "detail": {
+            "name": "fb-lib-newproj-core",
+            "uid": "n0116"
+          },
+          "id": "op79",
+          "op": "add-node",
+          "step": "s8"
+        },
+        {
+          "at": 1792790095,
+          "detail": {
+            "dst": "fb-lib-newproj-core",
+            "src": "newproj-cli-code",
+            "type": "accomplished-by"
+          },
+          "id": "op80",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790095,
+          "detail": {
+            "dst": "bootstrap-py-code",
+            "src": "fb-lib-newproj-core",
+            "type": "serves"
+          },
+          "id": "op81",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790095,
+          "detail": {
+            "dst": "fb-lib-newproj-core",
+            "src": "bootstrap-py-code",
+            "type": "accomplished-by"
+          },
+          "id": "op82",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790096,
+          "detail": {
+            "name": "fb-lib-newproj-screens",
+            "uid": "n0117"
+          },
+          "id": "op83",
+          "op": "add-node",
+          "step": "s8"
+        },
+        {
+          "at": 1792790096,
+          "detail": {
+            "dst": "fb-lib-newproj-screens",
+            "src": "wizard-screens-code",
+            "type": "accomplished-by"
+          },
+          "id": "op84",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790096,
+          "detail": {
+            "dst": "fb-lib-newproj-core",
+            "src": "fb-lib-newproj-screens",
+            "type": "relates-to"
+          },
+          "id": "op85",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790097,
+          "detail": {
+            "name": "fb-lib-newproj-remote",
+            "uid": "n0118"
+          },
+          "id": "op86",
+          "op": "add-node",
+          "step": "s8"
+        },
+        {
+          "at": 1792790097,
+          "detail": {
+            "dst": "fb-lib-newproj-remote",
+            "src": "remote-code",
+            "type": "accomplished-by"
+          },
+          "id": "op87",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790097,
+          "detail": {
+            "name": "fb-lib-config",
+            "uid": "n0119"
+          },
+          "id": "op88",
+          "op": "add-node",
+          "step": "s8"
+        },
+        {
+          "at": 1792790097,
+          "detail": {
+            "dst": "fb-lib-config",
+            "src": "config-code",
+            "type": "accomplished-by"
+          },
+          "id": "op89",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790098,
+          "detail": {
+            "name": "fb-share-completions",
+            "uid": "n0120"
+          },
+          "id": "op90",
+          "op": "add-node",
+          "step": "s8"
+        },
+        {
+          "at": 1792790098,
+          "detail": {
+            "dst": "fb-share-completions",
+            "src": "argv-code",
+            "type": "accomplished-by"
+          },
+          "id": "op91",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790099,
+          "detail": {
+            "name": "fb-tests-newproj",
+            "uid": "n0121"
+          },
+          "id": "op92",
+          "op": "add-node",
+          "step": "s8"
+        },
+        {
+          "at": 1792790099,
+          "detail": {
+            "dst": "fb-tests-newproj",
+            "src": "newproj-engine",
+            "type": "accomplished-by"
+          },
+          "id": "op93",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790099,
+          "detail": {
+            "dst": "req-newproj-github-optional",
+            "src": "fb-tests-newproj",
+            "type": "validated-by"
+          },
+          "id": "op94",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790099,
+          "detail": {
+            "dependents": [
+              "selfupdate-code"
+            ],
+            "name": "fb-readme",
+            "prev_status": "drafting",
+            "uid": "n0047",
+            "ver": 1
+          },
+          "id": "op95",
+          "op": "retire-succeed",
+          "step": "s8"
+        },
+        {
+          "at": 1792790100,
+          "detail": {
+            "dst": "newproj-experience",
+            "src": "fb-readme",
+            "type": "serves"
+          },
+          "id": "op96",
+          "op": "add-edge",
+          "step": "s8"
+        },
+        {
+          "at": 1792790100,
+          "detail": {
+            "dst": "fb-readme",
+            "src": "newproj-experience",
+            "type": "relates-to"
+          },
+          "id": "op97",
+          "op": "add-edge",
+          "step": "s8"
+        }
+      ],
+      "mode": "change"
+    },
     "jeff-sg-shebang-1792274040": {
       "ledger": [
         {
@@ -2476,5 +3926,5 @@
       "mode": null
     }
   },
-  "uid_seq": 89
+  "uid_seq": 121
 }
