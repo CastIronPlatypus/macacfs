@@ -67,7 +67,7 @@ macacfs config get newproj.github
 macacfs config unset newproj.ru
 ```
 
-Settings live in `${XDG_CONFIG_HOME:-~/.config}/macacfs/config`, a flat `key=value` file. Keys and values are validated. Precedence: a command-line flag, then the environment (`MACACFS_NEWPROJ_GITHUB`, `MACACFS_NEWPROJ_RU`, `MACACFS_NEWPROJ_PROJECTS_DIR`), then the file, then off.
+Settings live in `${XDG_CONFIG_HOME:-~/.config}/macacfs/config`, a flat `key=value` file. Keys and values are validated. Precedence: a command-line flag, then the environment (`MACACFS_NEWPROJ_GITHUB`, `MACACFS_NEWPROJ_RU`, `MACACFS_NEWPROJ_PROJECTS_DIR`), then the file, then off. gh keeps its login under `XDG_CONFIG_HOME` too, so if you point `XDG_CONFIG_HOME` somewhere else, also set `GH_CONFIG_DIR=~/.config/gh`. Otherwise newproj will report gh as unauthenticated.
 
 ## Shell completions
 

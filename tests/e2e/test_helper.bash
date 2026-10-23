@@ -92,7 +92,10 @@ setup_e2e_env() {
     # gum-less hosts acfs's e2e ran on. macacfs installs gum, so hide it (and
     # the user's real gh/ru, which would steer the default directory) behind
     # a PATH that links every other command.
-    local shadow="$E2E_TEST_DIR/shadow-bin" d f
+    # Built once per bats run (outside the per-test dir, which teardown removes
+    # while it still needs rm/date from PATH).
+    local shadow="${BATS_RUN_TMPDIR:-${TMPDIR:-/tmp}}/macacfs-e2e-shadow-bin" d f
+    if [[ ! -d "$shadow" ]]; then
     mkdir -p "$shadow"
     local IFS=:
     for d in $PATH; do
@@ -103,6 +106,7 @@ setup_e2e_env() {
         done
     done
     unset IFS
+    fi
     export PATH="$shadow:/usr/bin:/bin"
 
     # Disable CI detection for testing
