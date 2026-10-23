@@ -802,9 +802,9 @@
   "realized_fp": "1792290243:6",
   "status": "drafting",
   "stratum": "file-boundaries",
-  "succeeds": "fb-version-file@v2",
+  "succeeds": "fb-version-file@v3",
   "uid": "n0089",
-  "version": 3
+  "version": 4
 }
 -->
 

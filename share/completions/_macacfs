@@ -1,0 +1,81 @@
+#compdef macacfs
+# zsh completion for macacfs. Realizes: fb-share-completions.
+# On fpath via share/zshrc.mac.zsh (before Oh My Zsh runs compinit).
+
+_macacfs_tools() {
+  local manifest="${MACACFS_HOME:-$HOME/.macacfs}/share/manifest.tsv"
+  [[ -r $manifest ]] || return
+  local -a tools
+  tools=(${(f)"$(grep -vE '^[[:space:]]*(#|$)' $manifest | cut -f3)"})
+  _describe -t tools 'tool' tools
+}
+
+_macacfs_newproj() {
+  _arguments -s \
+    '(-i --interactive)'{-i,--interactive}'[launch the TUI wizard]' \
+    '--no-br[skip beads (br) initialization]' \
+    '--no-claude[skip Claude settings]' \
+    '--no-agents[skip AGENTS.md]' \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '--plan[reviewed bootstrap: print a plan]:project name:' \
+    '--apply[apply a reviewed plan]:plan file:_files -g "*.json"' \
+    '--yes[confirm --apply]' \
+    '--resume[resume an interrupted --apply]' \
+    '--guided[guided reviewed bootstrap]' \
+    '--directory[project directory]:directory:_directories' \
+    '--stack[starter stack]:stack:(python typescript)' \
+    '--preset[recommended feature preset]' \
+    '--with[features]:features:' \
+    '--beads[add beads]' \
+    '--agent-mail[Agent Mail URL]:url:' \
+    '--agent-mail-token-env[token env var]:name:' \
+    '--agent-mail-clients[clients]:clients:' \
+    '(--no-github --gh-private --gh-public)--github=-[create a GitHub repo]::visibility:(private public)' \
+    '(--github --gh-private --gh-public)--no-github[no GitHub repo]' \
+    '--gh-private[private GitHub repo]' \
+    '--gh-public[public GitHub repo]' \
+    '--github-owner=[GitHub user or org]:owner:' \
+    '(--no-ru)--ru[register with ru]' \
+    '(--ru)--no-ru[do not register with ru]' \
+    '1:project name:' \
+    '2:directory:_directories'
+}
+
+_macacfs() {
+  local -a verbs
+  verbs=(
+    'install:install tools (all, or the named ones)'
+    'update:update tools'
+    'list:list the tool catalog'
+    'newproj:create a new project'
+    'new:create a new project (alias)'
+    'config:persistent settings'
+    'schedule:weekly auto-update LaunchAgent'
+    'self-update:update macacfs itself'
+    'version:print version'
+    'help:show help'
+  )
+  if (( CURRENT == 2 )); then
+    _describe -t verbs 'macacfs command' verbs
+    return
+  fi
+  case ${words[2]} in
+    install|update) _arguments '--dry-run[print, do not run]' '*:tool:_macacfs_tools' ;;
+    newproj|new) shift words; (( CURRENT-- )); _macacfs_newproj ;;
+    config)
+      if (( CURRENT == 3 )); then
+        _values 'subcommand' list get set unset
+      elif (( CURRENT == 4 )); then
+        _values 'key' newproj.github newproj.ru newproj.projects_dir
+      elif (( CURRENT == 5 )) && [[ ${words[3]} == set ]]; then
+        case ${words[4]} in
+          newproj.github) _values 'value' off private public ;;
+          newproj.ru) _values 'value' on off ;;
+          newproj.projects_dir) _directories ;;
+        esac
+      fi ;;
+    schedule) _values 'option' --install --uninstall --status ;;
+  esac
+}
+
+_macacfs "$@"

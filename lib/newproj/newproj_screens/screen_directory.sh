@@ -138,6 +138,11 @@ check_directory_status() {
     # Check parent exists
     local parent
     parent=$(dirname "$resolved")
+    # macacfs: ru-layout folders (<base>/<owner>) are created on demand.
+    if declare -f newproj_layout_parent_creatable >/dev/null 2>&1 && newproj_layout_parent_creatable "$parent"; then
+        echo "WARNING:Will also create $parent (ru layout folder)"
+        return 1
+    fi
     if [[ ! -d "$parent" ]]; then
         echo "ERROR:Parent directory does not exist: $parent"
         return 2

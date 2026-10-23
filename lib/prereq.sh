@@ -102,3 +102,20 @@ prereq_ensure() {
   fi
   return 0
 }
+
+# prereq_warn_newproj — newproj's optional helpers. Never installs and never
+# fails: gh (--github), ru (--ru), br (beads) and python3 >= 3.9 (--plan/
+# --apply/--guided) are each needed only by some newproj paths, which fail
+# loud themselves; this just names what is missing up front.
+prereq_warn_newproj() {
+  local missing="" py ok=0
+  _have gh || missing="$missing gh(brew install gh)"
+  _have ru || missing="$missing ru(macacfs install ru)"
+  _have br || missing="$missing br(macacfs install br)"
+  for py in /opt/homebrew/bin/python3 /usr/local/bin/python3 "$(command -v python3 2>/dev/null)"; do
+    [ -n "$py" ] && [ -x "$py" ] && "$py" -c 'import sys; sys.exit(sys.version_info < (3, 9))' 2>/dev/null && { ok=1; break; }
+  done
+  [ "$ok" = 1 ] || missing="$missing python3>=3.9(brew install python)"
+  [ -z "$missing" ] || printf 'macacfs newproj: note — not found:%s\n' "$missing" >&2
+  return 0
+}

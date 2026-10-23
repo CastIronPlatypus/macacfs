@@ -88,6 +88,23 @@ setup_e2e_env() {
     git config --file "$GIT_CONFIG_GLOBAL" user.name "ACFS E2E"
     git config --file "$GIT_CONFIG_GLOBAL" user.email "acfs-e2e@example.invalid"
 
+    # macacfs: the expect scripts drive the plain read() prompts, as on the
+    # gum-less hosts acfs's e2e ran on. macacfs installs gum, so hide it (and
+    # the user's real gh/ru, which would steer the default directory) behind
+    # a PATH that links every other command.
+    local shadow="$E2E_TEST_DIR/shadow-bin" d f
+    mkdir -p "$shadow"
+    local IFS=:
+    for d in $PATH; do
+        [[ -d "$d" ]] || continue
+        for f in "$d"/*; do
+            case "${f##*/}" in gum|gh|ru) continue ;; esac
+            [[ -x "$f" && ! -e "$shadow/${f##*/}" ]] && ln -s "$f" "$shadow/${f##*/}"
+        done
+    done
+    unset IFS
+    export PATH="$shadow:/usr/bin:/bin"
+
     # Disable CI detection for testing
     unset CI GITHUB_ACTIONS GITLAB_CI JENKINS_URL TRAVIS CIRCLECI
 

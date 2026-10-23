@@ -6,8 +6,9 @@ A tiny macOS companion to [ACFS](https://github.com/Dicklesworthstone/agentic_co
 2. **Sets up the same terminal environment ACFS gives you** — Oh My Zsh, Powerlevel10k, zsh plugins, a Nerd Font, a modern-CLI bundle, atuin/zoxide/lazygit/ast-grep.
 3. **Installs a `launchd` agent that updates everything weekly** (with failure-driven retries).
 4. **Updates the tools — and itself — from a simple `macacfs` CLI.**
+5. **Bootstraps new projects** with `macacfs newproj`, a port of `acfs newproj`, which can also create the GitHub repo and register it with ru. A small settings store (`macacfs config`) holds its defaults.
 
-That's the whole scope. No user provisioning, no OS upgrades, no service orchestration.
+That's the whole scope. It is still not a full ACFS port: no user provisioning, no OS upgrades, no service orchestration, no phase runner.
 
 ## Install
 
@@ -34,6 +35,44 @@ macacfs list               # show the tool catalog
 
 Tools are named by abbreviation (`BR`) or cli (`br`), case-insensitive.
 
+## New projects (`macacfs newproj`, alias `new`)
+
+A port of `acfs newproj` with all three of its modes:
+
+```bash
+macacfs newproj myapp [DIR]          # classic: git, beads, AGENTS.md, Claude settings, .gitignore/.ubsignore
+macacfs newproj myapp --no-br --no-claude --no-agents
+macacfs newproj -i [myapp]           # TUI wizard (gum when installed); Back and Quit work on every screen
+macacfs newproj --plan myapp --preset > plan.json   # reviewed bootstrap: print a deterministic plan
+macacfs newproj --apply plan.json --yes [--resume]  # apply it; --resume continues after an interruption
+macacfs newproj --guided             # the reviewed bootstrap as a guided terminal dialogue
+```
+
+The reviewed bootstrap also takes `--stack python|typescript`, `--with FEATURES`, `--beads` and `--agent-mail URL` (plus `--agent-mail-token-env` and `--agent-mail-clients`). It needs python3 >= 3.9 and prefers Homebrew's python3.
+
+**GitHub and ru (all modes).** Pass `--github[=private|public]` (a bare `--github` means private), `--no-github`, `--github-owner ORG` (default: your gh login), and `--ru` / `--no-ru`. The wizard and `--guided` ask the same questions. Before anything is created, newproj checks that gh is installed and logged in, that the owner resolves, that `OWNER/NAME` is free on GitHub, that ru is installed, and that a git identity exists for the initial commit. `--ru` needs a GitHub remote, so on a new project it needs `--github` as well. newproj then makes the initial commit (it says so), runs `gh repo create OWNER/NAME --private|--public --source=. --remote=origin --push` and `ru add --from-cwd [--private]`, and checks the result with `ru list`. If any step fails, everything local is kept and the manual commands are printed. Nothing is retried automatically and nothing is deleted. In the reviewed bootstrap these steps appear in the plan, which marks network, commit and push as effects, and `--resume` picks them up after an interruption.
+
+**Where projects go.** An explicit `DIR` always wins. Otherwise newproj asks ru (`ru config`) for its `PROJECTS_DIR` and `LAYOUT` and puts the project where ru would: `flat` gives `<dir>/<name>`, `owner-repo` gives `<dir>/<owner>/<name>`, and `full` gives `<dir>/github.com/<owner>/<name>`. `MACACFS_PROJECTS_DIR`, `ACFS_PROJECTS_DIR` or the `newproj.projects_dir` setting override the base directory. Without ru the base falls back to `/data/projects` if it exists, else `~/Projects`.
+
+ntm, tmux and Antigravity (`agy`) features are offered only when those tools are installed.
+
+## Settings (`macacfs config`)
+
+```bash
+macacfs config list                         # every key, its value and where it came from
+macacfs config set newproj.github private   # off | private | public
+macacfs config set newproj.ru on            # on | off
+macacfs config set newproj.projects_dir ~/code
+macacfs config get newproj.github
+macacfs config unset newproj.ru
+```
+
+Settings live in `${XDG_CONFIG_HOME:-~/.config}/macacfs/config`, a flat `key=value` file. Keys and values are validated. Precedence: a command-line flag, then the environment (`MACACFS_NEWPROJ_GITHUB`, `MACACFS_NEWPROJ_RU`, `MACACFS_NEWPROJ_PROJECTS_DIR`), then the file, then off.
+
+## Shell completions
+
+zsh completion is on `fpath` automatically through the managed zshrc. For bash, add `source ~/.macacfs/share/completions/macacfs.bash` to your `~/.bashrc`.
+
 ## Terminal environment (part of `macacfs install`)
 
 A full `macacfs install` also reproduces the terminal setup ACFS installs, adapted for macOS + Homebrew (this runs automatically as part of install; there is no separate shell command):
@@ -58,6 +97,7 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 | method | how | tools |
 |---|---|---|
 | `brew` | `brew install/upgrade dicklesworthstone/tap/<formula>` | BR, BV, CAAM, CASS, CM, DCG, EE, MAIL, NTM, RCH, RU, SLB, TRU, UBS, XF |
+| `brew` (core) | `brew install/upgrade <formula>` | GUM, GLOW, JQ (used by `newproj`) |
 | `installer-sh` | the tool's own `install.sh` (installs latest) | WA, BRENNER, APR, PT, GIIL, CSCTF, RANO, MDWB, S2P, AADC, FSFS, SBH, CASR, DSR, ASB, PCR, FMD, PI, PFR |
 | `cargo-git` | `cargo install --git … --force` | MS, CAUT, JFP |
 | `skip` | nothing; shown as ⏭ skipped with the reason | SRPS, RP (Linux-only) |
@@ -79,6 +119,8 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 `macacfs` installs missing toolchains for you (best-effort): Homebrew first, then
 Rust, Go, uv, and Node as needed, plus `minisign` (WA's installer verifies releases with it) and `flock` (PCR's installer locks with it). Anything it can't provide is warned about, and
 any tool that truly needs a missing toolchain fails loudly rather than silently.
+
+`macacfs newproj` warns up front when gh, ru, br or python3 >= 3.9 is missing. Each is needed only by some newproj paths, and those paths fail loudly on their own.
 
 > **First-time macOS note:** Homebrew and any compiled tool need the Xcode
 > Command Line Tools license accepted once: `sudo xcodebuild -license accept`
@@ -120,7 +162,11 @@ lib/prereq.sh               toolchain auto-installer
 lib/report.sh              isolated runner + ✅/❌ summary
 lib/schedule.sh            launchd state + cadence + plist writer
 lib/selfupdate.sh          self-update from the repo
-share/manifest.tsv         the 39-tool catalog (source of truth)
+lib/config.sh              settings store + `macacfs config`
+lib/newproj/               newproj (ported from acfs) + newproj_remote.sh (GitHub/ru/projects dir)
+share/completions/         zsh (_macacfs) and bash completions
+tests/                     bats, Python and expect tests (`tests/run.sh`)
+share/manifest.tsv         the 42-tool catalog (source of truth)
 share/shell-bundle.tsv     the modern-CLI Homebrew bundle
 share/zshrc.mac.zsh        the mac-adapted managed zshrc
 share/p10k.zsh             the Powerlevel10k preset

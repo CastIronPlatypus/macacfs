@@ -138,6 +138,15 @@ newproj_default_project_dir() {
     printf '%s/%s\n' "$base" "$name"
 }
 
+# True when PARENT is missing but lies beneath the existing projects base, so
+# newproj_ensure_layout_parent may create it (ru's <base>/<owner> folders).
+newproj_layout_parent_creatable() {
+    local parent="$1" base
+    [[ -d "$parent" ]] && return 1
+    base="$(newproj_projects_dir)"
+    [[ -d "$base" && -w "$base" && "$parent" == "$base"/* ]]
+}
+
 # Create the missing layout folders between an existing projects base and the
 # project's parent (e.g. <base>/<owner>). Never creates the base itself.
 newproj_ensure_layout_parent() {
@@ -222,10 +231,10 @@ newproj_remote_ensure_commit() {
 }
 
 _newproj_manual_hint() {
-    local dir="$1" name="$2" owner="${3:-OWNER}"
+    local dir="$1" name="$2" owner="${3:-OWNER}" with_gh="${4:-yes}"
     echo "  Finish by hand:" >&2
-    if [[ "$NEWPROJ_GITHUB" != off ]]; then
-        echo "    cd $(printf '%q' "$dir")" >&2
+    echo "    cd $(printf '%q' "$dir")" >&2
+    if [[ "$NEWPROJ_GITHUB" != off && "$with_gh" == yes ]]; then
         echo "    gh repo create $owner/$name --$NEWPROJ_GITHUB --source=. --remote=origin --push" >&2
     fi
     if [[ "$NEWPROJ_RU" == on ]]; then
@@ -276,8 +285,7 @@ newproj_remote_finish() {
     [[ -n "${NEWPROJ_GITHUB_URL:-}" ]] && echo "GitHub: $NEWPROJ_GITHUB_URL"
     if ! newproj_remote_ru "$dir" "$name"; then
         echo "Error: ru registration failed (local project and GitHub repo are intact)." >&2
-        local saved="$NEWPROJ_GITHUB"; NEWPROJ_GITHUB=off
-        _newproj_manual_hint "$dir" "$name" "$owner"; NEWPROJ_GITHUB="$saved"
+        _newproj_manual_hint "$dir" "$name" "$owner" no
         return 1
     fi
     [[ "$NEWPROJ_RU" == on ]] && echo "ru: registered $owner/$name"

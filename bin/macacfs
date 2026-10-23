@@ -162,6 +162,7 @@ main() {
       require_darwin
       # The acfs-ported scripts need bash >= 4.3: run them under this same
       # (pinned Homebrew) bash, never /bin/bash 3.2.
+      prereq_warn_newproj
       exec "$BASH" "$MACACFS_HOME/lib/newproj/newproj.sh" "$@"
       ;;
     config)

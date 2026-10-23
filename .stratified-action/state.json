@@ -2928,6 +2928,21 @@
           "id": "op107",
           "op": "add-edge",
           "step": "s8b"
+        },
+        {
+          "at": 1792793964,
+          "detail": {
+            "dependents": [
+              "argv-code"
+            ],
+            "name": "fb-version-file",
+            "prev_status": "drafting",
+            "uid": "n0089",
+            "ver": 3
+          },
+          "id": "op108",
+          "op": "retire-succeed",
+          "step": "s9"
         }
       ],
       "mode": "change"

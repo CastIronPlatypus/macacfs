@@ -34,7 +34,8 @@ proc send_escape {} {
 }
 
 proc send_back {} {
-    send_escape
+    # macacfs: the e2e PATH hides gum, so use the read() prompts' explicit back command.
+    send "<back\r"
 }
 
 proc type_text {text} {

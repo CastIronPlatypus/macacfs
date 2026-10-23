@@ -15,6 +15,9 @@ fi
 # ~/.local/bin FIRST so the atuin agent-safe shim wins over Homebrew's atuin.
 export PATH="$HOME/.local/bin:$PATH"
 
+# --- macacfs completions (before Oh My Zsh runs compinit) -------------------
+fpath=("${MACACFS_HOME:-$HOME/.macacfs}/share/completions" $fpath)
+
 # --- Oh My Zsh + Powerlevel10k ----------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"

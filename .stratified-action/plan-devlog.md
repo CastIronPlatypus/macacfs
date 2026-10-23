@@ -924,3 +924,4 @@
 - [1792790912] **begin** — change
 - [1792790926] **comprehend** — modify=['config-store', 'newproj-dispatch', 'newproj-experience', 'remote-integration', 'req-newproj-acfs-parity', 'req-newproj-ru-optional']; attach=['argv-and-usage', 'fb-bin-macacfs-impl', 'fn-prereq-ensure', 'lf-cli-dispatch', 'lf-prereq-ensure']; impact=170 node(s)
 - [1792790926] **change** — comprehend -> plan
+- [1792793964] **retire** — fb-version-file@v3 -> v4; reason: VERSION 0.3.6 -> 0.3.7 -> ... for the newproj port commits (one bump per commit, ending at 0.4.0).; perturbed: []
