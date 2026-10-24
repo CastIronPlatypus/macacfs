@@ -13,9 +13,10 @@
   "node_type": "impl",
   "status": "drafting",
   "stratum": "function-map",
+  "succeeds": "fn-np-remote-preflight@v1",
   "uid": "n0262",
-  "version": 1
+  "version": 2
 }
 -->
 
-newproj_remote_preflight collects every problem before anything is created: --ru without GitHub, ru missing, no git identity, gh missing, gh unauthenticated, owner unknown, or OWNER/NAME already on GitHub (gh api repos/OWNER/NAME must answer 404). It prints them all and returns 1. Within the flow it [[lf-newproj-remote-preflight|serves|newproj_remote_preflight performs one step of this flow, so the flow breaks if it is removed.]]. It is defined in the file boundary it [[fb-lib-newproj-remote|serves|newproj_remote_preflight must stay defined in fb-lib-newproj-remote's file because its callers source that file.]], and its code is [[fb-lib-newproj-remote-impl|accomplished-by|The concrete code of newproj_remote_preflight lives in the fb-lib-newproj-remote-impl implementation, so a change to it requires re-proving that node.]]. it [[fn-np-remote-active|calls|With neither GitHub nor ru selected there is nothing to check.]]; it [[fn-np-git-identity-ok|calls|The pushed initial commit requires an identity.]]; it [[fn-np-remote-owner|calls|The name-taken probe needs the owner.]].
+newproj_remote_preflight NAME [EXPLICIT_DIR] returns 0 when no remote is selected; otherwise it collects every problem before anything is created: --ru without --github; with --ru and an explicit directory, a directory that is not newproj_default_project_dir (ru's layout path); ru missing; a missing git identity; gh missing or unauthenticated; an owner that does not resolve; OWNER/NAME already existing or uncheckable. It prints them all and returns 1. Within the flow it [[lf-newproj-remote-preflight|serves|It is the preflight.]]. It is defined in [[fb-lib-newproj-remote|serves|Defined in lib/newproj/newproj_remote.sh.]]. It [[fn-np-remote-active|calls|To skip when off.]], [[fn-np-default-project-dir|calls|For ru's path.]], [[fn-np-git-identity-ok|calls|For the identity.]] and [[fn-np-remote-owner|calls|For the owner.]].

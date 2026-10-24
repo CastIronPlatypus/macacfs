@@ -56,9 +56,15 @@ init_creation_steps() {
     STEP_STATUS=()
     STEP_ORDER=()
 
-    # Always required steps
-    STEP_ORDER+=("create_dir")
-    STEP_STATUS["create_dir"]="pending"
+    # macacfs remote-first order: with GitHub, create the repo and clone it
+    # (via ru when enabled) instead of creating an empty directory.
+    if [[ "$(state_get "enable_github")" == "true" ]]; then
+        STEP_ORDER+=("clone_github")
+        STEP_STATUS["clone_github"]="pending"
+    else
+        STEP_ORDER+=("create_dir")
+        STEP_STATUS["create_dir"]="pending"
+    fi
 
     STEP_ORDER+=("init_git")
     STEP_STATUS["init_git"]="pending"
@@ -110,6 +116,7 @@ init_creation_steps() {
 get_step_name() {
     local step="$1"
     case "$step" in
+        clone_github) echo "Creating GitHub repo and cloning it" ;;
         create_dir) echo "Creating project directory" ;;
         init_git) echo "Initializing Git repository" ;;
         create_readme) echo "Creating README.md" ;;
@@ -118,7 +125,7 @@ get_step_name() {
         init_br) echo "Initializing Beads tracking" ;;
         create_claude) echo "Creating Claude Code settings" ;;
         create_ubsignore) echo "Creating .ubsignore" ;;
-        publish_github) echo "Creating GitHub repo and pushing" ;;
+        publish_github) echo "Committing and pushing to GitHub" ;;
         register_ru) echo "Registering with ru" ;;
         finalize) echo "Finalizing project" ;;
         *) echo "$step" ;;
@@ -246,6 +253,25 @@ execute_step() {
     update_step "$step" "running"
 
     case "$step" in
+        clone_github)
+            newproj_wizard_remote_selection
+            if newproj_remote_clone "$project_name" "$project_dir" >/dev/null 2>"$NEWPROJ_REMOTE_ERR" \
+                && newproj_is_fresh_clone "$NEWPROJ_CLONE_DIR"; then
+                # ru decides the path; every later step works inside the clone.
+                if [[ "$NEWPROJ_CLONE_DIR" != "$project_dir" ]]; then
+                    project_dir="$NEWPROJ_CLONE_DIR"
+                    state_set "project_dir" "$project_dir"
+                    CREATION_PROJECT_DIR="$project_dir"
+                    WIZARD_PROJECT_ROOT="$project_dir"
+                fi
+                update_step "$step" "success"
+                return 0
+            fi
+            newproj_tty_printf '%s\n' "$(cat "$NEWPROJ_REMOTE_ERR" 2>/dev/null)"
+            update_step "$step" "error"
+            return 1
+            ;;
+
         create_dir)
             # macacfs: create missing ru-layout folders (<base>/<owner>) first.
             if declare -f newproj_ensure_layout_parent >/dev/null 2>&1; then
@@ -496,7 +522,7 @@ run_creation() {
         if [[ "$(state_get "enable_github")" == "true" || "$(state_get "enable_ru")" == "true" ]]; then
             newproj_wizard_remote_selection
             local preflight_out=""
-            if ! preflight_out=$(newproj_remote_preflight "$(state_get "project_name")" 2>&1); then
+            if ! preflight_out=$(newproj_remote_preflight "$(state_get "project_name")" "$project_dir" 2>&1); then
                 newproj_tty_printf '%s\n' "$preflight_out" 'Go back to Features to change the GitHub/ru selection.'
                 return 1
             fi

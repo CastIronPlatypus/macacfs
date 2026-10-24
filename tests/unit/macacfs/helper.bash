@@ -15,8 +15,15 @@ case "$1 $2" in
   "auth status") [ "${FAKE_GH:-ok}" = unauth ] && { echo "not logged in" >&2; exit 1; }; exit 0 ;;
   "api user") echo fakeuser; exit 0 ;;
   "repo create")
+    # Remote-first: OWNER/NAME [--private|--public] creates an empty bare repo.
+    # (With --source=. it also pushes, for projects created before remote-first.)
     [ "${FAKE_GH:-ok}" = createfail ] && { echo "HTTP 500" >&2; exit 1; }
-    git init -q --bare "$T/remote.git" && git remote add origin "$T/remote.git" && git push -q -u origin HEAD; exit $? ;;
+    bare="$T/remotes/$3.git"; mkdir -p "$(dirname "$bare")"; git init -q --bare "$bare" || exit 1
+    case " $* " in *" --source=. "*) git remote add origin "$bare" && git push -q -u origin HEAD; exit $? ;; esac
+    exit 0 ;;
+  "repo clone")
+    [ "${FAKE_GH:-ok}" = clonefail ] && { echo "clone failed" >&2; exit 1; }
+    git clone -q "$T/remotes/$3.git" "$4" 2>/dev/null; exit $? ;;
 esac
 if [ "$1" = api ]; then
   [ "${FAKE_GH:-ok}" = taken ] && { echo '{"full_name":"x"}'; exit 0; }
@@ -31,8 +38,25 @@ echo "ru $*" >> "$T/ru.log"
 case "$1" in
   config) { echo "Configuration (resolved):"; echo "  PROJECTS_DIR=${FAKE_RU_DIR:-$T/projects}"; echo "  LAYOUT=${FAKE_RU_LAYOUT:-flat}"; } >&2; exit 0 ;;
   add) [ "${FAKE_RU:-ok}" = addfail ] && { echo "ru: add failed" >&2; exit 1; }
-       r="$(git remote get-url origin)"; echo "fakeuser/$(basename "$PWD")" >> "$T/ru.repos"; exit 0 ;;
-  list) printf '{"data":{"repos":['; sed 's/.*/{"repo":"&"},/' "$T/ru.repos" 2>/dev/null | tr -d '\n'; printf '{}]}}\n'; exit 0 ;;
+       if [ "$2" = --from-cwd ]; then repo="fakeuser/$(basename "$PWD")"; else repo="$2"; fi
+       echo "$repo" >> "$T/ru.repos"; exit 0 ;;
+  sync) # sync OWNER/NAME --clone-only: clone into ru's layout path
+       [ "${FAKE_RU:-ok}" = syncfail ] && { echo "ru: sync failed" >&2; exit 1; }
+       repo="$2"; base="${FAKE_RU_DIR:-$T/projects}"
+       case "${FAKE_RU_LAYOUT:-flat}" in
+         flat) dest="$base/${repo#*/}" ;; owner-repo) dest="$base/$repo" ;; full) dest="$base/github.com/$repo" ;;
+       esac
+       mkdir -p "$(dirname "$dest")"; git clone -q "$T/remotes/$repo.git" "$dest" 2>/dev/null; exit $? ;;
+  list) # --json: repo + the path its layout gives it
+       base="${FAKE_RU_DIR:-$T/projects}"
+       printf '{"data":{"repos":['
+       while read -r repo; do
+         case "${FAKE_RU_LAYOUT:-flat}" in
+           flat) p="$base/${repo#*/}" ;; owner-repo) p="$base/$repo" ;; full) p="$base/github.com/$repo" ;;
+         esac
+         printf '{"repo":"%s","path":"%s"},' "$repo" "$p"
+       done < <(cat "$T/ru.repos" 2>/dev/null)
+       printf '{}]}}\n'; exit 0 ;;
 esac
 exit 0
 RU

@@ -13,9 +13,10 @@
   "node_type": "impl",
   "status": "drafting",
   "stratum": "function-map",
+  "succeeds": "fn-np-remote-ru@v1",
   "uid": "n0267",
-  "version": 1
+  "version": 2
 }
 -->
 
-newproj_remote_ru runs 'ru add --from-cwd --non-interactive' (plus --private for a private repo) from the project, then requires OWNER/NAME in 'ru list --json'. Within the flow it [[lf-newproj-remote-publish|serves|newproj_remote_ru performs one step of this flow, so the flow breaks if it is removed.]]. It is defined in the file boundary it [[fb-lib-newproj-remote|serves|newproj_remote_ru must stay defined in fb-lib-newproj-remote's file because its callers source that file.]], and its code is [[fb-lib-newproj-remote-impl|accomplished-by|The concrete code of newproj_remote_ru lives in the fb-lib-newproj-remote-impl implementation, so a change to it requires re-proving that node.]]. it [[fn-np-remote-owner|calls|The ru list check looks for OWNER/NAME.]].
+newproj_remote_ru DIR NAME returns at once unless ru is selected or when _newproj_ru_listed shows OWNER/NAME already registered (the remote-first clone registers it); otherwise it runs ru add --from-cwd --non-interactive [--private] in DIR and requires ru list --json to show the repo. Within the flow it [[lf-newproj-remote-publish|serves|It confirms or performs the registration.]]. It is defined in [[fb-lib-newproj-remote|serves|Defined in lib/newproj/newproj_remote.sh.]]. It [[fn-np-remote-owner|calls|For the owner.]] and [[fn-np-ru-listed|calls|To skip when already registered.]].

@@ -38,9 +38,10 @@
   "node_type": "unclassified",
   "status": "drafting",
   "stratum": "subsystems",
+  "succeeds": "remote-integration@v1",
   "uid": "n0109",
-  "version": 1
+  "version": 2
 }
 -->
 
-The remote-integration subsystem: shell functions shared by all newproj modes that resolve the GitHub/ru selection from flags and settings, preflight gh and ru, compute the owner-nested default directory, ensure an initial commit, run gh repo create and ru add, and print recovery commands on failure; the Python bootstrap calls the same preflight semantics natively. It [[github-publish|serves|The remote integration subsystem realizes GitHub publishing.]]. It serves [[ru-register|serves|The remote integration subsystem realizes ru registration.]]. It is accomplished by [[remote-code|accomplished-by|This code realizes the remote-integration subsystem.]]. It serves [[ru-layout-paths|serves|newproj_remote.sh computes the ru-layout default paths.]].
+The remote-integration subsystem: shell functions shared by all newproj modes that resolve the GitHub/ru selection from flags and settings, preflight gh and ru, compute the owner-nested default directory, create the empty GitHub repo and clone it before scaffolding (ru add plus ru sync into ru's layout path, or gh repo clone), then ensure an initial commit and push it, and print recovery commands on failure; the Python bootstrap calls the same preflight semantics natively. It [[github-publish|serves|The remote integration subsystem realizes GitHub publishing.]]. It serves [[ru-register|serves|The remote integration subsystem realizes ru registration.]]. It is accomplished by [[remote-code|accomplished-by|This code realizes the remote-integration subsystem.]]. It serves [[ru-layout-paths|serves|newproj_remote.sh computes the ru-layout default paths.]].

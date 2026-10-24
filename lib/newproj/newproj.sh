@@ -84,6 +84,15 @@ def default_project_dir(name, owner=None):
     return str(base / name)
 
 
+def require_ru_path(directory, remote, name):
+    """With ru, ru alone decides where the clone goes: the directory must be ru's path."""
+    if remote is not None and remote["ru"]:
+        expected = default_project_dir(name, remote["owner"])
+        if directory != expected:
+            raise ValueError("with --ru, ru clones the repo into its own layout path (" + expected
+                             + "); drop the directory argument, or use --no-ru")
+
+
 def require_parent(raw):
     """Planning writes nothing, so a missing ru-layout folder is reported, not created."""
     if not raw.parent.is_dir():
@@ -508,20 +517,29 @@ def make_plan(name, directory, stack, features, target, agent_mail=None, agent_m
         if remote["github"] == "public":
             scan_public(plan["files"], directory)
         identity = remote["identity"]
+        repo = remote["owner"] + "/" + name
         plan["remote"] = remote
         plan["effects"].update({"network": True, "commit": True, "push": True})
-        plan["commands"] += [
+        # Remote-first order: create the empty GitHub repo, clone it (ru clones
+        # into its own layout path), then write files inside the clone, then
+        # commit and push. The clone provides .git, so there is no git-init.
+        clone = [{"id": "gh-create", "phase": "before-root", "argv": ["gh", "repo", "create", repo, "--" + remote["github"]],
+                  "writes": ["GitHub repository " + repo + " (" + remote["github"] + ")"]}]
+        if remote["ru"]:
+            clone += [{"id": "ru-add", "phase": "before-root", "argv": ["ru", "add", repo, "--non-interactive"]
+                       + (["--private"] if remote["github"] == "private" else []),
+                       "writes": ["ru repository list (~/.config/ru/repos.d)"]},
+                      {"id": "ru-sync", "phase": "before-root", "argv": ["ru", "sync", repo, "--clone-only", "--non-interactive"],
+                       "writes": [directory + " (ru clones it into its layout path)"]}]
+        else:
+            clone.append({"id": "gh-clone", "phase": "before-root", "argv": ["gh", "repo", "clone", repo, directory, "--", "-q"],
+                          "writes": [directory]})
+        plan["commands"] = clone + [c for c in plan["commands"] if c["id"] != "git-init"] + [
             {"id": "git-add", "argv": ["git", "add", "-A", "--", ".", ":(exclude).acfs"], "writes": [".git/"]},
             {"id": "git-commit", "argv": ["git", "-c", "user.name=" + identity["name"], "-c", "user.email=" + identity["email"],
                                           "-c", "commit.gpgsign=false", "commit", "-q", "-m", "Initial commit"], "writes": [".git/"]},
-            {"id": "gh-create", "argv": ["gh", "repo", "create", remote["owner"] + "/" + name, "--" + remote["github"],
-                                         "--source=.", "--remote=origin", "--push"],
-             "writes": ["GitHub repository " + remote["owner"] + "/" + name + " (" + remote["github"] + ")", ".git/config"]},
+            {"id": "git-push", "argv": ["git", "push", "-q", "-u", "origin", "HEAD"], "writes": ["GitHub repository " + repo + " (main)"]},
         ]
-        if remote["ru"]:
-            plan["commands"].append({"id": "ru-add", "argv": ["ru", "add", "--from-cwd", "--non-interactive"]
-                                     + (["--private"] if remote["github"] == "private" else []),
-                                     "writes": ["ru repository list (~/.config/ru/repos.d)"]})
     plan["plan_id"] = digest(canonical(plan))
     return plan
 
@@ -689,6 +707,35 @@ def run_tool(executable, arguments, env, timeout=30):
         raise ValueError(f"{Path(executable).name} failed (exit {code}); partial project retained")
 
 
+def clone_remote(plan):
+    """Remote-first order, before the project root exists: create the empty
+    GitHub repo, then clone it (ru into its layout path, else gh repo clone),
+    and point HEAD at main. ru must clone to the planned directory."""
+    directory = plan["project"]["directory"]
+    repo = plan["remote"]["owner"] + "/" + plan["project"]["name"]
+    if os.path.lexists(directory):
+        raise ValueError(directory + " already exists; the GitHub flow clones into a new directory. Nothing was created")
+    for command in plan["commands"]:
+        if command.get("phase") != "before-root":
+            continue
+        try:
+            run_tool(os.path.abspath(shutil.which(command["argv"][0])), command["argv"][1:], user_env(), timeout=180)
+        except ValueError:
+            done = "nothing was created" if command["id"] == "gh-create" else "the GitHub repo " + repo + " exists"
+            raise ValueError(command["id"] + " failed; " + done + ". Finish by hand, or remove what exists and re-plan") from None
+    if plan["remote"]["ru"]:
+        listing = quiet(["ru", "list", "--json"])
+        paths = [r.get("path") for r in json.loads(listing.stdout).get("data", {}).get("repos", []) if r.get("repo") == repo] if listing else []
+        if paths != [directory]:
+            raise ValueError("ru cloned " + repo + " to " + (paths[0] if paths else "nowhere") + ", not the planned " + directory)
+    if not Path(directory, ".git").is_dir():
+        raise ValueError("clone of " + repo + " did not create " + directory)
+    git = shutil.which("git") or "git"
+    if subprocess.run([git, "-C", directory, "rev-parse", "--verify", "-q", "HEAD"],
+                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode != 0:
+        subprocess.run([git, "-C", directory, "symbolic-ref", "HEAD", "refs/heads/main"], check=True)
+
+
 def apply(plan, resume=False):
     import fcntl
     directory = plan["project"]["directory"]
@@ -711,7 +758,10 @@ def apply(plan, resume=False):
                     continue
                 if not shutil.which(command["argv"][0]):
                     raise ValueError("required executable is missing: " + command["argv"][0])
-            os.mkdir(name, 0o700, dir_fd=parent)
+            if plan.get("remote") is not None:
+                clone_remote(plan)
+            else:
+                os.mkdir(name, 0o700, dir_fd=parent)
             touched = True
         root = os.open(name, DIR_FLAGS, dir_fd=parent)
         fcntl.flock(root, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -737,7 +787,7 @@ def apply(plan, resume=False):
                     exists = check_tool_tree(root, metadata)
                     if feature + "-init" in state["completed_commands"] and not exists:
                         raise ValueError("completed tool metadata is missing: " + metadata)
-        elif os.listdir(root):
+        elif sorted(os.listdir(root)) != ([".git"] if plan.get("remote") is not None else []):
             raise ValueError("project directory is no longer empty; use --resume only for a reviewed interrupted bootstrap")
         # Resolve missing work now; completed commands need not be installed
         # again just to verify or resume file-only work.
@@ -756,7 +806,8 @@ def apply(plan, resume=False):
             os.mkdir(".acfs", 0o700, dir_fd=root)
             state_dir = os.open(".acfs", DIR_FLAGS, dir_fd=root)
             state = {"schema": SCHEMA, "plan_id": plan["plan_id"], "directory_identity": root_identity,
-                     "status": "applying", "completed_files": [], "completed_commands": []}
+                     "status": "applying", "completed_files": [],
+                     "completed_commands": [c["id"] for c in plan["commands"] if c.get("phase") == "before-root"]}
             write_new(state_dir, "bootstrap-state.json", canonical(state) + "\n", 0o600)
             os.fsync(state_dir)
             touched = True
@@ -798,18 +849,13 @@ def apply(plan, resume=False):
                 state["completed_commands"].append(command["id"])
                 save_state(state_dir, state)
                 continue
-            if command["id"] in ("gh-create", "ru-add"):
-                if command["id"] == "gh-create" and subprocess.run(
-                        ["git", "remote", "get-url", "origin"], env=env, stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL).returncode == 0:
-                    # Created before an interruption: only the push may be missing.
-                    run_tool(shutil.which("git") or "git", ["push", "-q", "-u", "origin", "HEAD"], user_env(), timeout=180)
-                else:
-                    try:
-                        run_tool(executable, command["argv"][1:], user_env(), timeout=180)
-                    except ValueError:
-                        raise ValueError(Path(executable).name + " step '" + command["id"] + "' failed; the local project is intact. "
-                                         "Fix the cause (gh auth / network / ru), then rerun with --resume") from None
+            if command["id"] == "git-push":
+                try:
+                    # The user's own git config and credentials, not the scrubbed env.
+                    run_tool(executable, command["argv"][1:], user_env(), timeout=180)
+                except ValueError:
+                    raise ValueError("git push failed; the project and its GitHub repo are intact. "
+                                     "Fix the cause (gh auth / network), then rerun with --resume") from None
                 state["completed_commands"].append(command["id"])
                 save_state(state_dir, state)
                 continue
@@ -909,6 +955,7 @@ def guided():
         raw = Path(answer or default_directory).expanduser()
         require_parent(raw)
         directory = str(raw.parent.resolve(strict=True) / raw.name)
+        require_ru_path(directory, remote, name)
         if any(ord(c) < 32 or ord(c) == 127 for c in directory):
             raise ValueError("project directory cannot contain control characters")
         stack = ask("Starter language: python or typescript", "python", ("python", "typescript"))
@@ -1065,6 +1112,7 @@ def main():
             raw = Path(default_project_dir(args.plan, remote["owner"] if remote else None))
         require_parent(raw)
         directory = str(raw.parent.resolve(strict=True) / raw.name)
+        require_ru_path(directory, remote, args.plan)
         features = (list(PRESET) if args.preset else args.features.split(",")) + (["beads"] if args.beads else [])
         if args.agent_mail and "agent-mail" not in features:
             features.append("agent-mail")
@@ -1230,11 +1278,11 @@ print_help() {
     echo "  --agent-mail-clients claude,codex,gemini  Configure only the selected clients"
     echo ""
     echo "GitHub / ru (all modes; defaults from 'macacfs config' newproj.github / newproj.ru):"
-    echo "  --github[=private|public]  Create OWNER/<name> with gh, set origin, push (bare = private)"
+    echo "  --github[=private|public]  Create OWNER/<name> on GitHub first, clone it, set up inside, push (bare = private)"
     echo "  --gh-private, --gh-public  Same as --github=private / --github=public"
     echo "  --no-github                Do not create a GitHub repo (overrides the setting)"
     echo "  --github-owner=OWNER       Create the repo under this user/org (default: your gh login)"
-    echo "  --ru / --no-ru             Register (or not) the GitHub repo with ru (needs --github)"
+    echo "  --ru / --no-ru             With --github: ru registers and clones it into its layout path (no DIR)"
     echo ""
     echo "CLI mode options:"
     echo "  --no-br         Skip beads (br) initialization"
@@ -1794,17 +1842,37 @@ main() {
     fi
 
     # macacfs: every GitHub/ru precondition is checked before anything is created.
-    if ! newproj_remote_preflight "$project_name"; then
+    local explicit_dir=""
+    [[ "$used_default_dir" == "true" ]] || explicit_dir="$project_dir"
+    if ! newproj_remote_preflight "$project_name" "$explicit_dir"; then
         exit 1
     fi
-    if [[ "$used_default_dir" == "true" ]]; then
+    # macacfs remote-first order: with --github, create the GitHub repo and
+    # clone it (via ru into ru's layout path when --ru) before scaffolding, so
+    # the project is set up inside the clone.
+    local remote_cloned=false
+    if [[ "${NEWPROJ_GITHUB:-off}" != off ]]; then
+        if [[ -e "$project_dir" ]]; then
+            echo -e "${RED}Error: $project_dir already exists; the GitHub flow clones into a new directory${NC}" >&2
+            exit 1
+        fi
+        newproj_remote_clone "$project_name" "$project_dir" || exit 1
+        project_dir="$NEWPROJ_CLONE_DIR"
+        remote_cloned=true
+    elif [[ "$used_default_dir" == "true" ]]; then
         # The ru-layout folders of the default (<base>/<owner>, <base>/github.com/<owner>)
         # may not exist yet; create them only beneath an existing projects base.
         newproj_ensure_layout_parent "$project_dir"
     fi
 
     # Match the wizard flow: allow only a brand-new path or an existing empty directory.
-    if [[ -e "$project_dir" ]]; then
+    # (A fresh clone from the remote-first order holds only .git.)
+    if [[ "$remote_cloned" == "true" ]]; then
+        newproj_is_fresh_clone "$project_dir" || {
+            echo -e "${RED}Error: the clone at $project_dir is not an empty repository${NC}" >&2
+            exit 1
+        }
+    elif [[ -e "$project_dir" ]]; then
         if [[ ! -d "$project_dir" ]]; then
             echo -e "${RED}Error: Path exists but is not a directory: $project_dir${NC}" >&2
             exit 1
@@ -1862,12 +1930,18 @@ main() {
     # From here on a failure leaves a partially-populated project.
     NEWPROJ_PARTIAL_DIR="$project_dir"
 
-    # Initialize git if not already
-    if [[ ! -d .git ]]; then
-        echo -e "${GREEN}Initializing git repository...${NC}"
-        git init -b main
+    # Initialize git if not already (a fresh remote-first clone has .git but
+    # nothing else, so it still gets the README and ignore files).
+    if [[ ! -d .git || "$remote_cloned" == "true" ]]; then
+        if [[ "$remote_cloned" == "true" ]]; then
+            echo -e "${GREEN}Using the clone of ${NEWPROJ_GITHUB_URL:-the GitHub repo}${NC}"
+            CREATED_ITEMS+=("Git repository (cloned from GitHub)")
+        else
+            echo -e "${GREEN}Initializing git repository...${NC}"
+            git init -b main
+            CREATED_ITEMS+=("Git repository")
+        fi
         git_initialized=true
-        CREATED_ITEMS+=("Git repository")
 
         # Create README
         echo "# $project_name" > README.md

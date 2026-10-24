@@ -15,9 +15,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-lib-newproj-remote@v1",
   "uid": "n0118",
-  "version": 1
+  "version": 2
 }
 -->
 
-The lib/newproj/newproj_remote.sh file boundary: gh/ru preflight, publish and register functions sourced by newproj.sh and the progress screen. Bead (code). It [[remote-code|serves|This file holds the remote code.]].
+The lib/newproj/newproj_remote.sh file boundary: gh/ru preflight, the remote-first clone (create the empty repo, ru or gh clone), publish (commit and push) and register functions sourced by newproj.sh and the progress screen. Bead (code). It [[remote-code|serves|This file holds the remote code.]].

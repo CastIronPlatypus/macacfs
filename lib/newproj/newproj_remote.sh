@@ -11,6 +11,14 @@
 # Every remote precondition is checked by newproj_remote_preflight BEFORE the
 # project directory is touched; anything failing afterwards is reported with
 # the manual commands to finish — nothing is ever deleted.
+#
+# Order with --github (remote first):
+#   1. newproj_remote_clone: gh repo create OWNER/NAME (empty), then with --ru
+#      `ru add` + `ru sync --clone-only` so ru clones it wherever its layout
+#      says (the path is read back from `ru list --json`); without --ru,
+#      `gh repo clone` into the default directory.
+#   2. the caller scaffolds inside that clone (git config, beads, AGENTS.md …);
+#   3. newproj_remote_finish: initial commit + push (ru is already registered).
 
 [[ -n "${MACACFS_NEWPROJ_REMOTE_LOADED:-}" ]] && return 0
 MACACFS_NEWPROJ_REMOTE_LOADED=1
@@ -162,15 +170,23 @@ _newproj_git_identity_ok() {
     git config user.name >/dev/null 2>&1 && git config user.email >/dev/null 2>&1
 }
 
-# newproj_remote_preflight NAME -> 0, or 1 after listing every problem.
-# Runs before anything local is created.
+# newproj_remote_preflight NAME [EXPLICIT_DIR] -> 0, or 1 after listing every
+# problem. Runs before anything local or remote is created. EXPLICIT_DIR is the
+# directory the user passed, if any: with --ru, ru alone decides where the
+# clone goes, so an explicit directory must be exactly ru's path.
 newproj_remote_preflight() {
-    local name="$1" owner="" out rc
+    local name="$1" explicit_dir="${2:-}" owner="" out rc ru_dir
     local -a problems=()
     newproj_remote_active || return 0
 
     if [[ "$NEWPROJ_RU" == on && "$NEWPROJ_GITHUB" == off ]]; then
         problems+=("--ru needs a GitHub remote: add --github (or set newproj.github), or use --no-ru")
+    fi
+    if [[ "$NEWPROJ_RU" == on && "$NEWPROJ_GITHUB" != off && -n "$explicit_dir" ]]; then
+        ru_dir="$(newproj_default_project_dir "$name")"
+        if [[ "${explicit_dir%/}" != "$ru_dir" ]]; then
+            problems+=("with --ru, ru clones the repo into its own layout path ($ru_dir); drop the directory argument, or use --no-ru")
+        fi
     fi
     if [[ "$NEWPROJ_RU" == on ]] && ! command -v ru >/dev/null 2>&1; then
         problems+=("ru is not installed — run: macacfs install ru   (or pass --no-ru)")
@@ -221,7 +237,79 @@ newproj_remote_scan_public() {
     return 0
 }
 
-# Make sure HEAD exists (gh --push needs a commit). Commits whatever newproj
+# ru's local path for OWNER/NAME, from `ru list --json` (empty if not listed).
+_newproj_ru_path() {
+    ru list --json 2>/dev/null | python3 -I -c '
+import json, sys
+want = sys.argv[1]
+try:
+    data = json.load(sys.stdin)
+except ValueError:
+    sys.exit(0)
+for repo in data.get("data", {}).get("repos", []):
+    if repo.get("repo") == want:
+        print(repo.get("path", ""))
+        break
+' "$1"
+}
+
+_newproj_ru_listed() { [[ -n "$(_newproj_ru_path "$1")" ]]; }
+
+# newproj_remote_clone NAME DEFAULT_DIR -> 0 and sets NEWPROJ_CLONE_DIR.
+# Step 1 of the remote-first order: create the empty GitHub repo, then have
+# ru clone it into its layout path (with --ru), else gh repo clone it into
+# DEFAULT_DIR. HEAD is pointed at main so the first push creates main.
+# On failure prints what exists and how to finish; never deletes anything.
+NEWPROJ_CLONE_DIR=""
+newproj_remote_clone() {
+    local name="$1" dir="$2" owner repo
+    NEWPROJ_CLONE_DIR=""
+    [[ "$NEWPROJ_GITHUB" != off ]] || return 0
+    owner="$(newproj_remote_owner)" || { echo "Error: GitHub owner unknown" >&2; return 1; }
+    repo="$owner/$name"
+    echo "Creating GitHub repo $repo ($NEWPROJ_GITHUB)..."
+    gh repo create "$repo" "--$NEWPROJ_GITHUB" >/dev/null || {
+        echo "Error: gh repo create $repo failed — nothing was created." >&2; return 1; }
+    NEWPROJ_GITHUB_URL="https://github.com/$repo"
+    if [[ "$NEWPROJ_RU" == on ]]; then
+        local -a add=(add "$repo" --non-interactive)
+        [[ "$NEWPROJ_GITHUB" == private ]] && add+=(--private)
+        echo "Registering $repo with ru and cloning it into ru's layout..."
+        ru "${add[@]}" >/dev/null || {
+            echo "Error: ru add $repo failed. The GitHub repo exists: $NEWPROJ_GITHUB_URL" >&2
+            echo "  Finish by hand: ru add $repo${add[3]:+ --private}; ru sync $repo; then rerun newproj inside the clone" >&2
+            return 1; }
+        ru sync "$repo" --clone-only --non-interactive >/dev/null || {
+            echo "Error: ru sync $repo failed. The repo is on GitHub and registered with ru." >&2
+            echo "  Finish by hand: ru sync $repo" >&2
+            return 1; }
+        dir="$(_newproj_ru_path "$repo")"
+        [[ -n "$dir" && -d "$dir/.git" ]] || {
+            echo "Error: ru did not clone $repo (ru list shows: ${dir:-nothing})" >&2; return 1; }
+    else
+        newproj_ensure_layout_parent "$dir"
+        echo "Cloning $repo into $dir..."
+        gh repo clone "$repo" "$dir" -- -q 2>/dev/null || {
+            echo "Error: gh repo clone $repo $dir failed. The GitHub repo exists: $NEWPROJ_GITHUB_URL" >&2; return 1; }
+    fi
+    git -C "$dir" rev-parse --verify -q HEAD >/dev/null 2>&1 || git -C "$dir" symbolic-ref HEAD refs/heads/main
+    NEWPROJ_CLONE_DIR="$dir"
+    return 0
+}
+
+# True when DIR is a fresh clone of an empty repo: only .git, no commits.
+newproj_is_fresh_clone() {
+    local dir="$1" entry
+    [[ -d "$dir/.git" ]] || return 1
+    git -C "$dir" rev-parse --verify -q HEAD >/dev/null 2>&1 && return 1
+    for entry in "$dir"/* "$dir"/.[!.]* "$dir"/..?*; do
+        [[ -e "$entry" ]] || continue
+        [[ "$entry" == "$dir/.git" ]] || return 1
+    done
+    return 0
+}
+
+# Make sure HEAD exists (the push needs a commit). Commits whatever newproj
 # just created; never called when the project had prior history.
 newproj_remote_ensure_commit() {
     local dir="$1"
@@ -249,9 +337,11 @@ newproj_remote_publish() {
     newproj_remote_ensure_commit "$dir" || { echo "Error: could not create the initial commit" >&2; return 1; }
     newproj_remote_scan_public "$dir" || return 1
     if git -C "$dir" remote get-url origin >/dev/null 2>&1; then
-        # Resumed run: the repo was created earlier; just push.
+        # Remote-first order: the repo was created and cloned up front; push.
+        echo "Pushing the initial commit to $owner/$name..."
         git -C "$dir" push -q -u origin HEAD || return 1
     else
+        # No clone (e.g. a project created before remote-first): create + push.
         echo "Creating GitHub repo $owner/$name ($NEWPROJ_GITHUB) and pushing..."
         (cd "$dir" && gh repo create "$owner/$name" "--$NEWPROJ_GITHUB" --source=. --remote=origin --push) || return 1
     fi
@@ -263,6 +353,8 @@ newproj_remote_ru() {
     local dir="$1" name="$2" owner
     [[ "$NEWPROJ_RU" == on ]] || return 0
     owner="$(newproj_remote_owner)" || return 1
+    # Remote-first order: newproj_remote_clone already registered it.
+    _newproj_ru_listed "$owner/$name" && return 0
     local -a args=(add --from-cwd --non-interactive)
     [[ "$NEWPROJ_GITHUB" == private ]] && args+=(--private)
     echo "Registering $owner/$name with ru..."

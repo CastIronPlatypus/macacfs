@@ -1132,3 +1132,61 @@
 - [1792865486] **retire** — fb-lib-codesign@v3 -> v4; reason: install_and_verify_row now runs path_audit_row and post_install_<ABBR>; candidates resolve the CLI via row_cli_resolved; perturbed: []
 - [1792865486] **retire** — fn-run-tools@v2 -> v3; reason: run engine change reached bin/macacfs implementation, now superseded; perturbed: ['fb-bin-macacfs-impl']
 - [1792865496] **absorb** — fb-bin-macacfs-impl absorbed the parent revision (unchanged)
+- [1792869166] **begin** — change
+- [1792869182] **comprehend** — modify=['lf-newproj-remote-publish', 'lf-newproj-wizard-remote', 'remote-integration', 'req-newproj-github-optional', 'req-newproj-ru-optional']; attach=['fb-lib-newproj-remote-impl', 'fb-lib-newproj-screens-impl', 'lf-newproj-dispatch']; impact=128 node(s)
+- [1792869182] **change** — comprehend -> plan
+- [1792869478] **set-changeplan** — 4 step(s)
+- [1792869478] **change** — plan -> walk
+- [1792869486] **add-requirement** — req-newproj-remote-first [functional] With --github, newproj creates the empty GitHub repo first, then clones it — with --ru by registering it with ru and letting ru clone it into its own configured layout path (the path is read back from ru), without --ru by gh repo clone into the project directory — then scaffolds the project inside the clone, then makes the initial commit and pushes it to main. With --ru a directory argument that is not ru's path is refused, and --github into an existing directory is refused, both before anything is created. All three modes (classic, wizard, reviewed bootstrap) follow this order.
+- [1792869487] **change-done** — s1
+- [1792869542] **retire** — github-publish@v1 -> v2; reason: remote-first order: create the empty repo, clone, scaffold in the clone, then push; perturbed: ['remote-integration']
+- [1792869543] **retire** — ru-register@v1 -> v2; reason: ru now registers the repo by name and clones it into its layout path before scaffolding; perturbed: ['remote-integration']
+- [1792869544] **add-node** — lf-newproj-remote-clone
+- [1792869566] **retire** — lf-newproj-remote-publish@v1 -> v2; reason: publish is now commit + push from the clone; ru registration is a no-op once listed; perturbed: ['fn-np-remote-scan-public', 'fn-np-remote-ensure-commit', 'fn-np-manual-hint', 'fn-np-remote-publish', 'fn-np-remote-ru', 'fn-np-remote-finish']
+- [1792869566] **retire** — lf-newproj-classic-remote@v1 -> v2; reason: classic main clones first with --github and scaffolds inside the clone; perturbed: ['fn-np-log-ts']
+- [1792869567] **retire** — lf-newproj-wizard-remote@v1 -> v2; reason: wizard replaces create_dir with clone_github when GitHub is on; perturbed: ['fn-np-wizard-remote-selection']
+- [1792869567] **retire** — lf-newproj-reviewed-remote@v1 -> v2; reason: reviewed plan is remote-first: gh-create, ru-add/ru-sync or gh-clone before the root, git-push at the end; perturbed: ['fn-np-python', 'fn-np-py-default-projects-dir', 'fn-np-py-default-project-dir', 'fn-np-py-require-parent', 'fn-np-py-user-env', 'fn-np-py-quiet', 'fn-np-py-gh-owner', 'fn-np-py-git-identity', 'fn-np-py-remote-selection', 'fn-np-py-remote-preflight', 'fn-np-py-scan-public']
+- [1792869567] **change-done** — s2
+- [1792869593] **add-node** — fn-np-remote-clone
+- [1792869593] **add-node** — fn-np-ru-path
+- [1792869594] **add-node** — fn-np-ru-listed
+- [1792869594] **add-node** — fn-np-is-fresh-clone
+- [1792869595] **add-node** — fn-np-py-clone-remote
+- [1792869596] **add-node** — fn-np-py-require-ru-path
+- [1792869596] **retire** — fn-np-remote-preflight@v1 -> v2; reason: takes the explicit directory and refuses one that is not ru's path when --ru; perturbed: ['fb-lib-newproj-remote-impl']
+- [1792869596] **retire** — fn-np-remote-publish@v1 -> v2; reason: pushes to the origin created up front; create-and-push only without an origin; perturbed: ['fb-lib-newproj-remote-impl']
+- [1792869597] **retire** — fn-np-remote-ru@v1 -> v2; reason: returns at once when ru already lists the repo (registered during the clone); perturbed: ['fb-lib-newproj-remote-impl']
+- [1792869597] **change-done** — s3
+- [1792869631] **retire** — fb-lib-newproj-remote-impl@v1 -> v2; reason: remote-first: newproj_remote_clone, ru path helpers, fresh-clone check; preflight takes the explicit dir; publish pushes; perturbed: []
+- [1792869632] **retire** — fb-lib-newproj-core-impl@v1 -> v2; reason: classic main and the reviewed bootstrap follow the remote-first order; perturbed: []
+- [1792869632] **retire** — fb-lib-newproj-screens-impl@v1 -> v2; reason: wizard: clone_github step replaces create_dir when GitHub is on; perturbed: []
+- [1792869633] **retire** — fb-tests-newproj-impl@v1 -> v2; reason: fake gh/ru model the remote-first order; new tests for it; perturbed: []
+- [1792869633] **retire** — fb-readme-impl@v7 -> v8; reason: documents the remote-first order; perturbed: []
+- [1792869634] **change-done** — s4
+- [1792869634] **change** — walk -> settle
+- [1792869669] **retire** — remote-integration@v1 -> v2; reason: subsystem now creates and clones the repo before scaffolding; perturbed: ['remote-code']
+- [1792869669] **absorb** — fb-lib-newproj-remote-impl absorbed the parent revision (unchanged)
+- [1792869669] **absorb** — fn-np-remote-publish absorbed the parent revision (unchanged)
+- [1792869669] **absorb** — fn-np-remote-ru absorbed the parent revision (unchanged)
+- [1792869670] **absorb** — fn-np-log-ts absorbed the parent revision (unchanged)
+- [1792869670] **absorb** — fn-np-manual-hint absorbed the parent revision (unchanged)
+- [1792869670] **absorb** — fn-np-py-default-project-dir absorbed the parent revision (unchanged)
+- [1792869670] **absorb** — fn-np-py-default-projects-dir absorbed the parent revision (unchanged)
+- [1792869670] **absorb** — fn-np-py-gh-owner absorbed the parent revision (unchanged)
+- [1792869671] **absorb** — fn-np-py-git-identity absorbed the parent revision (unchanged)
+- [1792869671] **absorb** — fn-np-py-quiet absorbed the parent revision (unchanged)
+- [1792869671] **absorb** — fn-np-py-remote-preflight absorbed the parent revision (unchanged)
+- [1792869671] **absorb** — fn-np-py-remote-selection absorbed the parent revision (unchanged)
+- [1792869671] **absorb** — fn-np-py-require-parent absorbed the parent revision (unchanged)
+- [1792869672] **absorb** — fn-np-py-scan-public absorbed the parent revision (unchanged)
+- [1792869672] **absorb** — fn-np-py-user-env absorbed the parent revision (unchanged)
+- [1792869672] **absorb** — fn-np-python absorbed the parent revision (unchanged)
+- [1792869672] **absorb** — fn-np-remote-ensure-commit absorbed the parent revision (unchanged)
+- [1792869672] **absorb** — fn-np-remote-finish absorbed the parent revision (unchanged)
+- [1792869672] **absorb** — fn-np-remote-scan-public absorbed the parent revision (unchanged)
+- [1792869673] **absorb** — fn-np-wizard-remote-selection absorbed the parent revision (unchanged)
+- [1792869687] **retire** — remote-code@v1 -> v2; reason: adds newproj_remote_clone and the ru path helpers; perturbed: ['fb-lib-newproj-remote']
+- [1792869688] **absorb** — remote-integration absorbed the parent revision (unchanged)
+- [1792869688] **absorb** — remote-code absorbed the parent revision (unchanged)
+- [1792869704] **retire** — fb-lib-newproj-remote@v1 -> v2; reason: file now also holds the remote-first clone; perturbed: []
+- [1792869704] **absorb** — fb-lib-newproj-remote absorbed the parent revision (unchanged)
