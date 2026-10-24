@@ -46,3 +46,42 @@ pre_install_MDWB() {
   HOOK_ENV=("CFT_VERSION=$build" "CFT_EXECUTABLE=$app")
   HOOK_EXTRA_ARGS=(--dir "$dir")
 }
+
+# ── post-install hooks ──────────────────────────────────────────────────────
+# post_install_<ABBR> runs after a tool installed, its signatures verified and
+# its CLI resolved to the installed copy (install_and_verify_row). Used to
+# register a tool with the coding agents, so it is in effect, not just present.
+# Each step is idempotent (re-running install = updating) and only edits agent
+# config through the tool's own installer command; none starts a service.
+# A failure fails the tool, with the tool's own error in the summary.
+
+# _ph_note <text> — append a note to this tool's summary row.
+_ph_note() { RUN_NOTE="${RUN_NOTE:+$RUN_NOTE; }$1"; }
+
+# DCG (destructive_command_guard): register its PreToolUse guard with Claude
+# Code (user level), and with OpenCode when OpenCode is installed. Without
+# this dcg is installed but guards nothing.
+post_install_DCG() {
+  local dcg
+  dcg="$(command -v dcg)" || { printf 'macacfs: dcg not on PATH after install\n' >&2; return 1; }
+  "$dcg" install --quiet || { printf 'macacfs: dcg install (Claude Code hook) failed\n' >&2; return 1; }
+  _ph_note "dcg guard registered for Claude Code"
+  if command -v opencode >/dev/null 2>&1; then
+    "$dcg" install --opencode --quiet || { printf 'macacfs: dcg install --opencode failed\n' >&2; return 1; }
+    _ph_note "and OpenCode"
+  fi
+  if command -v codex >/dev/null 2>&1 && "$dcg" doctor 2>/dev/null | grep -q 'Codex hook registration... NOT REGISTERED'; then
+    _ph_note "Codex not registered (dcg's CLI cannot do it; run dcg's install script)"
+  fi
+}
+
+# CM (cass_memory_system): install its user-level Claude Code SessionEnd hook
+# so every finished session is reflected into memory, not only manual runs.
+post_install_CM() {
+  if cm hook status 2>/dev/null | grep -Eq '^claude +user +installed'; then
+    _ph_note "cm reflection hook already installed (Claude Code)"
+    return 0
+  fi
+  cm hook install --global || { printf 'macacfs: cm hook install --global failed\n' >&2; return 1; }
+  _ph_note "cm reflection hook installed (Claude Code)"
+}

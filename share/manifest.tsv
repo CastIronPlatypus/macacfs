@@ -52,7 +52,7 @@ DSR	doodlestein_self_releaser	dsr	installer-sh	install.sh	-
 ASB	agent_settings_backup_script	asb	installer-sh	install.sh	-
 PCR	post_compact_reminder	claude-post-compact-reminder	installer-sh	install-post-compact-reminder.sh	-
 FMD	franken_markdown	fmd	installer-sh	install.sh	-
-PI	pi_agent_rust	pi	installer-sh	install.sh	-
+PI	pi_agent_rust	pi-rust|pi	installer-sh	install.sh	--yes --keep-existing-pi
 PFR	power_failure_resumer	pfr	installer-sh	install.sh	-
 GUM	charmbracelet/gum	gum	brew	gum	-
 GLOW	charmbracelet/glow	glow	brew	glow	-

@@ -41,6 +41,8 @@ require_darwin() {
 # shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/codesign.sh"
 # shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/pathcheck.sh"
+# shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/shell.sh"
 # shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/schedule.sh"
@@ -96,6 +98,7 @@ run_tools() {
       printf '  → %s (%s)\n' "$a" "$(row_method "$row")"
       RUN_STATUS=""; RUN_NOTE=""
       dispatch_row "$row"
+      if declare -F "post_install_$a" >/dev/null; then printf '    [dry-run] post_install_%s\n' "$a"; fi
       report_add "$a" "${RUN_STATUS:-ok}" "${RUN_NOTE:-(dry-run)}"
     else
       run_isolated "$a" "$(row_method "$row")" install_and_verify_row "$row"

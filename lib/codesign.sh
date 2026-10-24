@@ -31,7 +31,7 @@ _sig_candidates() { # row
   if [ "$(row_method "$row")" = brew ]; then
     brew list --formula "$(basename "$(row_ref "$row")")"
   fi
-  if p="$(command -v "$(row_cli "$row")" 2>/dev/null)"; then printf '%s\n' "$p"; fi
+  if p="$(command -v "$(row_cli_resolved "$row")" 2>/dev/null)"; then printf '%s\n' "$p"; fi
 }
 
 # sig_repair_row <row> — verify (and if needed re-sign) every Mach-O the tool
@@ -64,14 +64,20 @@ sig_repair_row() {
   return "$bad"
 }
 
-# install_and_verify_row <row> — install via the row's method, then verify and
-# repair the signatures of what it installed.
+# install_and_verify_row <row> — install via the row's method, verify and
+# repair the signatures of what it installed, check that its CLI resolves to
+# the installed copy (lib/pathcheck.sh), then run its post-install hook
+# (post_install_<ABBR> in lib/hooks.sh, e.g. registering agent hooks).
 install_and_verify_row() {
   local row="$1" rc
   SIG_MARKER="$(mktemp -t macacfs.sigmark.XXXXXX)"
   dispatch_row "$row"; rc=$?
   if [ "$rc" -eq 0 ] && [ "${RUN_STATUS:-}" != skip ]; then
     sig_repair_row "$row"; rc=$?
+    if [ "$rc" -eq 0 ]; then path_audit_row "$row"; rc=$?; fi
+    if [ "$rc" -eq 0 ] && declare -F "post_install_$(row_abbr "$row")" >/dev/null; then
+      "post_install_$(row_abbr "$row")" "$row"; rc=$?
+    fi
   fi
   rm -f "$SIG_MARKER"
   return "$rc"

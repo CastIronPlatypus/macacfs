@@ -1083,3 +1083,8 @@
 - [1792795390] **prove** — fb-share-zshrc-mac-impl: cmd exit 0
 - [1792795391] **prove** — fb-manifest-tsv-impl: cmd exit 0
 - [1792795437] **change** — settle -> idle (finalized)
+- [1792864781] **begin** — change
+- [1792864873] **comprehend** — modify=['fn-install-and-verify-row', 'lf-codesign-verify-repair', 'prereq-autoinstaller', 'signature-repair-code']; attach=['fb-lib-catalog', 'manifest-store', 'method-fns-code', 'req-per-tool-method-dispatch']; impact=79 node(s)
+- [1792864878] **change** — comprehend -> plan
+- [1792864896] **set-changeplan** — 6 step(s)
+- [1792864900] **change** — plan -> walk
