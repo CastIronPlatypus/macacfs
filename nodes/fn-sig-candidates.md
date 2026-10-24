@@ -8,9 +8,10 @@
   "node_type": "impl",
   "status": "drafting",
   "stratum": "function-map",
+  "succeeds": "fn-sig-candidates@v1",
   "uid": "n0143",
-  "version": 1
+  "version": 2
 }
 -->
 
-_sig_candidates <row> prints the files one install may have produced: files and links in the scan directories newer than SIG_MARKER, the brew formula's own files for brew rows (bottles keep upstream mtimes), and the tool's CLI as resolved on PATH. Within the flow it [[lf-codesign-verify-repair|serves|_sig_candidates is one of the functions that carries out this flow.]]. It is defined in the file boundary it [[fb-lib-codesign|serves|_sig_candidates is defined in lib/codesign.sh.]]. It [[fn-sig-scan-dirs|calls|It scans those directories.]]; it [[fn-row-method|calls|It checks whether the row is a brew row.]]; it [[fn-row-ref|calls|It reads the formula name for brew list.]]; it [[fn-row-cli|calls|It resolves the tool's CLI on PATH.]].
+_sig_candidates <row> prints the files one install may have produced: files and links in the scan directories newer than SIG_MARKER, the brew formula's own files for brew rows (bottles keep upstream mtimes), and the tool's CLI as resolved on PATH under the name row_cli_resolved picks. Within the flow it [[lf-codesign-verify-repair|serves|_sig_candidates is one of the functions that carries out this flow.]]. It is defined in the file boundary it [[fb-lib-codesign|serves|_sig_candidates is defined in lib/codesign.sh.]]. It [[fn-sig-scan-dirs|calls|It scans those directories.]]; it [[fn-row-method|calls|It checks whether the row is a brew row.]]; it [[fn-row-ref|calls|It reads the formula name for brew list.]]; it [[fn-row-cli-resolved|calls|It resolves the tool's CLI name, honoring a|b alternatives, before looking it up on PATH.]].

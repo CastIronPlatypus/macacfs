@@ -3,6 +3,8 @@
 # ACFS Unit Test Helper
 # Common setup, utilities, and mocks for bats unit tests
 # ============================================================
+# shellcheck source=../isolate.bash
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/isolate.bash"
 
 # Determine paths
 TESTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -501,7 +503,7 @@ mock_function() {
     local func_name="$1"
     local return_value="$2"
 
-    eval "${func_name}() { echo '$return_value'; }"
+    eval "${func_name}() { echo '$return_value'; }"  # ubs:ignore[bash.security.eval-variable,bash.security.eval_variable] - test mock definition
     log_debug "Created mock for: $func_name"
 }
 
@@ -511,6 +513,6 @@ mock_function_fail() {
     local func_name="$1"
     local exit_code="${2:-1}"
 
-    eval "${func_name}() { return $exit_code; }"
+    eval "${func_name}() { return $exit_code; }"  # ubs:ignore[bash.security.eval-variable,bash.security.eval_variable] - test mock definition
     log_debug "Created failing mock for: $func_name (exit $exit_code)"
 }

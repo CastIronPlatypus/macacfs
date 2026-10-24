@@ -106,6 +106,14 @@ rest use each tool's own installer, `cargo install --git`, or `go install`:
 
 **Code-signature repair.** Several suite tools (cm, brenner, csctf, s2p, ntm) are Bun-compiled single-file binaries that upstream ships with an invalid code signature, and macOS kills them at launch (your shell just prints `killed`). After every tool installs, macacfs checks each Mach-O binary it produced with `codesign -v --no-strict` (the check macOS enforces at launch; strict layout validation also rejects some binaries that run fine), re-signs any invalid one ad-hoc (`codesign --force -s -`), and re-verifies it. Each re-signed path is listed on that tool's ✅ row in the summary; a binary that can't be repaired fails the tool.
 
+**The right binary runs.** After the signature check, macacfs looks up each tool's command on `PATH` and checks that it is the copy that was just installed. A stale older copy of the same tool in `~/.local/bin`, `~/.cargo/bin` or `~/go/bin` that hides it (for example an old `br` shadowing Homebrew's) is moved to `~/.local/state/macacfs/shadowed/` — never deleted — and the summary says so. A different program ahead on `PATH` fails the tool with a hint; same-name programs later on `PATH` (tcl-tk's `pt`) are noted on the row. The manifest's cli column can list alternatives as `a|b`: PI is `pi-rust|pi`, because pi_agent_rust installs as `pi-rust` when you already have the TypeScript `pi` (macacfs runs its installer with `--yes --keep-existing-pi`, so your existing `pi` is left alone).
+
+**Agent hooks are registered.** Post-install hooks (`post_install_<ABBR>` in `lib/hooks.sh`) wire tools into your coding agents so they actually take effect:
+- **DCG** — `dcg install` registers its guard for Claude Code, `dcg install --opencode` for OpenCode when it's installed, and for Codex macacfs adds dcg as the first `PreToolUse`/`Bash` hook in `~/.codex/hooks.json` (backed up first, other hooks kept). Codex asks you to approve the new hook on its next start.
+- **CM** — `cm hook install --global` adds its Claude Code reflection hook, so finished sessions are learned from automatically.
+
+Each step is idempotent and starts no service; a failure fails the tool.
+
 **No side-installs.** brenner's installer normally also drops pinned (older) copies of ntm, cass and cm into `~/.local/bin`, which then shadow the Homebrew versions on `PATH`. macacfs runs it with `--skip-ntm --skip-cass --skip-cm` so each of those comes only from its own row.
 
 **Linux-only tools are skipped, visibly.** SRPS (apt-get, ananicy-cpp, sudo) and RP (iptables/ipset and Linux socket APIs) cannot run on macOS. They stay in the catalog as `skip` rows and show up in the summary as `⏭ skipped: <reason>`; a skip never fails the run.
@@ -155,8 +163,9 @@ The patch number in `VERSION` goes up by one on every commit (0.3.0, 0.3.1, 0.3.
 bin/macacfs                 CLI entrypoint + dispatch
 lib/catalog.sh              manifest loader
 lib/methods.sh              per-method install/update functions (+ skip)
-lib/hooks.sh                per-tool pre-install hooks (MDWB's Chrome for Testing)
+lib/hooks.sh                per-tool pre-install hooks (MDWB) + post-install agent hooks (DCG, CM)
 lib/codesign.sh             post-install code-signature check + ad-hoc re-sign
+lib/pathcheck.sh            post-install check that each CLI runs the installed copy
 lib/shell.sh               terminal-environment setup (omz/p10k/CLI bundle/atuin...)
 lib/prereq.sh               toolchain auto-installer
 lib/report.sh              isolated runner + ✅/❌ summary

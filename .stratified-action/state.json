@@ -111,9 +111,15 @@
           "round": 4,
           "stage": "attach"
         },
-        "current": "s1",
-        "cursor": 0,
-        "done": [],
+        "current": null,
+        "cursor": 5,
+        "done": [
+          "s2",
+          "s3",
+          "s4",
+          "s5",
+          "s6"
+        ],
         "graph_fp": {
           "argv-and-usage": "62e236323e3b7360da59a6ae6f529adf2c708e12",
           "argv-code": "2b75dcbfd9b9002de3ec5e10c10b3181f8edc745",
@@ -494,15 +500,9 @@
           "toolchain-prereqs-and-order",
           "update-equals-reinstall-idempotency"
         ],
-        "phase": 2,
+        "phase": 3,
         "plan": {
           "steps": [
-            {
-              "aim": "see how post-install CLI-resolution checks extend the install-and-verify step",
-              "id": "s1",
-              "kind": "investigate",
-              "target": "fn-install-and-verify-row"
-            },
             {
               "aim": "add the intent and problem nodes for usable installs",
               "expect": [
@@ -526,12 +526,11 @@
               "kind": "develop"
             },
             {
-              "aim": "add file boundaries and implementations for the two new lib files",
+              "aim": "add the file boundary and implementation for lib/pathcheck.sh; supersede the lib/hooks.sh boundary for post-install hooks",
               "expect": [
                 "fb-lib-pathcheck",
                 "fb-lib-pathcheck-impl",
-                "fb-lib-setup",
-                "fb-lib-setup-impl"
+                "fb-lib-hooks@v2"
               ],
               "id": "s4",
               "kind": "develop"
@@ -540,22 +539,28 @@
               "aim": "add logical flows and function maps for the new code",
               "expect": [
                 "lf-cli-path-audit",
-                "lf-agent-hook-setup",
+                "lf-post-install-hook",
                 "fn-path-audit-row",
-                "fn-path-quarantine-shadow",
+                "fn-pc-quarantine",
+                "fn-pc-installed-copy",
+                "fn-pc-path-hits",
+                "fn-pc-same-tool",
+                "fn-pc-in-user-dir",
+                "fn-pc-user-dirs",
                 "fn-row-cli-resolved",
-                "fn-setup-agent-hooks",
-                "fn-setup-dcg",
-                "fn-setup-cm"
+                "fn-post-install-dcg",
+                "fn-ph-dcg-codex",
+                "fn-post-install-cm",
+                "fn-ph-note"
               ],
               "id": "s5",
               "kind": "develop"
             },
             {
-              "aim": "supersede install-and-verify, the catalog cli accessor, the manifest, the main install path and the README to wire in path audit, alternate CLI names and the setup step",
+              "aim": "supersede install-and-verify, sig candidates, the manifest, the run engine and the README",
               "expect": [
                 "fn-install-and-verify-row@v2",
-                "fn-row-cli@v2",
+                "fn-sig-candidates@v2",
                 "fb-manifest-tsv-impl@v2",
                 "fn-run-tools@v2",
                 "fb-readme-impl@v2"
@@ -567,7 +572,410 @@
           ]
         }
       },
-      "ledger": [],
+      "ledger": [
+        {
+          "at": 1792865287,
+          "detail": {
+            "name": "req-cli-resolves-to-installed-copy",
+            "uid": "n0283"
+          },
+          "id": "op1",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792865287,
+          "detail": {
+            "name": "req-agent-hooks-registered",
+            "uid": "n0284"
+          },
+          "id": "op2",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792865297,
+          "detail": {
+            "name": "stale-shadowing-binaries",
+            "uid": "n0285"
+          },
+          "id": "op3",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792865298,
+          "detail": {
+            "name": "alternate-cli-names",
+            "uid": "n0286"
+          },
+          "id": "op4",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1792865313,
+          "detail": {
+            "name": "cli-path-audit",
+            "uid": "n0287"
+          },
+          "id": "op5",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792865314,
+          "detail": {
+            "name": "agent-hook-setup",
+            "uid": "n0288"
+          },
+          "id": "op6",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792865326,
+          "detail": {
+            "name": "pathcheck-code",
+            "uid": "n0289"
+          },
+          "id": "op7",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792865327,
+          "detail": {
+            "name": "agent-setup-code",
+            "uid": "n0290"
+          },
+          "id": "op8",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1792865348,
+          "detail": {
+            "name": "fb-lib-pathcheck",
+            "uid": "n0291"
+          },
+          "id": "op9",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1792865349,
+          "detail": {
+            "name": "fb-lib-pathcheck-impl",
+            "uid": "n0292"
+          },
+          "id": "op10",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1792865349,
+          "detail": {
+            "impl": "fb-lib-pathcheck-impl",
+            "in_place": true,
+            "node": "fb-lib-pathcheck-impl",
+            "path": "lib/pathcheck.sh"
+          },
+          "id": "op11",
+          "op": "add-impl",
+          "step": "s4"
+        },
+        {
+          "at": 1792865355,
+          "detail": {
+            "dependents": [
+              "tool-install-hooks"
+            ],
+            "name": "fb-lib-hooks",
+            "prev_status": "drafting",
+            "uid": "n0087",
+            "ver": 1
+          },
+          "id": "op12",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1792865406,
+          "detail": {
+            "dst": "req-agent-hooks-registered",
+            "src": "fb-lib-hooks",
+            "type": "validated-by"
+          },
+          "id": "op13",
+          "op": "add-edge",
+          "step": "s5"
+        },
+        {
+          "at": 1792865406,
+          "detail": {
+            "name": "lf-cli-path-audit",
+            "uid": "n0293"
+          },
+          "id": "op14",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865407,
+          "detail": {
+            "name": "lf-post-install-hook",
+            "uid": "n0294"
+          },
+          "id": "op15",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865408,
+          "detail": {
+            "name": "fn-path-audit-row",
+            "uid": "n0295"
+          },
+          "id": "op16",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865408,
+          "detail": {
+            "name": "fn-pc-quarantine",
+            "uid": "n0296"
+          },
+          "id": "op17",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865409,
+          "detail": {
+            "name": "fn-pc-installed-copy",
+            "uid": "n0297"
+          },
+          "id": "op18",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865410,
+          "detail": {
+            "name": "fn-pc-path-hits",
+            "uid": "n0298"
+          },
+          "id": "op19",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865411,
+          "detail": {
+            "name": "fn-pc-same-tool",
+            "uid": "n0299"
+          },
+          "id": "op20",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865411,
+          "detail": {
+            "name": "fn-pc-in-user-dir",
+            "uid": "n0300"
+          },
+          "id": "op21",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865412,
+          "detail": {
+            "name": "fn-pc-user-dirs",
+            "uid": "n0301"
+          },
+          "id": "op22",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865413,
+          "detail": {
+            "name": "fn-row-cli-resolved",
+            "uid": "n0302"
+          },
+          "id": "op23",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865413,
+          "detail": {
+            "name": "fn-post-install-dcg",
+            "uid": "n0303"
+          },
+          "id": "op24",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865414,
+          "detail": {
+            "name": "fn-ph-dcg-codex",
+            "uid": "n0304"
+          },
+          "id": "op25",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865415,
+          "detail": {
+            "name": "fn-post-install-cm",
+            "uid": "n0305"
+          },
+          "id": "op26",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865415,
+          "detail": {
+            "name": "fn-ph-note",
+            "uid": "n0306"
+          },
+          "id": "op27",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1792865453,
+          "detail": {
+            "dependents": [
+              "lf-codesign-verify-repair",
+              "fb-lib-codesign"
+            ],
+            "name": "fn-install-and-verify-row",
+            "prev_status": "drafting",
+            "uid": "n0145",
+            "ver": 1
+          },
+          "id": "op28",
+          "op": "retire-succeed",
+          "step": "s6"
+        },
+        {
+          "at": 1792865454,
+          "detail": {
+            "dependents": [
+              "lf-codesign-verify-repair",
+              "fb-lib-codesign"
+            ],
+            "name": "fn-sig-candidates",
+            "prev_status": "drafting",
+            "uid": "n0143",
+            "ver": 1
+          },
+          "id": "op29",
+          "op": "retire-succeed",
+          "step": "s6"
+        },
+        {
+          "at": 1792865454,
+          "detail": {
+            "dependents": [
+              "fb-manifest-tsv"
+            ],
+            "name": "fb-manifest-tsv-impl",
+            "prev_status": "drafting",
+            "uid": "n0050",
+            "ver": 6
+          },
+          "id": "op30",
+          "op": "retire-succeed",
+          "step": "s6"
+        },
+        {
+          "at": 1792865455,
+          "detail": {
+            "dependents": [
+              "lf-tool-run-engine",
+              "fb-bin-macacfs"
+            ],
+            "name": "fn-run-tools",
+            "prev_status": "drafting",
+            "uid": "n0128",
+            "ver": 1
+          },
+          "id": "op31",
+          "op": "retire-succeed",
+          "step": "s6"
+        },
+        {
+          "at": 1792865456,
+          "detail": {
+            "dependents": [
+              "fb-readme"
+            ],
+            "name": "fb-readme-impl",
+            "prev_status": "drafting",
+            "uid": "n0058",
+            "ver": 6
+          },
+          "id": "op32",
+          "op": "retire-succeed",
+          "step": "s6"
+        },
+        {
+          "at": 1792865485,
+          "detail": {
+            "dependents": [
+              "fb-bin-macacfs"
+            ],
+            "name": "fb-bin-macacfs-impl",
+            "prev_status": "drafting",
+            "uid": "n0048",
+            "ver": 7
+          },
+          "id": "op33",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1792865486,
+          "detail": {
+            "dependents": [
+              "signature-repair-code"
+            ],
+            "name": "fb-lib-codesign",
+            "prev_status": "drafting",
+            "uid": "n0084",
+            "ver": 3
+          },
+          "id": "op34",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1792865486,
+          "detail": {
+            "dependents": [
+              "lf-tool-run-engine",
+              "fb-bin-macacfs"
+            ],
+            "name": "fn-run-tools",
+            "prev_status": "drafting",
+            "uid": "n0128",
+            "ver": 2
+          },
+          "id": "op35",
+          "op": "retire-succeed",
+          "step": null
+        }
+      ],
       "mode": "change"
     },
     "jeff-graphfill-1792790368": {
@@ -6910,5 +7318,5 @@
       "mode": null
     }
   },
-  "uid_seq": 282
+  "uid_seq": 306
 }

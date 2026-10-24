@@ -6,10 +6,12 @@
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="/opt/homebrew/bin:$PATH"
+# shellcheck source=tests/isolate.bash
+. "$ROOT/tests/isolate.bash"
 command -v bats >/dev/null || { echo "bats missing: brew install bats-core" >&2; exit 2; }
 rc=0
-echo "== bats: newproj unit + lib + macacfs"
-bats "$ROOT/tests/unit/newproj" "$ROOT/tests/unit/lib" "$ROOT/tests/unit/macacfs" || rc=1
+echo "== bats: newproj unit + lib + macacfs + install"
+bats "$ROOT/tests/unit/newproj" "$ROOT/tests/unit/lib" "$ROOT/tests/unit/macacfs" "$ROOT/tests/unit/install" || rc=1
 echo "== python: bootstrap, creation recovery, ntm launch"
 for f in "$ROOT"/tests/unit/test_project_bootstrap.py "$ROOT"/tests/unit/newproj/test_*.py; do
   (cd "$ROOT" && python3 "$f") || rc=1

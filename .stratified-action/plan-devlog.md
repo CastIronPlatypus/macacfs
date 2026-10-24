@@ -1088,3 +1088,47 @@
 - [1792864878] **change** — comprehend -> plan
 - [1792864896] **set-changeplan** — 6 step(s)
 - [1792864900] **change** — plan -> walk
+- [1792865256] **change-amend** — 0 frozen + 4 re-authored
+- [1792865276] **change-amend** — 0 frozen + 5 re-authored
+- [1792865287] **add-requirement** — req-cli-resolves-to-installed-copy [functional] After a tool installs, typing its CLI name must run the copy macacfs just installed. A stale older copy of the same tool in a user bin dir (~/.local/bin, ~/.cargo/bin, ~/go/bin) is moved aside, never deleted; a different program ahead on PATH fails the tool with a fix hint; same-name programs later on PATH are noted on the summary row. A tool whose installer may use another name is checked under every listed name.
+- [1792865287] **add-requirement** — req-agent-hooks-registered [functional] Tools whose value depends on agent integration are registered with the installed coding agents at install time, idempotently, using the tool's own install command where it has one: dcg's PreToolUse guard for Claude Code, OpenCode and Codex; cm's user-level Claude Code SessionEnd reflection hook. Existing agent config is preserved and backed up before macacfs edits it directly; no service is started.
+- [1792865297] **add-node** — stale-shadowing-binaries
+- [1792865298] **add-node** — alternate-cli-names
+- [1792865298] **change-done** — s2
+- [1792865313] **add-node** — cli-path-audit
+- [1792865314] **add-node** — agent-hook-setup
+- [1792865326] **add-node** — pathcheck-code
+- [1792865327] **add-node** — agent-setup-code
+- [1792865327] **change-done** — s3
+- [1792865348] **add-node** — fb-lib-pathcheck
+- [1792865349] **add-node** — fb-lib-pathcheck-impl
+- [1792865349] **add-impl** — fb-lib-pathcheck-impl -> lib/pathcheck.sh (in place)
+- [1792865355] **retire** — fb-lib-hooks@v1 -> v2; reason: lib/hooks.sh now also holds post-install hooks (post_install_DCG, post_install_CM) that register agent hooks; perturbed: []
+- [1792865371] **change-done** — s4
+- [1792865406] **link-requirement** — fb-lib-hooks -> req-agent-hooks-registered
+- [1792865406] **add-node** — lf-cli-path-audit
+- [1792865407] **add-node** — lf-post-install-hook
+- [1792865408] **add-node** — fn-path-audit-row
+- [1792865408] **add-node** — fn-pc-quarantine
+- [1792865409] **add-node** — fn-pc-installed-copy
+- [1792865410] **add-node** — fn-pc-path-hits
+- [1792865411] **add-node** — fn-pc-same-tool
+- [1792865411] **add-node** — fn-pc-in-user-dir
+- [1792865412] **add-node** — fn-pc-user-dirs
+- [1792865413] **add-node** — fn-row-cli-resolved
+- [1792865413] **add-node** — fn-post-install-dcg
+- [1792865414] **add-node** — fn-ph-dcg-codex
+- [1792865415] **add-node** — fn-post-install-cm
+- [1792865415] **add-node** — fn-ph-note
+- [1792865416] **change-done** — s5
+- [1792865453] **retire** — fn-install-and-verify-row@v1 -> v2; reason: now also runs the CLI path audit and the tool's post-install hook; perturbed: []
+- [1792865454] **retire** — fn-sig-candidates@v1 -> v2; reason: resolves the CLI through row_cli_resolved so a|b alternatives work; perturbed: []
+- [1792865454] **retire** — fb-manifest-tsv-impl@v6 -> v7; reason: PI row: cli pi-rust|pi and installer args --yes --keep-existing-pi; cli column accepts a|b; perturbed: []
+- [1792865455] **retire** — fn-run-tools@v1 -> v2; reason: dry-run branch prints the post-install hook that would run; perturbed: ['fb-bin-macacfs-impl']
+- [1792865456] **retire** — fb-readme-impl@v6 -> v7; reason: documents the CLI path audit, a|b cli names, PI, and the DCG/CM agent hooks; layout lists lib/pathcheck.sh; perturbed: []
+- [1792865456] **change-done** — s6
+- [1792865462] **change** — walk -> settle
+- [1792865485] **retire** — fb-bin-macacfs-impl@v7 -> v8; reason: sources lib/pathcheck.sh; dry-run prints post-install hooks; install step now includes path audit and post-install hook; perturbed: []
+- [1792865486] **retire** — fb-lib-codesign@v3 -> v4; reason: install_and_verify_row now runs path_audit_row and post_install_<ABBR>; candidates resolve the CLI via row_cli_resolved; perturbed: []
+- [1792865486] **retire** — fn-run-tools@v2 -> v3; reason: run engine change reached bin/macacfs implementation, now superseded; perturbed: ['fb-bin-macacfs-impl']
+- [1792865496] **absorb** — fb-bin-macacfs-impl absorbed the parent revision (unchanged)

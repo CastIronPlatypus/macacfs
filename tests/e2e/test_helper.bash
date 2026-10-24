@@ -4,6 +4,8 @@
 # Provides TUI automation, terminal simulation, and test utilities
 # for end-to-end testing of the newproj wizard
 # ============================================================
+# shellcheck source=../isolate.bash
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/isolate.bash"
 
 # Determine paths
 E2E_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

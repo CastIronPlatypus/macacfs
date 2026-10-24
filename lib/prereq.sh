@@ -28,8 +28,8 @@ ensure_homebrew() {
   NONINTERACTIVE=1 /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || return 1
   # Put brew on PATH for the rest of this process (Apple Silicon vs Intel).
-  if [ -x /opt/homebrew/bin/brew ]; then eval "$(/opt/homebrew/bin/brew shellenv)"
-  elif [ -x /usr/local/bin/brew ]; then eval "$(/usr/local/bin/brew shellenv)"; fi
+  if [ -x /opt/homebrew/bin/brew ]; then eval "$(/opt/homebrew/bin/brew shellenv)"  # ubs:ignore[bash.security.eval-variable,bash.security.eval_variable] - brew shellenv output from a fixed binary path, the documented setup
+  elif [ -x /usr/local/bin/brew ]; then eval "$(/usr/local/bin/brew shellenv)"; fi  # ubs:ignore[bash.security.eval-variable,bash.security.eval_variable] - same, Intel Homebrew path
   PREREQ_INSTALLED="$PREREQ_INSTALLED homebrew"
 }
 
@@ -52,7 +52,7 @@ ensure_rust() {
     printf '    [dry-run] curl --proto =https --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y\n'
     return 0
   fi
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y || return 1
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y || return 1  # ubs:ignore — official rustup installer, https + TLS 1.2 pinned
   # shellcheck disable=SC1091
   [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
   PREREQ_INSTALLED="${PREREQ_INSTALLED} rust"

@@ -70,9 +70,50 @@ post_install_DCG() {
     "$dcg" install --opencode --quiet || { printf 'macacfs: dcg install --opencode failed\n' >&2; return 1; }
     _ph_note "and OpenCode"
   fi
-  if command -v codex >/dev/null 2>&1 && "$dcg" doctor 2>/dev/null | grep -q 'Codex hook registration... NOT REGISTERED'; then
-    _ph_note "Codex not registered (dcg's CLI cannot do it; run dcg's install script)"
+  if command -v codex >/dev/null 2>&1 || [ -d "$HOME/.codex" ]; then
+    _ph_dcg_codex "$dcg" || return 1
   fi
+}
+
+# _ph_dcg_codex <dcg-path> — register dcg in ~/.codex/hooks.json the way dcg's
+# own install.sh does (dcg's CLI has no Codex option): one PreToolUse group
+# matching Bash whose command is the quoted dcg path, placed first. Other hooks
+# are kept; the file is backed up before it changes; already-registered is a
+# no-op. Codex asks once, on its next start, to approve the new hook.
+_ph_dcg_codex() {
+  local out
+  out="$(python3 -I - "$1" "$HOME/.codex/hooks.json" <<'PY'
+import json, os, shlex, shutil, sys, time
+dcg, path = sys.argv[1], sys.argv[2]
+def is_dcg(c):
+    try: w = shlex.split(c) if isinstance(c, str) and c else []
+    except ValueError: return False
+    return bool(w) and os.path.basename(w[0]) == "dcg"
+data = {}
+if os.path.exists(path):
+    with open(path) as f:
+        data = json.load(f)
+if not isinstance(data, dict): raise SystemExit("hooks.json is not a JSON object")
+hooks = data.setdefault("hooks", {})
+groups = hooks.setdefault("PreToolUse", [])
+for g in groups:
+    if isinstance(g, dict) and any(isinstance(h, dict) and is_dcg(h.get("command")) for h in g.get("hooks", [])):
+        print("already"); raise SystemExit(0)
+groups.insert(0, {"matcher": "Bash", "hooks": [{"type": "command", "command": shlex.quote(dcg)}]})
+os.makedirs(os.path.dirname(path), exist_ok=True)
+if os.path.exists(path):
+    shutil.copy2(path, path + ".bak." + time.strftime("%Y%m%d%H%M%S"))
+tmp = path + ".macacfs.tmp"
+with open(tmp, "w") as f:
+    json.dump(data, f, indent=2); f.write("\n")
+os.replace(tmp, path)
+print("added")
+PY
+)" || { printf 'macacfs: could not register dcg in ~/.codex/hooks.json\n' >&2; return 1; }
+  case "$out" in
+    added) _ph_note "and Codex (approve the hook on Codex's next start)" ;;
+    *)     _ph_note "and Codex" ;;
+  esac
 }
 
 # CM (cass_memory_system): install its user-level Claude Code SessionEnd hook

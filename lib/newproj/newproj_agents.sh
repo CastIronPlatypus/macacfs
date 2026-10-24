@@ -864,7 +864,7 @@ register_custom_section() {
     AGENTS_SECTION_ORDER+=("$section_id")
 
     # Map the custom section name to the user's provided function
-    eval "_custom_section_${section_id}() { \"$content_fn\" \"\$@\"; }"
+    eval "_custom_section_${section_id}() { \"$content_fn\" \"\$@\"; }"  # ubs:ignore[bash.security.eval-variable,bash.security.eval_variable] - section_id and content_fn are regex-validated above
 }
 
 # Get list of available sections

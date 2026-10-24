@@ -1,6 +1,8 @@
 # Shared setup for macacfs-specific newproj tests: an isolated HOME/XDG/git
 # identity and fake gh/ru executables on PATH (no network, no real accounts).
 REPO_ROOT="$(cd "$BATS_TEST_DIRNAME/../../.." && pwd)"
+# shellcheck source=../../isolate.bash
+. "$REPO_ROOT/tests/isolate.bash"
 NEWPROJ="$REPO_ROOT/lib/newproj/newproj.sh"
 
 mk_fakes() {

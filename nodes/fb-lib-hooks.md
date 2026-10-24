@@ -780,6 +780,11 @@
       "dst": "req-install-whole-suite",
       "reason": "lib/hooks.sh holds the per-tool pre-install hooks",
       "type": "validated-by"
+    },
+    {
+      "dst": "req-agent-hooks-registered",
+      "reason": "lib/hooks.sh holds the post-install hooks that register agent hooks",
+      "type": "validated-by"
     }
   ],
   "impl_path": "lib/hooks.sh",
@@ -802,9 +807,10 @@
   "realized_fp": "1792289542:2574",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-lib-hooks@v1",
   "uid": "n0087",
-  "version": 1
+  "version": 2
 }
 -->
 
-lib/hooks.sh — per-tool pre-install hooks (pre_install_<ABBR>), sourced by lib/methods.sh; currently pre_install_MDWB, which downloads and unpacks the Chrome for Testing build MDWB tests and passes CFT_VERSION, CFT_EXECUTABLE and --dir ~/markdown_web_browser to its installer. It [[tool-install-hooks|serves|This file realizes the tool-install-hooks code unit.]]. Bead. Its HOOK_ENV and HOOK_EXTRA_ARGS arrays [[fb-lib-methods-impl|couples-with|dispatch_row resets and do_installer_sh consumes HOOK_ENV and HOOK_EXTRA_ARGS, so a hook's settings reach the installer only while lib/methods.sh keeps reading those exact arrays.]].
+lib/hooks.sh — per-tool install hooks. Pre-install hooks (pre_install_<ABBR>) are run by dispatch_row before a tool's method; currently pre_install_MDWB, which downloads and unpacks the Chrome for Testing build MDWB tests and passes CFT_VERSION, CFT_EXECUTABLE and --dir ~/markdown_web_browser to its installer. Post-install hooks (post_install_<ABBR>) are run by install_and_verify_row after the signature and path checks pass: post_install_DCG registers dcg's guard for Claude Code, OpenCode (when installed) and Codex (via _ph_dcg_codex editing ~/.codex/hooks.json), and post_install_CM installs cm's user-level Claude Code reflection hook; _ph_note records each result on the tool's row. It [[tool-install-hooks|serves|This file realizes the tool-install-hooks code unit.]] and [[agent-setup-code|serves|Its post-install hooks realize the agent-hook setup code unit.]]. Bead. Its HOOK_ENV and HOOK_EXTRA_ARGS arrays [[fb-lib-methods-impl|couples-with|dispatch_row resets and do_installer_sh consumes HOOK_ENV and HOOK_EXTRA_ARGS, so a hook's settings reach the installer only while lib/methods.sh keeps reading those exact arrays.]]. Its post_install_<ABBR> names [[fb-lib-codesign|couples-with|install_and_verify_row in lib/codesign.sh looks hooks up by exactly that name pattern, and bin/macacfs's dry-run branch prints them.]].
