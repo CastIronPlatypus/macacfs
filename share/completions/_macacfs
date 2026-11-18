@@ -37,6 +37,9 @@ _macacfs_newproj() {
     '--github-owner=[GitHub user or org]:owner:' \
     '(--no-ru)--ru[register with ru]' \
     '(--ru)--no-ru[do not register with ru]' \
+    '(--no-tools)--tools=[flywheel tools to initialize]:tools:(br ee cm ntm slb ms ubs)' \
+    '(--tools)--no-tools[initialize no flywheel tools]' \
+    '--save-defaults[store the tool choice as newproj.tools]' \
     '1:project name:' \
     '2:directory:_directories'
 }
@@ -49,6 +52,7 @@ _macacfs() {
     'list:list the tool catalog'
     'newproj:create a new project'
     'new:create a new project (alias)'
+    'projinit:initialize missing flywheel tools in a project'
     'config:persistent settings'
     'schedule:weekly auto-update LaunchAgent'
     'self-update:update macacfs itself'
@@ -62,11 +66,17 @@ _macacfs() {
   case ${words[2]} in
     install|update) _arguments '--dry-run[print, do not run]' '*:tool:_macacfs_tools' ;;
     newproj|new) shift words; (( CURRENT-- )); _macacfs_newproj ;;
+    projinit) _arguments \
+        '(--no-tools)--tools=[tools to want]:tools:(br ee cm ntm slb ms ubs)' \
+        '(--tools)--no-tools[want no tools]' \
+        '(-i --interactive)'{-i,--interactive}'[choose from a checklist]' \
+        '--status[report each tool state]' '--dry-run[print commands]' '--json[JSON output]' \
+        '--save-defaults[store the set as newproj.tools]' '1:directory:_directories' ;;
     config)
       if (( CURRENT == 3 )); then
         _values 'subcommand' list get set unset
       elif (( CURRENT == 4 )); then
-        _values 'key' newproj.github newproj.ru newproj.projects_dir
+        _values 'key' newproj.github newproj.ru newproj.projects_dir newproj.tools
       elif (( CURRENT == 5 )) && [[ ${words[3]} == set ]]; then
         case ${words[4]} in
           newproj.github) _values 'value' off private public ;;

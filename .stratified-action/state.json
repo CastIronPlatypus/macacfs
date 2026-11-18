@@ -5,6 +5,491 @@
     "scope-containment"
   ],
   "runs": {
+    "jeff-6584-1794937039": {
+      "ledger": [
+        {
+          "at": 1794937190,
+          "detail": {
+            "dependents": [],
+            "name": "req-minimal-scope",
+            "prev_status": "drafting",
+            "uid": "n0091",
+            "ver": 2
+          },
+          "id": "op1",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1794937205,
+          "detail": {
+            "id": "req-minimal-scope",
+            "now": {
+              "accept": "Feature set maps only to those items (install/update/self-update/schedule/newproj/projinit/config); none of the ACFS VPS machinery is present.",
+              "kind": "constraint",
+              "text": "Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration), per-project flywheel tool initialization (macacfs projinit), and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+            },
+            "prev": {
+              "accept": "Feature set maps only to those items (install/update/self-update/schedule/newproj/config); none of the ACFS VPS machinery is present.",
+              "kind": "constraint",
+              "text": "Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration) and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner)."
+            },
+            "uid": "n0091"
+          },
+          "id": "op2",
+          "op": "edit-requirement",
+          "step": "s2"
+        },
+        {
+          "at": 1794937206,
+          "detail": {
+            "name": "req-per-project-tool-init",
+            "uid": "n0315"
+          },
+          "id": "op3",
+          "op": "add-node",
+          "step": "s2"
+        },
+        {
+          "at": 1794937209,
+          "detail": {
+            "dependents": [
+              "scope-containment",
+              "update-equals-reinstall-idempotency"
+            ],
+            "name": "macacfs-command-surface",
+            "prev_status": "drafting",
+            "uid": "n0011",
+            "ver": 5
+          },
+          "id": "op4",
+          "op": "retire-succeed",
+          "step": "s2"
+        },
+        {
+          "at": 1794937217,
+          "detail": {
+            "dst": "req-per-project-tool-init",
+            "src": "macacfs-command-surface",
+            "type": "validated-by"
+          },
+          "id": "op5",
+          "op": "add-edge",
+          "step": "s2"
+        },
+        {
+          "at": 1794937226,
+          "detail": {
+            "name": "projinit-dispatch",
+            "uid": "n0316"
+          },
+          "id": "op6",
+          "op": "add-node",
+          "step": "s3"
+        },
+        {
+          "at": 1794937233,
+          "detail": {
+            "dependents": [
+              "cli-arg-dispatch",
+              "newproj-experience"
+            ],
+            "name": "newproj-dispatch",
+            "prev_status": "drafting",
+            "uid": "n0101",
+            "ver": 1
+          },
+          "id": "op7",
+          "op": "retire-succeed",
+          "step": "s3"
+        },
+        {
+          "at": 1794937234,
+          "detail": {
+            "dst": "req-per-project-tool-init",
+            "src": "newproj-dispatch",
+            "type": "validated-by"
+          },
+          "id": "op8",
+          "op": "add-edge",
+          "step": "s3"
+        },
+        {
+          "at": 1794937246,
+          "detail": {
+            "name": "project-tool-registry",
+            "uid": "n0317"
+          },
+          "id": "op9",
+          "op": "add-node",
+          "step": "s4"
+        },
+        {
+          "at": 1794937246,
+          "detail": {
+            "dependents": [
+              "newproj-dispatch",
+              "settings-store"
+            ],
+            "name": "config-store",
+            "prev_status": "drafting",
+            "uid": "n0110",
+            "ver": 1
+          },
+          "id": "op10",
+          "op": "retire-succeed",
+          "step": "s4"
+        },
+        {
+          "at": 1794937253,
+          "detail": {
+            "dst": "req-per-project-tool-init",
+            "src": "config-store",
+            "type": "validated-by"
+          },
+          "id": "op11",
+          "op": "add-edge",
+          "step": "s4"
+        },
+        {
+          "at": 1794937265,
+          "detail": {
+            "name": "projinit-code",
+            "uid": "n0318"
+          },
+          "id": "op12",
+          "op": "add-node",
+          "step": "s5"
+        },
+        {
+          "at": 1794937266,
+          "detail": {
+            "dependents": [
+              "config-store"
+            ],
+            "name": "config-code",
+            "prev_status": "drafting",
+            "uid": "n0115",
+            "ver": 1
+          },
+          "id": "op13",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1794937266,
+          "detail": {
+            "dependents": [
+              "newproj-engine"
+            ],
+            "name": "newproj-cli-code",
+            "prev_status": "drafting",
+            "uid": "n0111",
+            "ver": 1
+          },
+          "id": "op14",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1794937267,
+          "detail": {
+            "dependents": [
+              "newproj-engine"
+            ],
+            "name": "wizard-screens-code",
+            "prev_status": "drafting",
+            "uid": "n0112",
+            "ver": 1
+          },
+          "id": "op15",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1794937267,
+          "detail": {
+            "dependents": [
+              "newproj-engine"
+            ],
+            "name": "bootstrap-py-code",
+            "prev_status": "drafting",
+            "uid": "n0113",
+            "ver": 1
+          },
+          "id": "op16",
+          "op": "retire-succeed",
+          "step": "s5"
+        },
+        {
+          "at": 1794937273,
+          "detail": {
+            "dst": "project-tool-registry",
+            "src": "projinit-code",
+            "type": "serves"
+          },
+          "id": "op17",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937274,
+          "detail": {
+            "dst": "projinit-dispatch",
+            "src": "project-tool-registry",
+            "type": "serves"
+          },
+          "id": "op18",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937274,
+          "detail": {
+            "dst": "projinit-dispatch",
+            "src": "config-store",
+            "type": "serves"
+          },
+          "id": "op19",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937275,
+          "detail": {
+            "dst": "newproj-dispatch",
+            "src": "project-tool-registry",
+            "type": "serves"
+          },
+          "id": "op20",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937275,
+          "detail": {
+            "dst": "macacfs-command-surface",
+            "src": "projinit-dispatch",
+            "type": "serves"
+          },
+          "id": "op21",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937276,
+          "detail": {
+            "dst": "projinit-dispatch",
+            "src": "macacfs-command-surface",
+            "type": "accomplished-by"
+          },
+          "id": "op22",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937283,
+          "detail": {
+            "name": "fb-lib-projinit",
+            "uid": "n0319"
+          },
+          "id": "op23",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1794937284,
+          "detail": {
+            "name": "fb-tests-projinit",
+            "uid": "n0320"
+          },
+          "id": "op24",
+          "op": "add-node",
+          "step": "s6"
+        },
+        {
+          "at": 1794937285,
+          "detail": {
+            "dst": "fb-lib-projinit",
+            "src": "projinit-code",
+            "type": "accomplished-by"
+          },
+          "id": "op25",
+          "op": "add-edge",
+          "step": "s6"
+        },
+        {
+          "at": 1794937311,
+          "detail": {
+            "dependents": [
+              "macacfs-command-surface"
+            ],
+            "name": "cli-arg-dispatch",
+            "prev_status": "drafting",
+            "uid": "n0022",
+            "ver": 2
+          },
+          "id": "op26",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794937311,
+          "detail": {
+            "dependents": [
+              "cli-arg-dispatch"
+            ],
+            "name": "argv-and-usage",
+            "prev_status": "drafting",
+            "uid": "n0029",
+            "ver": 2
+          },
+          "id": "op27",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794937312,
+          "detail": {
+            "dependents": [
+              "argv-and-usage"
+            ],
+            "name": "argv-code",
+            "prev_status": "drafting",
+            "uid": "n0036",
+            "ver": 2
+          },
+          "id": "op28",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794937313,
+          "detail": {
+            "dependents": [
+              "argv-code"
+            ],
+            "name": "fb-bin-macacfs",
+            "prev_status": "drafting",
+            "uid": "n0037",
+            "ver": 2
+          },
+          "id": "op29",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794937313,
+          "detail": {
+            "dependents": [
+              "wizard-screens-code"
+            ],
+            "name": "fb-lib-newproj-screens",
+            "prev_status": "drafting",
+            "uid": "n0117",
+            "ver": 1
+          },
+          "id": "op30",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794939236,
+          "detail": {
+            "impl": "fb-lib-projinit",
+            "in_place": true,
+            "node": "fb-lib-projinit",
+            "path": "lib/projinit.sh"
+          },
+          "id": "op31",
+          "op": "add-impl",
+          "step": null
+        },
+        {
+          "at": 1794939236,
+          "detail": {
+            "impl": "fb-tests-projinit",
+            "in_place": true,
+            "node": "fb-tests-projinit",
+            "path": "tests/unit/macacfs/projinit.bats"
+          },
+          "id": "op32",
+          "op": "add-impl",
+          "step": null
+        },
+        {
+          "at": 1794939237,
+          "detail": {
+            "dependents": [
+              "argv-code"
+            ],
+            "name": "fb-share-completions",
+            "prev_status": "drafting",
+            "uid": "n0120",
+            "ver": 1
+          },
+          "id": "op33",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794939237,
+          "detail": {
+            "dependents": [
+              "fb-bin-macacfs"
+            ],
+            "name": "fb-bin-macacfs-impl",
+            "prev_status": "drafting",
+            "uid": "n0048",
+            "ver": 8
+          },
+          "id": "op34",
+          "op": "retire-succeed",
+          "step": null
+        },
+        {
+          "at": 1794939250,
+          "detail": {
+            "cmd": "/opt/homebrew/bin/bash -c '. tests/isolate.bash; bats tests/unit/macacfs/projinit.bats'",
+            "exit": 0,
+            "kind": "cmd",
+            "name": "fb-lib-projinit",
+            "reason": null,
+            "uid": "n0319"
+          },
+          "id": "op35",
+          "op": "prove",
+          "step": null
+        },
+        {
+          "at": 1794939256,
+          "detail": {
+            "cmd": "/opt/homebrew/bin/bash -c '. tests/isolate.bash; bats tests/unit/macacfs/projinit.bats'",
+            "exit": 0,
+            "kind": "cmd",
+            "name": "fb-tests-projinit",
+            "reason": null,
+            "uid": "n0320"
+          },
+          "id": "op36",
+          "op": "prove",
+          "step": null
+        },
+        {
+          "at": 1794939347,
+          "detail": {
+            "agent": "jeff-6584-1794937039",
+            "at": 1794939347,
+            "node": "macacfs-command-surface",
+            "reason": "no-net-anemia on macacfs-command-surface (74.1 -> 72.4): this run added the projinit verb with reciprocated accomplished-by/serves edges whose reasons name the observable commands, and rewrote the req-minimal-scope edge to a falsifiable check; the remaining gap is the 50 pre-existing low-falsifiability reasons and the req-persistent-settings / req-terminal-environment-parity tissue in the folded neighborhood, not a thin edge introduced here."
+          },
+          "id": "op37",
+          "op": "override",
+          "step": null
+        }
+      ],
+      "mode": null
+    },
     "jeff-fix4-1792864777": {
       "change": {
         "comprehend": {
@@ -8334,5 +8819,5 @@
       "mode": null
     }
   },
-  "uid_seq": 314
+  "uid_seq": 320
 }

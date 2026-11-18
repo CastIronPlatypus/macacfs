@@ -20,9 +20,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "components",
+  "succeeds": "config-code@v1",
   "uid": "n0115",
-  "version": 1
+  "version": 2
 }
 -->
 
-Code unit: lib/config.sh — config_file, config_known_keys, config_validate, config_get_raw, config_effective, config_set, config_unset, config_list and config_main. It [[config-store|serves|This code realizes the config store.]]. It is accomplished by [[fb-lib-config|accomplished-by|This file holds the config code.]].
+Code unit: lib/config.sh — config_file, config_known_keys, config_validate, config_get_raw, config_effective, config_set, config_unset, config_list and config_main, with newproj.tools in the registry and validated by projinit_validate_list. It [[config-store|serves|This code realizes the config store.]]. It is accomplished by [[fb-lib-config|accomplished-by|This file holds the config code.]].

@@ -55,9 +55,9 @@ teardown() {
 @test "SCREEN_FLOW contains all screens" {
     source_lib "newproj_screens"
 
-    [[ ${#SCREEN_FLOW[@]} -eq 9 ]]
+    [[ ${#SCREEN_FLOW[@]} -eq 10 ]]  # macacfs: + tools screen
     [[ "${SCREEN_FLOW[0]}" == "welcome" ]]
-    [[ "${SCREEN_FLOW[8]}" == "success" ]]
+    [[ "${SCREEN_FLOW[9]}" == "success" ]]
 }
 
 @test "SCREEN_RUNNERS maps to valid functions" {

@@ -1,5 +1,6 @@
 # lib/config.sh — persistent macacfs settings (key=value file).
 # Realizes: config-code / fb-lib-config.
+# newproj.tools is validated against lib/projinit.sh's registry when loaded.
 #
 # File: ${XDG_CONFIG_HOME:-~/.config}/macacfs/config, one KEY=VALUE per line.
 # Every known key has an env override (MACACFS_<KEY upper, . and - -> _>).
@@ -16,6 +17,7 @@ config_registry() {
 newproj.github|off|create a GitHub repo for every newproj: off, private or public
 newproj.ru|off|register every newproj with ru: on or off
 newproj.projects_dir||default parent directory for newproj (absolute path; empty = auto)
+newproj.tools|br,ee,cm,ubs|per-project tools newproj/projinit initialize: comma list of br,ee,cm,ntm,slb,ms,ubs or none
 EOF
 }
 
@@ -45,6 +47,10 @@ config_validate() {
         /*) case "$val" in *[[:cntrl:]]*) ;; *) return 0 ;; esac ;;
       esac
       printf 'macacfs config: %s must be an absolute path\n' "$key" >&2; return 1 ;;
+    newproj.tools)
+      if declare -f projinit_validate_list >/dev/null 2>&1; then projinit_validate_list "$val"; return; fi
+      case "$val" in *[!a-z,]*) printf 'macacfs config: %s must be a comma list of tool ids or none\n' "$key" >&2; return 1 ;; esac
+      return 0 ;;
   esac
   printf 'macacfs config: unknown key "%s" (known: %s)\n' "$key" "$(config_known_keys | tr '\n' ' ')" >&2
   return 1

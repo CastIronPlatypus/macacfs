@@ -126,6 +126,9 @@ if {$test_type eq "edit_from_confirm"} {
     expect "Select Project Features"
 
     send_enter  ;# Accept features
+    expect "Which flywheel tools"
+
+    send_enter  ;# macacfs: accept project tools
     expect "AGENTS.md Preview"
 
     send_enter  ;# Continue from preview

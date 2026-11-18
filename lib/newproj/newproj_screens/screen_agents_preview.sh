@@ -21,7 +21,7 @@ SCREEN_AGENTS_PREVIEW_ID="agents_preview"
 SCREEN_AGENTS_PREVIEW_TITLE="AGENTS.md Preview"
 SCREEN_AGENTS_PREVIEW_STEP=6
 SCREEN_AGENTS_PREVIEW_NEXT="confirmation"
-SCREEN_AGENTS_PREVIEW_PREV="features"
+SCREEN_AGENTS_PREVIEW_PREV="tools"  # macacfs
 
 # Generate preview content based on current state
 generate_preview_content() {

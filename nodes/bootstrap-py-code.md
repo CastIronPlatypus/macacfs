@@ -25,9 +25,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "components",
+  "succeeds": "bootstrap-py-code@v1",
   "uid": "n0113",
-  "version": 1
+  "version": 2
 }
 -->
 
-Code unit: the Python program embedded in newproj.sh — templates, Agent Mail validation and registration, make_plan, read_plan, apply with checkpoints, guided, and argparse main — extended with the macOS projects-dir resolver, --github/--ru options and their commit/gh-create/ru-add commands with disclosed effects and a public-push personal-data scan. It [[newproj-engine|serves|This code is the reviewed-bootstrap part of the engine.]]. It is accomplished by [[fb-lib-newproj-core|accomplished-by|The embedded Python lives in newproj.sh.]].
+Code unit: the Python program embedded in newproj.sh — templates, Agent Mail validation and registration, make_plan, read_plan, apply with checkpoints, guided, and argparse main — extended with the macOS projects-dir resolver, --github/--ru options, a --tools LIST option (--plan and --guided both default to newproj.tools; --no-tools opts out) that adds one reviewed 'tools-init' command running 'macacfs projinit DIR --tools LIST' after the files and disclosing global_settings when ee is chosen, and their commit/gh-create/ru-add commands with disclosed effects and a public-push personal-data scan. It [[newproj-engine|serves|This code is the reviewed-bootstrap part of the engine.]]. It is accomplished by [[fb-lib-newproj-core|accomplished-by|The embedded Python lives in newproj.sh.]].

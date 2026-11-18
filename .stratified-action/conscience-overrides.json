@@ -5,6 +5,12 @@
       "at": 1792794999,
       "node": "macacfs-command-surface",
       "reason": "no-net-anemia on macacfs-command-surface (66.5 -> 61.4): this run added the newproj and config verbs, whose links are now reciprocated relates-to edges with concrete reasons. The rest of the drop comes from the large newproj-experience neighborhood the score folds in, not from a thin edge on this node. The follow-up run jeff-takeover-1 supersedes this node for the 42-tool catalog."
+    },
+    {
+      "agent": "jeff-6584-1794937039",
+      "at": 1794939347,
+      "node": "macacfs-command-surface",
+      "reason": "no-net-anemia on macacfs-command-surface (74.1 -> 72.4): this run added the projinit verb with reciprocated accomplished-by/serves edges whose reasons name the observable commands, and rewrote the req-minimal-scope edge to a falsifiable check; the remaining gap is the 50 pre-existing low-falsifiability reasons and the req-persistent-settings / req-terminal-environment-parity tissue in the folded neighborhood, not a thin edge introduced here."
     }
   ]
 }

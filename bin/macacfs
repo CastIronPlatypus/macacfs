@@ -50,6 +50,8 @@ require_darwin() {
 . "$MACACFS_HOME/lib/selfupdate.sh"
 # shellcheck source=/dev/null
 . "$MACACFS_HOME/lib/config.sh"
+# shellcheck source=/dev/null
+. "$MACACFS_HOME/lib/projinit.sh"
 
 usage() {
   cat <<EOF
@@ -71,9 +73,15 @@ Usage:
                                           --plan/--apply/--guided for the reviewed
                                           bootstrap, --github[=private|public] and
                                           --ru to publish/register (alias: new;
-                                          see 'macacfs newproj --help')
+                                          see 'macacfs newproj --help'); --tools LIST
+                                          picks the flywheel tools to initialize
+  macacfs projinit [DIR] [options]        initialize the desired flywheel tools
+                                          (br, ee, cm, ntm, slb, ms, ubs) a project
+                                          lacks; -i checklist, --status, --json
+                                          (see 'macacfs projinit --help')
   macacfs config [list|get|set|unset]     persistent settings (newproj.github,
-                                          newproj.ru, newproj.projects_dir)
+                                          newproj.ru, newproj.projects_dir,
+                                          newproj.tools)
   macacfs list                            list the tool catalog
   macacfs version                         print version
   macacfs help                            this help
@@ -167,6 +175,10 @@ main() {
       # (pinned Homebrew) bash, never /bin/bash 3.2.
       prereq_warn_newproj
       exec "$BASH" "$MACACFS_HOME/lib/newproj/newproj.sh" "$@"
+      ;;
+    projinit|init-tools)
+      require_darwin
+      projinit_main "$@"; exit $?
       ;;
     config)
       config_main "$@"; exit $?

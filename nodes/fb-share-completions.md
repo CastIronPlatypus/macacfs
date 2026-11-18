@@ -15,9 +15,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "file-boundaries",
+  "succeeds": "fb-share-completions@v1",
   "uid": "n0120",
-  "version": 1
+  "version": 2
 }
 -->
 
-The share/completions file boundary: _macacfs (zsh) and macacfs.bash completing verbs, newproj flags and config keys; the zsh one is put on fpath by the managed zshrc. Bead (data). It [[argv-code|serves|Completions mirror the verbs and flags the argv code accepts.]].
+The share/completions file boundary: _macacfs (zsh) and macacfs.bash completing verbs (including projinit and its flags), newproj flags (including --tools/--no-tools/--save-defaults) and config keys (including newproj.tools); the zsh one is put on fpath by the managed zshrc. Bead (data). It [[argv-code|serves|Completions mirror the verbs and flags the argv code accepts.]].

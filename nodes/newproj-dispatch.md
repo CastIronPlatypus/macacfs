@@ -26,6 +26,11 @@
       "dst": "config-store",
       "reason": "newproj reads its defaults through the config store.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-per-project-tool-init",
+      "reason": "newproj is where the user first chooses which tools a new project gets",
+      "type": "validated-by"
     }
   ],
   "is_bead": false,
@@ -33,9 +38,10 @@
   "node_type": "unclassified",
   "status": "drafting",
   "stratum": "capabilities",
+  "succeeds": "newproj-dispatch@v1",
   "uid": "n0101",
-  "version": 1
+  "version": 2
 }
 -->
 
-The capability to take 'macacfs newproj ARGS' and route it: --plan/--apply/--guided go to the Python reviewed bootstrap, -i/--interactive to the wizard, anything else to the classic CLI; GitHub/ru flags and their persistent-setting defaults are resolved once (flag > env > config > off) and passed to whichever mode runs, and unknown options fail with usage. It [[newproj-experience|serves|Routing every newproj invocation to the right mode is how the whole newproj experience is delivered.]]. It serves [[cli-arg-dispatch|serves|it receives newproj argv from the top-level dispatcher.]]. It is accomplished by [[newproj-engine|accomplished-by|The engine is where the dispatcher sends each mode.]]. It is accomplished by [[config-store|accomplished-by|newproj reads its defaults through the config store.]].
+The capability to take 'macacfs newproj ARGS' and route it: --plan/--apply/--guided go to the Python reviewed bootstrap, -i/--interactive to the wizard, anything else to the classic CLI; GitHub/ru flags and their persistent-setting defaults are resolved once (flag > env > config > off), and so is the per-project tool set (--tools LIST / --no-tools > env > newproj.tools > default; --no-br removes br; --save-defaults stores it), and both are passed to whichever mode runs — the classic CLI and the wizard initialize the chosen tools through [[project-tool-registry|accomplished-by|after scaffolding, newproj hands the chosen tool set to the same registry projinit uses, so both paths initialize tools identically.]] once the project directory exists, and the reviewed plan carries it as a reviewed 'tools-init' command, and unknown options fail with usage. It [[newproj-experience|serves|Routing every newproj invocation to the right mode is how the whole newproj experience is delivered.]]. It serves [[cli-arg-dispatch|serves|it receives newproj argv from the top-level dispatcher.]]. It is accomplished by [[newproj-engine|accomplished-by|The engine is where the dispatcher sends each mode.]]. It is accomplished by [[config-store|accomplished-by|newproj reads its defaults through the config store.]].

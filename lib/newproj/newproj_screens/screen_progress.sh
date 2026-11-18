@@ -34,7 +34,7 @@ creation_request() {
     local key value
     for key in project_dir project_name tech_stack agents_md_custom \
         enable_agents enable_br enable_claude enable_ubsignore \
-        enable_github enable_github_public enable_ru; do
+        enable_github enable_github_public enable_ru tools_selected; do
         value=$(state_get "$key") || return 1
         printf '%q=%q\n' "$key" "$value"
     done
@@ -96,6 +96,16 @@ init_creation_steps() {
         STEP_STATUS["create_ubsignore"]="pending"
     fi
 
+    # macacfs: per-project flywheel tools (Project Tools screen).
+    if [[ -n "$(state_get "tools_selected")" ]]; then
+        STEP_ORDER+=("init_tools")
+        STEP_STATUS["init_tools"]="pending"
+    fi
+    if [[ "$(state_get "save_tool_defaults")" == "true" ]]; then
+        projinit_save_defaults "$(tools_screen_full_list)" >/dev/null 2>&1 \
+            || log_warn "could not save newproj.tools default"
+    fi
+
     # macacfs: optional GitHub publish + ru registration.
     if [[ "$(state_get "enable_github")" == "true" ]]; then
         STEP_ORDER+=("publish_github")
@@ -125,6 +135,7 @@ get_step_name() {
         init_br) echo "Initializing Beads tracking" ;;
         create_claude) echo "Creating Claude Code settings" ;;
         create_ubsignore) echo "Creating .ubsignore" ;;
+        init_tools) echo "Initializing project tools ($(state_get tools_selected))" ;;
         publish_github) echo "Committing and pushing to GitHub" ;;
         register_ru) echo "Registering with ru" ;;
         finalize) echo "Finalizing project" ;;
@@ -465,6 +476,17 @@ __pycache__/
                 update_step "$step" "error"
                 return 1
             fi
+            ;;
+
+        init_tools)
+            # macacfs: shared registry (lib/projinit.sh); unavailable tools are skipped.
+            if projinit_apply "$project_dir" "$(state_get tools_selected)" >/dev/null 2>&1; then
+                update_step "$step" "success"
+                return 0
+            fi
+            log_error "project tool init failed (re-run: macacfs projinit $project_dir)"
+            update_step "$step" "error"
+            return 1
             ;;
 
         publish_github)

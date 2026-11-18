@@ -7,3 +7,6 @@ _MACACFS_ISO="${BATS_RUN_TMPDIR:-${TMPDIR:-/tmp}}/macacfs-iso.$$"
 mkdir -p "$_MACACFS_ISO/xdg/ru" "$_MACACFS_ISO/gh"
 export XDG_CONFIG_HOME="$_MACACFS_ISO/xdg" GH_CONFIG_DIR="$_MACACFS_ISO/gh" RU_CONFIG_DIR="$_MACACFS_ISO/xdg/ru"
 unset MACACFS_NEWPROJ_GITHUB MACACFS_NEWPROJ_RU GH_TOKEN GITHUB_TOKEN
+# Per-project tool init (lib/projinit.sh) defaults to br,ubs under test (the pre-tools behavior), so no
+# test runs real ee/slb hook installs; tests that want tools set this or --tools.
+export MACACFS_NEWPROJ_TOOLS="br,ubs"

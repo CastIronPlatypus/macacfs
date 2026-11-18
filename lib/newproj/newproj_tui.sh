@@ -183,6 +183,8 @@ declare -gA WIZARD_STATE=(
     [enable_github]="false"
     [enable_github_public]="false"
     [enable_ru]="false"
+    [tools_selected]=""
+    [save_tool_defaults]="false"
 )
 
 # Set a state value
@@ -225,6 +227,8 @@ state_reset() {
         [enable_github]="false"
         [enable_github_public]="false"
         [enable_ru]="false"
+        [tools_selected]=""
+        [save_tool_defaults]="false"
     )
     log_info "State reset to defaults"
 }

@@ -55,6 +55,12 @@ get_files_to_create() {
         files+=("$project_dir/.ubsignore")
     fi
 
+    # macacfs: Project Tools screen selections.
+    local tool_id
+    for tool_id in $(printf '%s' "$(state_get "tools_selected")" | tr ',' ' '); do
+        files+=("$project_dir/$(projinit_marker "$tool_id")")
+    done
+
     # Always create a basic README and .gitignore
     files+=("$project_dir/README.md")
     files+=("$project_dir/.gitignore")

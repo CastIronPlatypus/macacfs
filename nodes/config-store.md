@@ -16,6 +16,16 @@
       "dst": "config-code",
       "reason": "This code realizes the config store.",
       "type": "accomplished-by"
+    },
+    {
+      "dst": "req-per-project-tool-init",
+      "reason": "the saved default tool set lives in the config store",
+      "type": "validated-by"
+    },
+    {
+      "dst": "projinit-dispatch",
+      "reason": "the default tool set and --save-defaults go through the config store",
+      "type": "serves"
     }
   ],
   "is_bead": false,
@@ -23,9 +33,10 @@
   "node_type": "unclassified",
   "status": "drafting",
   "stratum": "subsystems",
+  "succeeds": "config-store@v1",
   "uid": "n0110",
-  "version": 1
+  "version": 2
 }
 -->
 
-The config-store subsystem: lib/config.sh's registry of known keys (newproj.github, newproj.ru, newproj.projects_dir) with validators, file read/write with atomic replace, env overrides, and the config verb's get/set/unset/list handlers. It [[settings-store|serves|The config store is the storage layer of the settings capability.]]. It serves [[newproj-dispatch|serves|newproj reads its defaults through the config store.]]. It is accomplished by [[config-code|accomplished-by|This code realizes the config store.]].
+The config-store subsystem: lib/config.sh's registry of known keys (newproj.github, newproj.ru, newproj.projects_dir, and newproj.tools — the comma list of per-project tools to initialize by default, validated against the project tool registry, default 'br,ee,cm,ubs') with validators, file read/write with atomic replace, env overrides, and the config verb's get/set/unset/list handlers. It [[settings-store|serves|The config store is the storage layer of the settings capability.]]. It serves [[newproj-dispatch|serves|newproj reads its defaults through the config store.]] and [[projinit-dispatch|serves|projinit reads the default desired tool set and stores --save-defaults through the config store.]]. It is accomplished by [[config-code|accomplished-by|This code realizes the config store.]].

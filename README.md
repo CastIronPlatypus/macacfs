@@ -42,6 +42,7 @@ A port of `acfs newproj` with all three of its modes:
 ```bash
 macacfs newproj myapp [DIR]          # classic: git, beads, AGENTS.md, Claude settings, .gitignore/.ubsignore
 macacfs newproj myapp --no-br --no-claude --no-agents
+macacfs newproj myapp --tools br,ee,cm,ubs [--save-defaults]   # which flywheel tools to initialize
 macacfs newproj -i [myapp]           # TUI wizard (gum when installed); Back and Quit work on every screen
 macacfs newproj --plan myapp --preset > plan.json   # reviewed bootstrap: print a deterministic plan
 macacfs newproj --apply plan.json --yes [--resume]  # apply it; --resume continues after an interruption
@@ -63,6 +64,36 @@ With `--ru`, ru alone decides where the project lives, so a `DIR` argument that 
 
 ntm, tmux and Antigravity (`agy`) features are offered only when those tools are installed.
 
+## Per-project flywheel tools (`--tools`, `macacfs projinit`)
+
+Some flywheel tools need setting up inside each project, not just installing. macacfs knows seven:
+
+| id | marker | what initializing does |
+|---|---|---|
+| `br` | `.beads/` | `br init` |
+| `ee` | `.ee/ee.db` | `ee init --workspace DIR`, then `ee hook claude-code --install` (user-level Claude Code hooks) and, when Codex is present, `ee hook codex --install` (project `.codex/hooks.json`) |
+| `cm` | `.cass/` | `cm init --repo` |
+| `ntm` | `.ntm/` | `ntm init` (plus its git hooks in a git repo) |
+| `slb` | `.slb/` | `slb init` and `slb hook install` (project `.claude/settings.json`) |
+| `ms` | `.ms/` | `ms init` |
+| `ubs` | `.ubsignore` | writes the standard ignore file |
+
+`.ee/`, `.slb/` and `.ms/` hold local databases or keys and are added to `.gitignore` in git repos.
+
+**New projects.** `macacfs newproj` initializes the tools in `--tools LIST` (or none with `--no-tools`); without either it uses the `newproj.tools` setting (default `br,ee,cm,ubs`). `--no-br` drops `br`. `--save-defaults` stores the list as the new default. The wizard has a Project tools screen after Features, with a "save as default" toggle; beads and the UBS ignore file stay on Features. The reviewed bootstrap (`--plan`, `--guided`) uses the same default unless you pass `--tools` or `--no-tools`, as one reviewed `tools-init` command.
+
+**Existing projects.**
+
+```bash
+macacfs projinit [DIR] --status [--json]     # each tool: initialized / missing / unavailable
+macacfs projinit [DIR]                       # initialize the default tools DIR lacks
+macacfs projinit [DIR] --tools ee,cm         # ...or these
+macacfs projinit [DIR] -i                    # choose from a checklist
+macacfs projinit [DIR] --dry-run             # print the commands only
+```
+
+Already-initialized tools are left alone, so re-running it changes nothing. A tool that isn't installed is skipped with a `macacfs install` hint. A failed init exits 1. `--json` prints one result per tool.
+
 ## Settings (`macacfs config`)
 
 ```bash
@@ -70,11 +101,12 @@ macacfs config list                         # every key, its value and where it 
 macacfs config set newproj.github private   # off | private | public
 macacfs config set newproj.ru on            # on | off
 macacfs config set newproj.projects_dir ~/code
+macacfs config set newproj.tools br,ee,cm,ubs  # or none
 macacfs config get newproj.github
 macacfs config unset newproj.ru
 ```
 
-Settings live in `${XDG_CONFIG_HOME:-~/.config}/macacfs/config`, a flat `key=value` file. Keys and values are validated. Precedence: a command-line flag, then the environment (`MACACFS_NEWPROJ_GITHUB`, `MACACFS_NEWPROJ_RU`, `MACACFS_NEWPROJ_PROJECTS_DIR`), then the file, then off. gh keeps its login under `XDG_CONFIG_HOME` too, so if you point `XDG_CONFIG_HOME` somewhere else, also set `GH_CONFIG_DIR=~/.config/gh`. Otherwise newproj will report gh as unauthenticated.
+Settings live in `${XDG_CONFIG_HOME:-~/.config}/macacfs/config`, a flat `key=value` file. Keys and values are validated. Precedence: a command-line flag, then the environment (`MACACFS_NEWPROJ_GITHUB`, `MACACFS_NEWPROJ_RU`, `MACACFS_NEWPROJ_PROJECTS_DIR`, `MACACFS_NEWPROJ_TOOLS`), then the file, then off. gh keeps its login under `XDG_CONFIG_HOME` too, so if you point `XDG_CONFIG_HOME` somewhere else, also set `GH_CONFIG_DIR=~/.config/gh`. Otherwise newproj will report gh as unauthenticated.
 
 ## Shell completions
 

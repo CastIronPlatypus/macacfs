@@ -1190,3 +1190,72 @@
 - [1792869688] **absorb** — remote-code absorbed the parent revision (unchanged)
 - [1792869704] **retire** — fb-lib-newproj-remote@v1 -> v2; reason: file now also holds the remote-first clone; perturbed: []
 - [1792869704] **absorb** — fb-lib-newproj-remote absorbed the parent revision (unchanged)
+- [1794937042] **begin** — change
+- [1794937117] **comprehend** — modify=['agent-hook-setup', 'fb-lib-hooks', 'newproj-dispatch', 'req-agent-hooks-registered', 'req-newproj-acfs-parity']; attach=['macacfs-command-surface', 'manifest-store', 'req-no-cross-tool-side-installs', 'req-persistent-settings']; impact=60 node(s)
+- [1794937118] **change** — comprehend -> plan
+- [1794937171] **set-changeplan** — 6 step(s)
+- [1794937171] **change** — plan -> walk
+- [1794937189] **change-done** — s1 — tool selection must thread three newproj modes (classic bash CLI, TUI wizard features screen + progress, Python reviewed plan --with/--guided); config.sh registry gets newproj.tools; req-minimal-scope must also be superseded to admit the projinit verb
+- [1794937190] **retire** — req-minimal-scope@v2 -> v3; reason: admit macacfs projinit: per-project flywheel tool initialization; perturbed: []
+- [1794937205] **edit-requirement** — req-minimal-scope: {'text': 'Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration) and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).', 'kind': 'constraint', 'accept': 'Feature set maps only to those items (install/update/self-update/schedule/newproj/config); none of the ACFS VPS machinery is present.'} -> {'text': 'Minimal scope: install tools, set up the macOS terminal environment, install a weekly-update plist, manual update via CLI, self-update, plus the explicitly requested project bootstrap (macacfs newproj, ported from acfs newproj, with optional GitHub publish and ru registration), per-project flywheel tool initialization (macacfs projinit), and a small persistent settings store (macacfs config). Still not a full ACFS port (no user provisioning, OS upgrade, service orchestration, phase runner).', 'kind': 'constraint', 'accept': 'Feature set maps only to those items (install/update/self-update/schedule/newproj/projinit/config); none of the ACFS VPS machinery is present.'}
+- [1794937206] **add-requirement** — req-per-project-tool-init [functional] macacfs can initialize the per-project parts of the flywheel tools (br beads, ee workspace + its agent hooks, cm repo-level .cass, ntm, slb, ms, ubs ignore file) in a project: newproj lets the user choose which in every mode (classic CLI flags, TUI wizard, Python reviewed plan), the chosen set can be saved as the default (config key newproj.tools), and 'macacfs projinit [DIR]' inspects an existing project and initializes only the desired tools that are not yet initialized, interactively (-i) or not. Each init is idempotent and uses the tool's own init/hook command.
+- [1794937209] **retire** — macacfs-command-surface@v5 -> v6; reason: adds macacfs projinit and newproj --tools/--no-tools/--save-defaults; perturbed: ['cli-arg-dispatch', 'method-dispatch', 'shell-setup-dispatch']
+- [1794937217] **link-requirement** — macacfs-command-surface -> req-per-project-tool-init
+- [1794937218] **change-done** — s2
+- [1794937226] **add-node** — projinit-dispatch
+- [1794937233] **retire** — newproj-dispatch@v1 -> v2; reason: newproj resolves and applies a per-project tool set; perturbed: ['newproj-engine', 'config-store']
+- [1794937234] **link-requirement** — newproj-dispatch -> req-per-project-tool-init
+- [1794937234] **change-done** — s3
+- [1794937246] **add-node** — project-tool-registry
+- [1794937246] **retire** — config-store@v1 -> v2; reason: adds newproj.tools key; perturbed: ['config-code']
+- [1794937253] **link-requirement** — config-store -> req-per-project-tool-init
+- [1794937253] **change-done** — s4
+- [1794937265] **add-node** — projinit-code
+- [1794937266] **retire** — config-code@v1 -> v2; reason: per-project tool selection; perturbed: ['fb-lib-config']
+- [1794937266] **retire** — newproj-cli-code@v1 -> v2; reason: per-project tool selection; perturbed: ['fb-lib-newproj-core']
+- [1794937267] **retire** — wizard-screens-code@v1 -> v2; reason: per-project tool selection; perturbed: ['fb-lib-newproj-screens']
+- [1794937267] **retire** — bootstrap-py-code@v1 -> v2; reason: per-project tool selection; perturbed: ['fb-lib-newproj-core']
+- [1794937268] **change-done** — s5
+- [1794937273] **add-edge** — projinit-code -serves-> project-tool-registry
+- [1794937274] **add-edge** — project-tool-registry -serves-> projinit-dispatch
+- [1794937274] **add-edge** — config-store -serves-> projinit-dispatch
+- [1794937275] **add-edge** — project-tool-registry -serves-> newproj-dispatch
+- [1794937275] **add-edge** — projinit-dispatch -serves-> macacfs-command-surface
+- [1794937276] **add-edge** — macacfs-command-surface -accomplished-by-> projinit-dispatch
+- [1794937283] **add-node** — fb-lib-projinit
+- [1794937284] **add-node** — fb-tests-projinit
+- [1794937285] **add-edge** — projinit-code -accomplished-by-> fb-lib-projinit
+- [1794937285] **change-done** — s6
+- [1794937289] **change** — walk -> settle
+- [1794937311] **retire** — cli-arg-dispatch@v2 -> v3; reason: projinit verb / tools screen; perturbed: ['argv-and-usage', 'newproj-dispatch']
+- [1794937311] **retire** — argv-and-usage@v2 -> v3; reason: projinit verb / tools screen; perturbed: ['argv-code']
+- [1794937312] **retire** — argv-code@v2 -> v3; reason: projinit verb / tools screen; perturbed: ['fb-bin-macacfs', 'fb-share-completions']
+- [1794937313] **retire** — fb-bin-macacfs@v2 -> v3; reason: projinit verb / tools screen; perturbed: ['fb-bin-macacfs-impl']
+- [1794937313] **retire** — fb-lib-newproj-screens@v1 -> v2; reason: projinit verb / tools screen; perturbed: []
+- [1794937314] **absorb** — method-dispatch absorbed the parent revision (unchanged)
+- [1794937314] **absorb** — shell-setup-dispatch absorbed the parent revision (unchanged)
+- [1794937314] **absorb** — newproj-engine absorbed the parent revision (unchanged)
+- [1794937314] **absorb** — config-store absorbed the parent revision (unchanged)
+- [1794937315] **absorb** — config-code absorbed the parent revision (unchanged)
+- [1794937315] **absorb** — fb-lib-config absorbed the parent revision (unchanged)
+- [1794937315] **absorb** — fb-lib-newproj-core absorbed the parent revision (unchanged)
+- [1794937327] **absorb** — argv-and-usage absorbed the parent revision (unchanged)
+- [1794937327] **absorb** — argv-code absorbed the parent revision (unchanged)
+- [1794937327] **absorb** — cli-arg-dispatch absorbed the parent revision (unchanged)
+- [1794937328] **absorb** — fb-bin-macacfs absorbed the parent revision (unchanged)
+- [1794937328] **absorb** — fb-lib-newproj-screens absorbed the parent revision (unchanged)
+- [1794937328] **absorb** — newproj-dispatch absorbed the parent revision (unchanged)
+- [1794939236] **add-impl** — fb-lib-projinit -> lib/projinit.sh (in place)
+- [1794939236] **add-impl** — fb-tests-projinit -> tests/unit/macacfs/projinit.bats (in place)
+- [1794939237] **retire** — fb-share-completions@v1 -> v2; reason: completions gain projinit, --tools/--no-tools/--save-defaults and newproj.tools; perturbed: []
+- [1794939237] **retire** — fb-bin-macacfs-impl@v8 -> v9; reason: bin/macacfs sources lib/projinit.sh and dispatches projinit; perturbed: []
+- [1794939250] **prove** — fb-lib-projinit: cmd exit 0
+- [1794939256] **prove** — fb-tests-projinit: cmd exit 0
+- [1794939265] **absorb** — fb-bin-macacfs-impl absorbed the parent revision (unchanged)
+- [1794939266] **absorb** — fb-share-completions absorbed the parent revision (unchanged)
+- [1794939347] **override** — jeff-6584-1794937039: no-net-anemia on macacfs-command-surface (74.1 -> 72.4): this run added the projinit verb with reciprocated accomplished-by/serves edges whose reasons name the observable commands, and rewrote the req-minimal-scope edge to a falsifiable check; the remaining gap is the 50 pre-existing low-falsifiability reasons and the req-persistent-settings / req-terminal-environment-parity tissue in the folded neighborhood, not a thin edge introduced here. (node macacfs-command-surface)
+- [1794939398] **add-edge** — macacfs-command-surface -accomplished-by-> newproj-dispatch
+- [1794939410] **ledger-rewind** — ['op39']
+- [1794939410] **ledger-rewind** — ['op38']
+- [1794939429] **change** — settle -> idle (finalized)
+- [1794964756] **link-requirement** — macacfs-command-surface -> req-per-project-tool-init

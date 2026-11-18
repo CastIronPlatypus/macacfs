@@ -20,7 +20,7 @@ _ACFS_SCREEN_FEATURES_LOADED=1
 SCREEN_FEATURES_ID="features"
 SCREEN_FEATURES_TITLE="Features"
 SCREEN_FEATURES_STEP=5
-SCREEN_FEATURES_NEXT="agents_preview"
+SCREEN_FEATURES_NEXT="tools"  # macacfs: Project Tools screen
 SCREEN_FEATURES_PREV="tech_stack"
 
 # Available features with descriptions

@@ -20,6 +20,8 @@ fi
 NEWPROJ_SCRIPT_DIR="${NEWPROJ_SCRIPT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 # shellcheck source=newproj_remote.sh
 source "$NEWPROJ_SCRIPT_DIR/newproj_remote.sh"
+# shellcheck source=../projinit.sh
+source "$NEWPROJ_SCRIPT_DIR/../projinit.sh"
 
 # macacfs: prefer Homebrew python3, require >= 3.9 (Path.is_relative_to).
 newproj_python() {
@@ -46,6 +48,8 @@ newproj_reviewed_main() {
     NEWPROJ_DEFAULT_PROJECTS_DIR="$(newproj_projects_dir)" \
     MACACFS_NEWPROJ_GITHUB_DEFAULT="$(config_effective newproj.github)" \
     MACACFS_NEWPROJ_RU_DEFAULT="$(config_effective newproj.ru)" \
+    MACACFS_NEWPROJ_TOOLS_DEFAULT="$(projinit_default_tools 2>/dev/null)" \
+    MACACFS_BIN="$(cd "$NEWPROJ_SCRIPT_DIR/../../bin" && pwd)/macacfs" \
     NEWPROJ_RU_LAYOUT="$(newproj_ru_layout)" \
     "$py" -I - "$@" 3<&0 <<'ACFS_BOOTSTRAP_PY'
 import argparse
@@ -64,6 +68,21 @@ FEATURES = ("git", "beads", "readme", "gitignore", "agents", "starter", "ci", "p
 PRESET = ("git", "readme", "gitignore", "agents", "starter", "ci", "prompt")
 DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 GITHUB_VISIBILITY = ("private", "public")
+# macacfs: per-project flywheel tools (lib/projinit.sh registry ids).
+PROJECT_TOOLS = ("br", "ee", "cm", "ntm", "slb", "ms", "ubs")
+
+
+def tools_selection(raw):
+    """Canonical registry-ordered tool list from a comma list ('' / none -> [])."""
+    wanted = [t for t in (raw or "").lower().replace(" ", "").split(",") if t and t != "none"]
+    unknown = [t for t in wanted if t not in PROJECT_TOOLS]
+    if unknown:
+        raise ValueError("unknown project tool(s): " + ",".join(unknown) + " (known: " + ",".join(PROJECT_TOOLS) + ")")
+    return [t for t in PROJECT_TOOLS if t in wanted]
+
+
+def default_tools():
+    return tools_selection(os.environ.get("MACACFS_NEWPROJ_TOOLS_DEFAULT", ""))
 
 
 # macacfs: projects-dir resolution and GitHub/ru (see lib/newproj/newproj_remote.sh).
@@ -407,7 +426,7 @@ def mail_client_files(settings, clients, has_policy):
     return files, connection_files, "".join(instructions)
 
 
-def make_plan(name, directory, stack, features, target, agent_mail=None, agent_mail_clients=None, remote=None):
+def make_plan(name, directory, stack, features, target, agent_mail=None, agent_mail_clients=None, remote=None, tools=None):
     if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{0,63}", name):
         raise ValueError("project name must start with a letter and contain at most 64 letters, digits, _ or -")
     if stack not in ("python", "typescript"):
@@ -513,6 +532,15 @@ def make_plan(name, directory, stack, features, target, agent_mail=None, agent_m
                                  "writes": ["Agent Mail project namespace on the reviewed service"]})
     if agent_mail_clients is not None:
         plan["agent_mail_clients"] = agent_mail_clients
+    if tools:
+        # macacfs: one reviewed command initializes the chosen per-project tools
+        # through 'macacfs projinit' (idempotent; skips tools that are not installed).
+        tools = tools_selection(",".join(tools))
+        plan["tools"] = tools
+        plan["commands"].append({"id": "tools-init", "argv": [os.environ.get("MACACFS_BIN") or "macacfs", "projinit", directory, "--tools", ",".join(tools)],
+                                 "writes": [".beads/" if t == "br" else ".ee/ + Claude Code/Codex hooks" if t == "ee" else "." + t + "/" if t != "ubs" else ".ubsignore" for t in tools]})
+        if "ee" in tools:
+            plan["effects"]["global_settings"] = True
     if remote is not None:
         if remote["github"] == "public":
             scan_public(plan["files"], directory)
@@ -598,7 +626,7 @@ def read_plan(path):
     if type(value) is not dict or type(value.get("project")) is not dict:
         raise ValueError("invalid bootstrap plan")
     project = value["project"]
-    expected = make_plan(project.get("name"), project.get("directory"), project.get("stack"), value.get("features"), value.get("target"), value.get("agent_mail"), value.get("agent_mail_clients"), value.get("remote"))
+    expected = make_plan(project.get("name"), project.get("directory"), project.get("stack"), value.get("features"), value.get("target"), value.get("agent_mail"), value.get("agent_mail_clients"), value.get("remote"), value.get("tools"))
     if value != expected:
         raise ValueError("plan differs from this ACFS version's templates; regenerate and review it")
     return value
@@ -849,6 +877,12 @@ def apply(plan, resume=False):
                 state["completed_commands"].append(command["id"])
                 save_state(state_dir, state)
                 continue
+            if command["id"] == "tools-init":
+                # The user's own environment: tool hooks are installed for this user.
+                run_tool(executable, command["argv"][1:], user_env(), timeout=600)
+                state["completed_commands"].append(command["id"])
+                save_state(state_dir, state)
+                continue
             if command["id"] == "git-push":
                 try:
                     # The user's own git config and credentials, not the scrubbed env.
@@ -971,7 +1005,7 @@ def guided():
             settings = mail_settings({"url": url, "token_env": None if token_env == "none" else token_env})
             clients = mail_clients(ask("Clients: comma-separated claude,codex,gemini", "claude,codex").split(","))
             features.append("agent-mail")
-        plan = make_plan(name, directory, stack, features, target_snapshot(directory), settings, clients, remote)
+        plan = make_plan(name, directory, stack, features, target_snapshot(directory), settings, clients, remote, default_tools())
         suggested_plan = str(Path(directory).parent / ("." + name + "-acfs-plan.json"))
         show("Suggested recovery plan: " + display(suggested_plan))
         raw_plan = Path(ask("Plan file (Enter uses the suggestion)") or suggested_plan).expanduser()
@@ -1074,11 +1108,14 @@ def main():
     remote_group.add_argument("--gh-public", dest="github", action="store_const", const="public")
     remote_group.add_argument("--no-github", dest="github", action="store_const", const="off")
     parser.add_argument("--github-owner", metavar="OWNER", help="GitHub user/org for the new repo (default: the gh login)")
+    tools_group = parser.add_mutually_exclusive_group()
+    tools_group.add_argument("--tools", metavar=",".join(PROJECT_TOOLS), help="per-project flywheel tools to initialize (default: the newproj.tools setting)")
+    tools_group.add_argument("--no-tools", dest="tools", action="store_const", const="none")
     ru_group = parser.add_mutually_exclusive_group()
     ru_group.add_argument("--ru", dest="ru", action="store_const", const=True, help="register the GitHub repo with ru")
     ru_group.add_argument("--no-ru", dest="ru", action="store_const", const=False)
     args = parser.parse_args()
-    remote_flags = args.github is not None or args.github_owner is not None or args.ru is not None
+    remote_flags = args.github is not None or args.github_owner is not None or args.ru is not None or args.tools is not None
     if args.guided:
         if remote_flags or any((args.directory, args.stack, args.preset, args.features, args.yes, args.resume,
                 args.beads, args.agent_mail, args.agent_mail_token_env, args.agent_mail_clients is not None)):
@@ -1119,7 +1156,7 @@ def main():
         result = make_plan(args.plan, directory, args.stack or "python", features, target_snapshot(directory),
                            {"url": args.agent_mail, "token_env": args.agent_mail_token_env} if args.agent_mail else None,
                            args.agent_mail_clients.split(",") if args.agent_mail_clients is not None else None,
-                           remote)
+                           remote, tools_selection(args.tools) if args.tools is not None else default_tools())
     print(json.dumps(result, indent=2, ensure_ascii=True))
 
 
@@ -1285,7 +1322,11 @@ print_help() {
     echo "  --ru / --no-ru             With --github: ru registers and clones it into its layout path (no DIR)"
     echo ""
     echo "CLI mode options:"
-    echo "  --no-br         Skip beads (br) initialization"
+    echo "  --tools LIST    Flywheel tools to initialize: br,ee,cm,ntm,slb,ms,ubs"
+    echo "                  (default: the newproj.tools setting, $(projinit_default_tools 2>/dev/null || true))"
+    echo "  --no-tools      Initialize no flywheel tools"
+    echo "  --save-defaults Store the --tools choice as the newproj.tools default"
+    echo "  --no-br         Skip beads (br) initialization (removes br from --tools)"
     echo "  --no-claude     Skip Claude settings creation"
     echo "  --no-agents     Skip AGENTS.md template creation"
     echo "  -h, --help      Show this help message"
@@ -1700,6 +1741,9 @@ run_interactive_mode() {
         [[ "$NEWPROJ_GITHUB" == public ]] && state_set "enable_github_public" "true"
     fi
     [[ "$NEWPROJ_RU" == on ]] && state_set "enable_ru" "true"
+    # macacfs: Project Tools screen starts from --tools / newproj.tools (br and
+    # ubs stay on the Features screen's own checkboxes).
+    state_set "tools_selected" "$(printf '%s' "${NEWPROJ_TOOLS:-}" | tr ',' '\n' | grep -vxE 'br|ubs' | paste -sd, -)"
 
     # Pre-fill state if arguments provided
     if [[ -n "$prefill_name" ]]; then
@@ -1732,6 +1776,7 @@ main() {
     local interactive_mode=false
     local git_initialized=false
     local used_default_dir=false
+    local tools_list="" tools_set=false save_defaults=false
 
     # Parse arguments
     while [[ $# -gt 0 ]]; do
@@ -1746,6 +1791,22 @@ main() {
                 ;;
             --no-br)
                 skip_br=true
+                shift
+                ;;
+            --tools)
+                tools_list="${2:-}"; tools_set=true
+                shift 2 || { echo -e "${RED}--tools needs a value${NC}" >&2; exit 1; }
+                ;;
+            --tools=*)
+                tools_list="${1#--tools=}"; tools_set=true
+                shift
+                ;;
+            --no-tools)
+                tools_list=""; tools_set=true
+                shift
+                ;;
+            --save-defaults)
+                save_defaults=true
                 shift
                 ;;
             --no-claude)
@@ -1791,6 +1852,21 @@ main() {
 
     # macacfs: GitHub/ru selection = flags > env > settings > off.
     newproj_remote_init_defaults
+
+    # macacfs: per-project tool set = --tools/--no-tools > env > newproj.tools > default;
+    # --no-br removes br. Validated before anything is created.
+    if [[ "$tools_set" == "true" ]]; then
+        tools_list="$(projinit_normalize "$tools_list")" || exit 1
+    else
+        tools_list="$(projinit_default_tools)" || exit 1
+    fi
+    if [[ "$save_defaults" == "true" ]]; then
+        projinit_save_defaults "$tools_list" || exit 1
+    fi
+    if [[ "$skip_br" == "true" ]]; then
+        tools_list="$(projinit_normalize "$(printf '%s' "$tools_list" | tr ',' '\n' | grep -vx br | paste -sd, -)")"
+    fi
+    NEWPROJ_TOOLS="$tools_list"
 
     # Handle interactive mode
     if [[ "$interactive_mode" == "true" ]]; then
@@ -1985,64 +2061,8 @@ venv/
 EOF
         CREATED_ITEMS+=(".gitignore")
 
-        # Create universal .ubsignore (patterns for UBS bug scanner)
-        cat > .ubsignore << 'EOF'
-# UBS ignore globs (keep bug scanner focused on source code)
-# Patterns are evaluated relative to the project root.
-
-# Dependencies / vendored (never scan third-party code)
-node_modules/
-**/node_modules/
-
-# Python virtual environments
-.venv/
-venv/
-.tox/
-
-# Build outputs (scan source, not artifacts)
-dist/
-build/
-.next/
-out/
-target/
-*.egg-info/
-
-# Test artifacts
-coverage/
-.coverage
-htmlcov/
-.pytest_cache/
-playwright-report/
-test-results/
-
-# IDE/Editor
-.idea/
-.vscode/
-
-# Package manager caches
-.npm/
-.pnpm-store/
-.yarn/
-EOF
-        CREATED_ITEMS+=(".ubsignore")
     else
         echo -e "${CYAN}Git already initialized, skipping${NC}"
-    fi
-
-    # Initialize beads (br) if available and not skipped
-    if [[ "$skip_br" == "false" ]]; then
-        if command -v br &>/dev/null; then
-            if [[ ! -d .beads ]]; then
-                echo -e "${GREEN}Initializing beads (br)...${NC}"
-                br init
-                CREATED_ITEMS+=("Beads tracking (.beads/)")
-            else
-                echo -e "${CYAN}Beads already initialized, skipping${NC}"
-            fi
-        else
-            echo -e "${YELLOW}Warning: br not found, skipping beads initialization${NC}"
-            echo -e "${YELLOW}Install with: macacfs install br${NC}"
-        fi
     fi
 
     # Create Claude settings if not skipped
@@ -2073,6 +2093,19 @@ EOF
         else
             echo -e "${CYAN}AGENTS.md already exists, skipping${NC}"
         fi
+    fi
+
+    # macacfs: after AGENTS.md/Claude settings exist (ee only writes them when
+    # missing), initialize the chosen per-project flywheel tools (br, ee, cm,
+    # ntm, slb, ms, ubs) through the shared registry (lib/projinit.sh). A tool
+    # that is not installed is reported and skipped; a failed init fails.
+    if [[ -n "$NEWPROJ_TOOLS" ]]; then
+        echo -e "${GREEN}Initializing project tools: ${NEWPROJ_TOOLS}${NC}"
+        projinit_apply "$project_dir" "$NEWPROJ_TOOLS" || {
+            echo -e "${RED}Error: a project tool failed to initialize (re-run: macacfs projinit $project_dir)${NC}" >&2
+            exit 1
+        }
+        [[ -n "$PROJINIT_DONE" ]] && CREATED_ITEMS+=("Project tools: $PROJINIT_DONE")
     fi
 
     if [[ "$git_initialized" == "true" ]]; then
@@ -2119,7 +2152,7 @@ EOF
     if [[ "$skip_agents" == "false" ]] && [[ -f AGENTS.md ]]; then
         echo "  # Edit AGENTS.md to customize for your project"
     fi
-    if [[ "$skip_br" == "false" ]] && command -v br &>/dev/null; then
+    if [[ -d .beads ]]; then
         echo "  br ready                    # Check for work"
         echo "  br create --title=\"...\"    # Create tasks"
     fi

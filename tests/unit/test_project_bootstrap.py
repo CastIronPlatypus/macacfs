@@ -20,7 +20,8 @@ class BootstrapTests(unittest.TestCase):
         self.base = Path(self.tmp.name).resolve()
         self.target = self.base / "project with spaces"
         self.env = os.environ.copy()
-        self.env.update({"ACFS_PROJECTS_DIR": str(self.base), "PYTHONDONTWRITEBYTECODE": "1"})
+        self.env.update({"ACFS_PROJECTS_DIR": str(self.base), "PYTHONDONTWRITEBYTECODE": "1",
+                         "MACACFS_NEWPROJ_TOOLS": "none"})  # tests below pin exact plans; default-tool behavior is tested explicitly
 
     def run_cli(self, *args, ok=True, env=None):
         result = subprocess.run([BASH, str(SCRIPT), *map(str, args)], env=env or self.env, text=True, capture_output=True, timeout=10)
@@ -82,6 +83,14 @@ class BootstrapTests(unittest.TestCase):
         result = subprocess.run([node, "--input-type=module", "-e", program, str(self.target / "src/app.ts")], capture_output=True, text=True, timeout=10)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertFalse((self.target / "package-lock.json").exists())
+
+    def test_plan_uses_saved_default_tools_unless_overridden(self):
+        env = dict(self.env, MACACFS_NEWPROJ_TOOLS="br,ubs")
+        plan = json.loads(self.run_cli("--plan", "demo", self.target, "--preset", "first-project", env=env).stdout)
+        self.assertEqual(plan.get("tools"), ["br", "ubs"])
+        self.assertIn("tools-init", [c["id"] for c in plan["commands"]])
+        none = json.loads(self.run_cli("--plan", "demo", self.target, "--preset", "first-project", "--no-tools", env=env).stdout)
+        self.assertNotIn("tools-init", [c["id"] for c in none["commands"]])
 
     def test_apply_requires_explicit_confirmation(self):
         path = self.save(self.plan("--with", "readme"))

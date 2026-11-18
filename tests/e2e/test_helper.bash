@@ -346,6 +346,7 @@ run_wizard_happy_path() {
     # 3. Directory: Enter (accept default)
     # 4. Tech stack: Enter (skip selection)
     # 5. Features: Enter (accept defaults)
+    # 5b. Project Tools (macacfs): Enter (accept defaults)
     # 6. AGENTS preview: Enter (continue)
     # 7. Confirmation: Enter (create)
     # 8. Success: q (quit)
@@ -355,6 +356,7 @@ run_wizard_happy_path() {
 
 ${project_name}
 ${project_base}/${project_name}
+
 
 
 

@@ -117,6 +117,14 @@ expect {
 log_step "Pressing Enter to accept default features"
 send_enter
 
+# macacfs: Project Tools screen (per-project flywheel tools)
+log_step "Waiting for Project Tools screen..."
+expect {
+    timeout { puts stderr "ERROR: Timeout waiting for Project Tools screen"; exit 1 }
+    "Which flywheel tools" { log_step "Project Tools screen detected" }
+}
+send_enter
+
 # ============================================================
 # Screen 6: AGENTS.md Preview
 # ============================================================

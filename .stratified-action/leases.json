@@ -1,9 +1,19 @@
 {
   "agents": {
+    "jeff-6584-1794937039": {
+      "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-6584-1794937039.fifo",
+      "inbox": [],
+      "registered_at": 1794937190
+    },
     "jeff-96078-1789593573": {
       "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-96078-1789593573.fifo",
       "inbox": [],
       "registered_at": 1789593708
+    },
+    "jeff-fix-96852": {
+      "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-fix-96852.fifo",
+      "inbox": [],
+      "registered_at": 1794964756
     },
     "jeff-fix4-1792864777": {
       "fifo": "/data/projects/CastIronPlatypus/macacfs/.stratified-action/pipes/jeff-fix4-1792864777.fifo",

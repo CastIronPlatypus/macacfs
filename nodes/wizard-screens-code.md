@@ -20,9 +20,10 @@
   "realized_at": "0.15.0",
   "status": "drafting",
   "stratum": "components",
+  "succeeds": "wizard-screens-code@v1",
   "uid": "n0112",
-  "version": 1
+  "version": 2
 }
 -->
 
-Code unit: newproj_tui.sh (state, navigation, gum/plain inputs), newproj_screens.sh (screen registry, wizard loop) and the nine newproj_screens/screen_*.sh modules, with the features screen carrying GitHub and ru toggles defaulted from settings and the progress screen running publish/register steps after the local steps. It [[newproj-engine|serves|This code is the wizard part of the engine.]]. It is accomplished by [[fb-lib-newproj-screens|accomplished-by|These files hold the wizard screens.]].
+Code unit: newproj_tui.sh (state, navigation, gum/plain inputs), newproj_screens.sh (screen registry, wizard loop) and the nine newproj_screens/screen_*.sh modules, with the features screen carrying GitHub and ru toggles defaulted from settings, a tools screen (after features) listing every registry tool as a checkbox preselected from newproj.tools plus a 'save as defaults' toggle, and the progress screen running the chosen tool inits via projinit_apply and the publish/register steps after the local steps. It [[newproj-engine|serves|This code is the wizard part of the engine.]]. It is accomplished by [[fb-lib-newproj-screens|accomplished-by|These files hold the wizard screens.]].
