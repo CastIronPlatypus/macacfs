@@ -7,3 +7,5 @@ tests/logs/
 .local/
 .stratified-action/index.db-shm
 .stratified-action/index.db-wal
+.ee/
+**/.ee/
