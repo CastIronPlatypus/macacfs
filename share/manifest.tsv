@@ -38,7 +38,7 @@ WA	frankenterm	ft	installer-sh	@latest-release/install.sh	--force
 BRENNER	brenner_bot	brenner	installer-sh	install.sh	--skip-ntm --skip-cass --skip-cm
 SRPS	system_resource_protection_script	sysmoni	skip	Linux-only: installs via apt-get, ananicy-cpp and sudo; cannot run on macOS	-
 APR	automated_plan_reviser_pro	apr	installer-sh	install.sh	-
-PT	process_triage	pt	installer-sh	install.sh	-
+PT	process_triage	pt	installer-sh	install.sh	--no-configure
 GIIL	giil	giil	installer-sh	install.sh	-
 CSCTF	chat_shared_conversation_to_file	csctf	installer-sh	install.sh	-
 RANO	rano	rano	installer-sh	install.sh	-
